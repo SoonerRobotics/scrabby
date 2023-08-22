@@ -2,24 +2,42 @@
 
 namespace Scrabby.Utilities
 {
-    public class MonoSingleton<T> : MonoBehaviour
+    public class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
     {
-        public static T Instance;
+        private static T _instance = null;
+
+        public static T instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType(typeof(T)) as T;
+                }
+                return _instance;
+            }
+        }
 
         private void Awake()
         {
-            Instance = (T) (object) this;
-            Init();
+            if (_instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            
+            _instance = this as T;
+            if (_instance != null) _instance.Init();
         }
 
         private void OnDestroy()
         {
-            Instance = default;
+            _instance = null;
         }
 
         private void OnApplicationQuit()
         {
-            Instance = default;
+            _instance = null;
         }
         
         protected virtual void Init()

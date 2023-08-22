@@ -22,7 +22,7 @@ namespace Scrabby.Interface.MainMenu
         private void OnValueChanged(int value)
         {
             var robotName = robotDropdown.options[value].text;
-            var robot = ScrabbyState.Instance.robots.Find(r => r.name == robotName);
+            var robot = ScrabbyState.instance.robots.Find(r => r.name == robotName);
             if (robot == null)
             {
                 Debug.LogError($"Robot {robotName} not found");

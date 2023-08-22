@@ -16,7 +16,7 @@ namespace Scrabby.Interface.MainMenu
         {
             _dropdown = GetComponentInChildren<TMP_Dropdown>();
             _dropdown.ClearOptions();
-            _dropdown.AddOptions(ScrabbyState.Instance.maps.Select(m => m.category).Distinct().ToList());
+            _dropdown.AddOptions(ScrabbyState.instance.maps.Select(m => m.category).Distinct().ToList());
             
             _dropdown.onValueChanged.AddListener(OnValueChanged);
             OnValueChanged(0);
@@ -25,7 +25,7 @@ namespace Scrabby.Interface.MainMenu
         private void OnValueChanged(int value)
         {
             var category = _dropdown.options[value].text;
-            var maps = ScrabbyState.Instance.maps.Where(m => m.category == category).ToList();
+            var maps = ScrabbyState.instance.maps.Where(m => m.category == category).ToList();
             
             mapDropdown.GetComponentInChildren<TMP_Dropdown>().ClearOptions();
             mapDropdown.GetComponentInChildren<TMP_Dropdown>().AddOptions(maps.Select(m => m.name).ToList());

@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
 using Scrabby.Networking;
 using Scrabby.ScriptableObjects;
+using Scrabby.State;
 using UnityEngine;
 using Network = Scrabby.Networking.Network;
 
@@ -23,8 +24,6 @@ namespace Scrabby.Robots
 
         public float forwardControl;
         public float angularControl;
-
-        public bool useController;
 
         private Vector3 LinearVelocity { get; set; }
         private Vector3 AngularVelocity { get; set; }
@@ -81,7 +80,7 @@ namespace Scrabby.Robots
             }
             
             var psi = transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
-            if (useController)
+            if (ScrabbyState.instance.canMoveManually)
             {
                 var horiz = Mathf.Pow(Input.GetAxis("Vertical"), 3);
                 var vertical = Input.GetAxis("Horizontal");
@@ -140,7 +139,7 @@ namespace Scrabby.Robots
                 { _deltaYField, deltaY },
                 { _deltaThetaField, deltaTheta }
             };
-            Network.Instance.Publish(_feedbackTopic, _feedbackType, data);
+            Network.instance.Publish(_feedbackTopic, _feedbackType, data);
         }
     }
 }

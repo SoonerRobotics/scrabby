@@ -19,19 +19,19 @@ MonoBehaviour:
   options:
   - key: topics.input
     type: 0
-    value: /autonav/MotorInput
+    value: /igvc/velocity
   - key: topics.input.type
     type: 0
-    value: autonav_msgs/MotorInput
+    value: igvc_msgs/motors
   - key: topics.feedback
     type: 0
-    value: /autonav/MotorFeedback
+    value: /igvc/feedback
   - key: topics.feedback.type
     type: 0
-    value: autonav_msgs/MotorFeedback
+    value: igvc_msgs/deltaodom
   - key: topics.camera
     type: 0
-    value: /autonav/camera/compressed
+    value: /igvc/camera/compressed
   - key: topics.camera.type
     type: 0
     value: sensor_msgs/CompressedImage

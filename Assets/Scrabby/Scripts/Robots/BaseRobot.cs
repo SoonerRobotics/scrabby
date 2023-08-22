@@ -26,12 +26,12 @@ namespace Scrabby.Robots
             }
             
             var type = options.FirstOrDefault(x => x.key == $"{option.key}.type")?.value ?? "std_msgs/Empty";
-            Network.Instance.Subscribe(option.value, type);
+            Network.instance.Subscribe(option.value, type);
         }
 
         protected bool CanMove()
         {
-            return ScrabbyState.Instance.movementEnabled;
+            return ScrabbyState.instance.movementEnabled;
         }
     }
 }

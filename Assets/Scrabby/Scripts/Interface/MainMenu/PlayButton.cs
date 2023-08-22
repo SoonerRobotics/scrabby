@@ -1,7 +1,9 @@
 ﻿using System;
+using Scrabby.ScriptableObjects;
 using Scrabby.State;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Scrabby.Interface.MainMenu
@@ -24,16 +26,18 @@ namespace Scrabby.Interface.MainMenu
             var robotName = robotDropdown.options[robotDropdown.value].text;
             var mapName = mapDropdown.options[mapDropdown.value].text;
             
-            var robot = ScrabbyState.Instance.robots.Find(r => r.name == robotName);
-            var map = ScrabbyState.Instance.maps.Find(m => m.name == mapName);
+            var robot = ScrabbyState.instance.robots.Find(r => r.name == robotName);
+            var map = ScrabbyState.instance.maps.Find(m => m.name == mapName);
             
             if (robot == null || map == null)
             {
                 Debug.LogError($"Robot or map not found: {robotName} {mapName}");
                 return;
             }
-            
-            Debug.Log($"Play {robot} on {map}");
+
+            Map.Active = map;
+            Robot.Active = robot;
+            SceneManager.LoadScene(map.sceneIndex);
         }
     }
 }

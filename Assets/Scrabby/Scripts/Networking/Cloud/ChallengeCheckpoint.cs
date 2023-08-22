@@ -29,12 +29,12 @@ namespace Scrabby.Networking
 
             if (type == CheckpointType.End)
             {
-                await Cloud.Instance.SetRunStatus(RunStatus.Finished);
+                await Cloud.instance.SetRunStatus(RunStatus.Finished);
                 SceneHelper.Quit();
                 return;
             }
             
-            await Cloud.Instance.Log(LogLevel.Info, message);
+            await Cloud.instance.Log(LogLevel.Info, message);
         }
     }
 

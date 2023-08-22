@@ -151,12 +151,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   robots:
-  - {fileID: 11400000, guid: 129b4581b296368498971c3c6ecedbab, type: 2}
   - {fileID: 11400000, guid: 4beeaea5b7be41d418900deefdca842b, type: 2}
+  - {fileID: 11400000, guid: 129b4581b296368498971c3c6ecedbab, type: 2}
   maps:
   - {fileID: 11400000, guid: 909fdd8f9329cc4439e5db9256bcdadc, type: 2}
   - {fileID: 11400000, guid: d1d198e96bc8d8f46a0d3d90c7bfaae2, type: 2}
   movementEnabled: 1
+  canMoveManually: 0
 --- !u!1 &8119374511398643187
 GameObject:
   m_ObjectHideFlags: 0

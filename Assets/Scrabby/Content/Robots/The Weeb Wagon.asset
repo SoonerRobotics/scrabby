@@ -15,5 +15,65 @@ MonoBehaviour:
   id: 2023/IGVC/WeebWagon
   name: The Weeb Wagon
   year: 2023
-  prefab: {fileID: 919132149155446097, guid: 62a620856ffcbe445b2128be48c271d1, type: 3}
-  options: []
+  prefab: {fileID: 1332190145721879363, guid: 4e9bff9edbd7c4040beba79243ea2ed4, type: 3}
+  options:
+  - key: topics.input
+    type: 0
+    value: /autonav/MotorInput
+  - key: topics.input.type
+    type: 0
+    value: autonav_msgs/MotorInput
+  - key: topics.feedback
+    type: 0
+    value: /autonav/MotorFeedback
+  - key: topics.feedback.type
+    type: 0
+    value: autonav_msgs/MotorFeedback
+  - key: topics.camera
+    type: 0
+    value: /autonav/camera/compressed
+  - key: topics.camera.type
+    type: 0
+    value: sensor_msgs/CompressedImage
+  - key: topics.camera.fps
+    type: 1
+    value: 12
+  - key: topics.camera.width
+    type: 1
+    value: 640
+  - key: topics.camera.height
+    type: 1
+    value: 480
+  - key: topics.camera.quality
+    type: 1
+    value: 75
+  - key: topics.feedback.deltax
+    type: 0
+    value: delta_x
+  - key: topics.feedback.deltay
+    type: 0
+    value: delta_y
+  - key: topics.feedback.deltatheta
+    type: 0
+    value: delta_theta
+  - key: topics.gps
+    type: 0
+    value: /autonav/gps
+  - key: topics.gps.type
+    type: 0
+    value: autonav_msgs/GPSFeedback
+  - key: topics.gps.lat_field
+    type: 0
+    value: latitude
+  - key: topics.gps.lon_field
+    type: 0
+    value: longitude
+  - key: topics.gps.rate
+    type: 2
+    value: 2.0
+  - key: topics.gps.lat_noise
+    type: 2
+    value: 0.0
+  - key: topics.gps.lon_noise
+    type: 2
+    value: 0.0

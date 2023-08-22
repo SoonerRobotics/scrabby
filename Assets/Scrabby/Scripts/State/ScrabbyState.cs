@@ -11,6 +11,12 @@ namespace Scrabby.State
         public List<Robot> robots;
         public List<Map> maps;
         public bool movementEnabled = true;
+        public bool canMoveManually = false;
+
+        protected override void Init()
+        {
+            DontDestroyOnLoad(gameObject);
+        }
 
         public Robot GetRobotById(string id)
         {
