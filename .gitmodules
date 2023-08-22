@@ -1,0 +1,3 @@
+[submodule "Assets/Third Party"]
+	path = Assets/Third Party
+	url = git@github.com:SoonerRobotics/scrabbydeps.git

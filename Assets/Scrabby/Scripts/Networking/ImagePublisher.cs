@@ -1,0 +1,53 @@
+﻿using Scrabby.ScriptableObjects;
+using UnityEngine;
+using UnityEngine.Rendering;
+
+namespace Scrabby.Networking
+{
+    public class ImagePublisher : MonoBehaviour
+    {
+        public new Camera camera;
+
+        private Texture2D _texture;
+        private Rect _rect;
+
+        private int _quality;
+        private int _frameRate;
+        private string _topic;
+        private float _lastCaptureTime;
+
+        private void Start()
+        {
+            var robot = Robot.Active;
+            var width = robot.GetOption("topics.camera.width", 640);
+            var height = robot.GetOption("topics.camera.height", 480);
+            _frameRate = robot.GetOption("topics.camera.fps", 30);
+            _quality = robot.GetOption("topics.camera.quality", 75);
+            _topic = robot.GetOption("topics.camera", "/scr/camera/compressed");
+
+            Debug.Log(
+                $"Publishing camera to {_topic} at {_frameRate} FPS with {_quality}% quality at {width}x{height}");
+            _texture = new Texture2D(width, height, TextureFormat.RGB24, false);
+            _rect = new Rect(0, 0, width, height);
+            camera.targetTexture = new RenderTexture(width, height, 24);
+            camera.targetTexture.Create();
+
+            RenderPipelineManager.endCameraRendering += OnCameraRender;
+        }
+
+        private void OnCameraRender(ScriptableRenderContext context, Camera targetCamera)
+        {
+            if (Time.time - _lastCaptureTime < 1f / _frameRate) return;
+            _lastCaptureTime = Time.time;
+
+            if (_texture == null)
+            {
+                return;
+            }
+
+            _texture.ReadPixels(_rect, 0, 0);
+            var bytes = _texture.EncodeToJPG(_quality);
+            Network.Instance.PublishCompressedImage(_topic, bytes);
+        }
+    }
+}
