@@ -15,6 +15,11 @@ namespace Scrabby.Interface.MainMenu
             _dropdown = GetComponentInChildren<TMP_Dropdown>();
             _dropdown.ClearOptions();
             _dropdown.AddOptions(ScrabbyState.instance.robots.Select(r => r.name).ToList());
+
+            var controller = FindObjectOfType<RobotSettingsController>();
+            if (controller == null) return;
+            
+            controller.Init();
         }
     }
 }

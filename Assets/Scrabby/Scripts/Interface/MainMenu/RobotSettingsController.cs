@@ -19,6 +19,11 @@ namespace Scrabby.Interface.MainMenu
             robotDropdown.onValueChanged.AddListener(OnValueChanged);
         }
 
+        public void Init()
+        {
+            OnValueChanged(0);
+        }
+
         private void OnValueChanged(int value)
         {
             var robotName = robotDropdown.options[value].text;
@@ -42,9 +47,9 @@ namespace Scrabby.Interface.MainMenu
                 controller.Initialize(setting);
             }
             
-            Canvas.ForceUpdateCanvases();
             _scrollRect = GetComponent<ScrollRect>();
             _scrollRect.normalizedPosition = new Vector2(0, 1);
+            Canvas.ForceUpdateCanvases();
         }
     }
 }

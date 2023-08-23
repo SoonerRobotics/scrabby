@@ -12,6 +12,14 @@ namespace Scrabby.Interface.MainMenu
         {
             _dropdown = GetComponentInChildren<TMP_Dropdown>();
             _dropdown.onValueChanged.AddListener(OnValueChanged);
+            
+            _dropdown.value = Screen.fullScreenMode switch
+            {
+                FullScreenMode.FullScreenWindow => 0,
+                FullScreenMode.ExclusiveFullScreen => 1,
+                FullScreenMode.Windowed => 2,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
         
         private static void OnValueChanged(int value)

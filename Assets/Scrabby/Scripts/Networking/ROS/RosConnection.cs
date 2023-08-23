@@ -81,6 +81,11 @@ namespace Scrabby.Networking.ROS
 
         private static void OnError(string error)
         {
+            if (error == "Unable to connect to the remote server")
+            {
+                return;
+            }
+            
             Debug.LogError($"[ROS] Error: {error}");
         }
 

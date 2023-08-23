@@ -16,7 +16,6 @@ namespace Scrabby.Networking
 {
     public class Cloud : MonoSingleton<Cloud>
     {
-        public string baseCloudUrl = "http://localhost:3000/api/";
         public string apiVersion = "v1";
 
         private string _runId;
@@ -33,7 +32,11 @@ namespace Scrabby.Networking
 
         private string GetUrl(string endpoint)
         {
-            return baseCloudUrl + apiVersion + "/" + endpoint;
+#if UNITY_EDITOR
+            return "http://localhost:3000/api/" + apiVersion + "/" + endpoint;
+#else
+            return "https://sim.soonerrobotics.org/api/" + apiVersion + "/" + endpoint;
+#endif
         }
 
         private static string GetAuthorizationToken()

@@ -21,9 +21,9 @@ namespace Scrabby.Networking
             var robot = Robot.Active;
             var width = robot.GetOption("topics.camera.width", 640);
             var height = robot.GetOption("topics.camera.height", 480);
-            _frameRate = robot.GetOption("topics.camera.fps", 30);
+            _frameRate = robot.GetOption("topics.camera.fps", 8);
             _quality = robot.GetOption("topics.camera.quality", 75);
-            _topic = robot.GetOption("topics.camera", "/scr/camera/compressed");
+            _topic = robot.GetOption("topics.camera", "/autonav/camera/compressed");
 
             Debug.Log(
                 $"Publishing camera to {_topic} at {_frameRate} FPS with {_quality}% quality at {width}x{height}");

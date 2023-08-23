@@ -1,5 +1,4 @@
-﻿using System;
-using Scrabby.ScriptableObjects;
+﻿using Scrabby.ScriptableObjects;
 using Scrabby.State;
 using TMPro;
 using UnityEngine;

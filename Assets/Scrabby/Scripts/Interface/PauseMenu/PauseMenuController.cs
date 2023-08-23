@@ -12,7 +12,7 @@ namespace Scrabby
         
         [Header("Buttons")]
         public Button mainMenuButton;
-        public Button settingsButton;
+        public Button restartButton;
 
         [Header("Other")] 
         public Toggle manualControlToggle;
@@ -20,20 +20,21 @@ namespace Scrabby
         private void Start()
         {
             mainMenuButton.onClick.AddListener(OnMainMenuPressed);
-            // settingsButton.onClick.AddListener(OnSettingsPressed);
+            restartButton.onClick.AddListener(OnRestartPressed);
             
             manualControlToggle.onValueChanged.AddListener(OnManualControlToggleChanged);
             manualControlToggle.isOn = ScrabbyState.instance.canMoveManually;
         }
 
-        private static void OnMainMenuPressed()
+        private void OnMainMenuPressed()
         {
             SceneManager.LoadScene(0);
+            gameObject.SetActive(false);
         }
 
-        private static void OnSettingsPressed()
+        private static void OnRestartPressed()
         {
-            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         
         private static void OnManualControlToggleChanged(bool isOn)
@@ -41,9 +42,10 @@ namespace Scrabby
             ScrabbyState.instance.canMoveManually = isOn;
         }
 
-        private void TogglePauseMenu()
+        public void TogglePauseMenu()
         {
             pauseMenuContainer.SetActive(!pauseMenuContainer.activeSelf);
+            ScrabbyState.instance.movementEnabled = !pauseMenuContainer.activeSelf;
         }
 
         private void Update()

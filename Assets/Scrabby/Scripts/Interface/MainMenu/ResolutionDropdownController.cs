@@ -19,6 +19,8 @@ namespace Scrabby.Interface.MainMenu
             _dropdown.AddOptions(options);
             _dropdown.value = options.IndexOf(Screen.width + "x" + Screen.height);
             _dropdown.onValueChanged.AddListener(OnValueChanged);
+            
+            Canvas.ForceUpdateCanvases();
         }
         
         private void OnValueChanged(int value)

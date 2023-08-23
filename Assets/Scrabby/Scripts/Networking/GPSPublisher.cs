@@ -27,10 +27,10 @@ namespace Scrabby.Networking
             _gpsLatNoise = robot.GetOption("topics.gps.lat_noise", 0.0f);
             _gpsLonNoise = robot.GetOption("topics.gps.lon_noise", 0.0f);
 
-            _gpsType = robot.GetOption("topics.gps.type", "sensor_msgs/Point");
-            _gpsTopic = robot.GetOption("topics.gps", "/scr/gps");
-            _gpsLatField = robot.GetOption("topics.gps.lat_field", "x");
-            _gpsLonField = robot.GetOption("topics.gps.lon_field", "y");
+            _gpsType = robot.GetOption("topics.gps.type", "autonav_msgs/GPSFeedback");
+            _gpsTopic = robot.GetOption("topics.gps", "/autonav/gps");
+            _gpsLatField = robot.GetOption("topics.gps.lat_field", "latitude");
+            _gpsLonField = robot.GetOption("topics.gps.lon_field", "longitude");
 
             _gpsData = new JObject();
         }
