@@ -25,6 +25,11 @@ namespace Scrabby.Networking
             
             _networks.ForEach(n => n.Init());
         }
+        
+        public PyScrabbyConnection GetPyScrabbyConnection()
+        {
+            return (PyScrabbyConnection) _networks.Find(n => n is PyScrabbyConnection);
+        }
 
         public static void PublishNetworkInstruction(NetworkInstruction instruction)
         {

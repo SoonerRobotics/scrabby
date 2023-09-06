@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -21,13 +22,11 @@ namespace Scrabby.Networking.PyScrabby
         private Thread _readThread;
 
         private bool _isRunning = true;
-
-        public string address = "localhost";
-        public int port = 9092;
+        private const int Port = 9092;
 
         public void Init()
         {
-            _tcp = new TcpListener(IPAddress.Loopback, port);
+            _tcp = new TcpListener(IPAddress.Loopback, Port);
             _tcp.Start();
             
             _serverThread = new Thread(ServerThread);
@@ -76,7 +75,31 @@ namespace Scrabby.Networking.PyScrabby
                 {
                     client.Close();
                 }
+                
+                _clients.Clear();
             }
+            
+            _serverThread = null;
+            _readThread = null;
+            _tcp = null;
+        }
+        
+        public int GetPort()
+        {
+            return Port;
+        }
+        
+        public int GetNumClients()
+        {
+            lock (_clientLock)
+            {
+                return _clients.Count;
+            }
+        }
+        
+        public int MessagesInQueue()
+        {
+            return _messageQueue.Count;
         }
 
         private void ServerThread()
@@ -134,7 +157,15 @@ namespace Scrabby.Networking.PyScrabby
             }
 
             var message = _messageQueue.Dequeue();
-            var json = JObject.Parse(message);
+            JObject json;
+            try
+            {
+                json = JObject.Parse(message);
+            } catch (Exception)
+            {
+                Debug.LogError($"Failed to parse message: {message}");
+                return;
+            }
             var op = json["op"]?.ToString();
             var topic = json["topic"]?.ToString();
             if (op == null || topic == null || !json.TryGetValue("msg", out var data))

@@ -20,11 +20,13 @@ namespace Scrabby.ScriptableObjects
 
         public T GetOption<T>(string key)
         {
+            ConfigManager.RobotConfig.EnsureRobot(Active);
             return ConfigManager.RobotConfig.GetKeyValue<T>(id, key);
         }
 
         public T GetOption<T>(string key, T defaultValue)
         {
+            ConfigManager.RobotConfig.EnsureRobot(Active);
             return ConfigManager.RobotConfig.GetKeyValue<T>(id, key, defaultValue);
         }
     }

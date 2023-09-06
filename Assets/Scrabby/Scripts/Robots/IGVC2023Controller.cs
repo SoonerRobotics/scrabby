@@ -49,7 +49,7 @@ namespace Scrabby.Robots
             _deltaXField = robot.GetOption("topics.feedback.deltax", "delta_x");
             _deltaYField = robot.GetOption("topics.feedback.deltay", "delta_y");
             _deltaThetaField = robot.GetOption("topics.feedback.deltatheta", "delta_theta");
-
+            
             InitializeRobot(robot.options);
         }
 
@@ -61,6 +61,7 @@ namespace Scrabby.Robots
         private void OnNetworkInstruction(NetworkInstruction instruction)
         {
             var inputTopic = robot.GetOption("topics.input", "/autonav/MotorInput");
+            Debug.Log(inputTopic);
             if (inputTopic != instruction.Topic)
             {
                 return;

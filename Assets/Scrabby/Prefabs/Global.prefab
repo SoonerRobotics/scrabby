@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72676a8be539430f8e4f5ae7d41ce596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseCloudUrl: http://localhost:3000/api/
   apiVersion: v1
 --- !u!1 &1257713567776025616
 GameObject:
@@ -153,9 +152,11 @@ MonoBehaviour:
   robots:
   - {fileID: 11400000, guid: 4beeaea5b7be41d418900deefdca842b, type: 2}
   - {fileID: 11400000, guid: 129b4581b296368498971c3c6ecedbab, type: 2}
+  - {fileID: 11400000, guid: 79eb064c1c4c15f4ea6b081f42d4771a, type: 2}
   maps:
   - {fileID: 11400000, guid: 909fdd8f9329cc4439e5db9256bcdadc, type: 2}
   - {fileID: 11400000, guid: d1d198e96bc8d8f46a0d3d90c7bfaae2, type: 2}
+  - {fileID: 11400000, guid: ad831942fe19ff448b5767fe6ac46970, type: 2}
   movementEnabled: 1
   canMoveManually: 0
 --- !u!1 &8119374511398643187

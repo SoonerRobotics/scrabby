@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scrabby/Scenes/Maps/IGVC 2023.unity
     guid: 4a0be46865230db4593c650c67635e36
   - enabled: 1
-    path: Assets/Scrabby/Scenes/Maps/Onboarding/Day1.unity
+    path: Assets/Scrabby/Scenes/Maps/Onboarding/Day 1.unity
     guid: 2aad96cc83797244ea596d3979fcfce0
+  - enabled: 1
+    path: Assets/Scrabby/Scenes/Maps/Onboarding/Day 2.unity
+    guid: ed7a4c167d5051d4294383da9c0fd9f8
   m_configObjects: {}

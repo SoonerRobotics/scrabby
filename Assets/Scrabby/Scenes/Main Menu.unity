@@ -3250,7 +3250,6 @@ GameObject:
   m_Component:
   - component: {fileID: 536309402}
   - component: {fileID: 536309403}
-  - component: {fileID: 536309404}
   m_Layer: 5
   m_Name: Category Dropdown
   m_TagString: Untagged
@@ -3300,19 +3299,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &536309404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 536309401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b89283c07288451bb5d279d3e1c1f9d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapDropdown: {fileID: 1677364980}
 --- !u!1 &543138267
 GameObject:
   m_ObjectHideFlags: 0
@@ -4227,7 +4213,6 @@ GameObject:
   m_Component:
   - component: {fileID: 732204193}
   - component: {fileID: 732204195}
-  - component: {fileID: 732204196}
   m_Layer: 5
   m_Name: Resolution
   m_TagString: Untagged
@@ -4277,18 +4262,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &732204196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 732204192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fd2f13acc63d384eb76665a886a84f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &733416944
 GameObject:
   m_ObjectHideFlags: 0
@@ -6111,6 +6084,7 @@ GameObject:
   - component: {fileID: 1007250577}
   - component: {fileID: 1007250576}
   - component: {fileID: 1007250575}
+  - component: {fileID: 1007250579}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -6202,6 +6176,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1007250579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007250574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87645c04bc8e0444ea2638e2c0718675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotDropdown: {fileID: 2773060775308610410}
+  categoryDropdown: {fileID: 144166321}
+  mapDropdown: {fileID: 1453102456}
+  playButton: {fileID: 2684230265302228008}
+  quitButton: {fileID: 1065411763}
+  resolutionDropdown: {fileID: 1571350135}
+  screenModeDropdown: {fileID: 1440629560}
 --- !u!1 &1025602296
 GameObject:
   m_ObjectHideFlags: 0
@@ -6212,7 +6205,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1025602297}
   - component: {fileID: 1025602298}
-  - component: {fileID: 1025602299}
   m_Layer: 5
   m_Name: Robot Dropdown
   m_TagString: Untagged
@@ -6262,18 +6254,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &1025602299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025602296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f31ee32f38ba456d81cae03f18d3d99f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1033043464
 GameObject:
   m_ObjectHideFlags: 0
@@ -9862,7 +9842,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1697376855}
   - component: {fileID: 1697376857}
-  - component: {fileID: 1697376858}
   m_Layer: 5
   m_Name: Screen Mode
   m_TagString: Untagged
@@ -9912,18 +9891,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &1697376858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697376854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cde4f0683d60555478884542a0cc649b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1700818048
 GameObject:
   m_ObjectHideFlags: 0
@@ -15019,8 +14986,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a274afba8ea439bb57677fd7e66c87d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotDropdown: {fileID: 2773060775308610410}
-  mapDropdown: {fileID: 1453102456}
 --- !u!114 &8732412868549671098
 MonoBehaviour:
   m_ObjectHideFlags: 0
