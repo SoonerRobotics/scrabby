@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Newtonsoft.Json.Linq;
+using Scrabby.State;
 using UnityEngine;
 
 namespace Scrabby.Networking.PyScrabby
@@ -45,6 +46,10 @@ namespace Scrabby.Networking.PyScrabby
                 ["msg"] = data
             };
             var json = message.ToString();
+            if (ScrabbyState.ShowOutgoingMessages)
+            {
+                Debug.Log($"[PyScrabby] Sending: {json}");
+            }
 
             lock (_clientLock)
             {
@@ -129,6 +134,10 @@ namespace Scrabby.Networking.PyScrabby
                         }
 
                         var message = client.Receive();
+                        if (ScrabbyState.ShowIncomingMessages)
+                        {
+                            Debug.Log($"[PyScrabby] Received: {message}");
+                        }
                         _messageQueue.Enqueue(message);
                     }
                 }

@@ -8,6 +8,9 @@ namespace Scrabby.State
 {
     public class ScrabbyState : MonoSingleton<ScrabbyState>
     {
+        public static bool ShowIncomingMessages = true;
+        public static bool ShowOutgoingMessages = true;
+        
         public List<Robot> robots;
         public List<Map> maps;
         public bool movementEnabled = true;
