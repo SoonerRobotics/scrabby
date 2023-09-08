@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 2023/Onboarding
   name: Onboarding Bot
   year: 2023
-  prefab: {fileID: 1332190145721879363, guid: 2406d44fde9fedd45919464fb5676817, type: 3}
+  prefab: {fileID: 8394219286567082423, guid: 9f7ac52398ef832459945172385f3072, type: 3}
   options:
   - key: topics.input
     type: 0

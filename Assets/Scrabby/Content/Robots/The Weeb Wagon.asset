@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 2023/IGVC/WeebWagon
   name: The Weeb Wagon
   year: 2023
-  prefab: {fileID: 1332190145721879363, guid: 4e9bff9edbd7c4040beba79243ea2ed4, type: 3}
+  prefab: {fileID: 8394219286567082423, guid: 2c325194cde224a4ab642ba58b0dd487, type: 3}
   options:
   - key: topics.input
     type: 0

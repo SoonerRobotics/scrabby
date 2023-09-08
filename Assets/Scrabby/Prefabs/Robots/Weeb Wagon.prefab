@@ -22729,7 +22729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f827c895be7b4a58bb7067b8de04c0bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robot: {fileID: 11400000, guid: 79eb064c1c4c15f4ea6b081f42d4771a, type: 2}
+  robot: {fileID: 11400000, guid: 4beeaea5b7be41d418900deefdca842b, type: 2}
   speedMod: 2.2727273
   wheelRadius: 0.1016
   distanceBetweenWheels: 0.3
