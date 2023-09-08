@@ -12,7 +12,7 @@ namespace Scrabby.Gameplay
         private SplineContainer _splineContainer;
         private Mesh _mesh;
 
-        [Range(1f, 30f)]
+        [Range(1f, 100f)]
         public float width = 1f;
         public int sampleRate = 10;
         public int splineIndex = 0;
