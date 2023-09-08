@@ -484,6 +484,7 @@ MonoBehaviour:
   pauseMenuContainer: {fileID: 6886375712804370462}
   mainMenuButton: {fileID: 3359974345452187218}
   restartButton: {fileID: 4274150769620077476}
+  resumeButton: {fileID: 7274647960971106905}
   manualControlToggle: {fileID: 1711975231835605746}
 --- !u!1 &5518519785339874068
 GameObject:
@@ -1868,19 +1869,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8747432349309630003}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7159221914443933570}
-        m_TargetAssemblyTypeName: Scrabby.PauseMenuController, Assembly-CSharp
-        m_MethodName: TogglePauseMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!95 &782410338872045285
 Animator:
   serializedVersion: 5

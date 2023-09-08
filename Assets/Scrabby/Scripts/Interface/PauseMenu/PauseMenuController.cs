@@ -14,6 +14,7 @@ namespace Scrabby
         [Header("Buttons")]
         public Button mainMenuButton;
         public Button restartButton;
+        public Button resumeButton;
 
         [Header("Other")] 
         public Toggle manualControlToggle;
@@ -22,9 +23,19 @@ namespace Scrabby
         {
             mainMenuButton.onClick.AddListener(OnMainMenuPressed);
             restartButton.onClick.AddListener(OnRestartPressed);
+            resumeButton.onClick.AddListener(TogglePauseMenu);
             
             manualControlToggle.onValueChanged.AddListener(OnManualControlToggleChanged);
             manualControlToggle.isOn = ScrabbyState.instance.canMoveManually;
+        }
+
+        private void OnDestroy()
+        {
+            mainMenuButton.onClick.RemoveListener(OnMainMenuPressed);
+            restartButton.onClick.RemoveListener(OnRestartPressed);
+            resumeButton.onClick.RemoveListener(TogglePauseMenu);
+            
+            manualControlToggle.onValueChanged.RemoveListener(OnManualControlToggleChanged);
         }
 
         private void OnMainMenuPressed()
