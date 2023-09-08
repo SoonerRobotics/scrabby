@@ -3,6 +3,7 @@ using Scrabby.State;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Network = Scrabby.Networking.Network;
 
 namespace Scrabby
 {
@@ -28,6 +29,8 @@ namespace Scrabby
 
         private void OnMainMenuPressed()
         {
+            Network.instance.Close();
+            ScrabbyState.instance.movementEnabled = true;
             SceneManager.LoadScene(0);
             gameObject.SetActive(false);
         }
