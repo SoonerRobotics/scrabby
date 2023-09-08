@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 2022/IGVC/RatVan
   name: The Rat Van
   year: 2022
-  prefab: {fileID: 2614087818690431861, guid: ef364c2f5c58b6f4188de80629293aba, type: 3}
+  prefab: {fileID: 5188842218415806168, guid: f30f3db1e5a7bf24dbf3663db5b40751, type: 3}
   options:
   - key: topics.input
     type: 0

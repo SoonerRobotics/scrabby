@@ -4672,7 +4672,6 @@ GameObject:
   m_Component:
   - component: {fileID: 781930542}
   - component: {fileID: 781930544}
-  - component: {fileID: 781930543}
   m_Layer: 5
   m_Name: Robot Dropdown
   m_TagString: Untagged
@@ -4702,18 +4701,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1560, y: 100}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &781930543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781930541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f31ee32f38ba456d81cae03f18d3d99f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &781930544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6686,7 +6673,6 @@ GameObject:
   - component: {fileID: 1065411763}
   - component: {fileID: 1065411762}
   - component: {fileID: 1065411761}
-  - component: {fileID: 1065411766}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -6825,18 +6811,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065411759}
   m_CullTransparentMesh: 0
---- !u!114 &1065411766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1065411759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d847a517d4a4f75a2baacedb48e8fb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1165448924
 GameObject:
   m_ObjectHideFlags: 0
@@ -13664,7 +13638,6 @@ GameObject:
   - component: {fileID: 2684230265302228008}
   - component: {fileID: 8732412868549671096}
   - component: {fileID: 476219568342570480}
-  - component: {fileID: 8732412868549671097}
   - component: {fileID: 8732412868549671098}
   m_Layer: 5
   m_Name: Play Button
@@ -15051,18 +15024,6 @@ MonoBehaviour:
   fadeTime: 0.2
   onHoverAlpha: 0.6
   onClickAlpha: 0.7
---- !u!114 &8732412868549671097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2684230265302228013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a274afba8ea439bb57677fd7e66c87d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8732412868549671098
 MonoBehaviour:
   m_ObjectHideFlags: 0

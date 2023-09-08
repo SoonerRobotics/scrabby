@@ -109,7 +109,15 @@ namespace Scrabby
             
             mapDropdown.GetComponentInChildren<TMP_Dropdown>().ClearOptions();
             mapDropdown.GetComponentInChildren<TMP_Dropdown>().AddOptions(maps.Select(m => m.name).ToList());
-            OnMapSelected(0);
+            if (_selectedMap == null)
+            {
+                _selectedMap = mapDropdown.options[0].text;
+            }
+            else
+            {
+                mapDropdown.value = mapDropdown.options.FindIndex(o => o.text == _selectedMap);
+            }
+            OnMapSelected(mapDropdown.value);
         }
         
         private void OnMapSelected(int index)
@@ -117,10 +125,11 @@ namespace Scrabby
             _selectedMap = mapDropdown.options[index].text;
         }
         
-        private static void OnResolutionSelected(int index)
+        private void OnResolutionSelected(int index)
         {
             var resolution = Screen.resolutions[index];
-            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreenMode);
+            var screenMode = (FullScreenMode) Enum.Parse(typeof(FullScreenMode), screenModeDropdown.options[index].text);
+            Screen.SetResolution(resolution.width, resolution.height, screenMode);
         }
         
         private void OnScreenModeSelected(int index)
