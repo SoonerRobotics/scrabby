@@ -18,7 +18,7 @@ namespace Scrabby.Gameplay
         
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            if (scene.buildIndex == (int)SceneIndex.MainMenu)
+            if (scene.buildIndex == 0)
             {
                 return;
             }
