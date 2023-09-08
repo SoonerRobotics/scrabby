@@ -34,6 +34,7 @@ namespace Scrabby
 
         private static void OnRestartPressed()
         {
+            ScrabbyState.instance.movementEnabled = true;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         
