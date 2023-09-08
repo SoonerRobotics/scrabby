@@ -1,40 +1,64 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using Newtonsoft.Json.Linq;
-using Scrabby.State;
 using UnityEngine;
 
 namespace Scrabby.Networking.PyScrabby
 {
     public class PyScrabbyConnection : INetwork
     {
-        private TcpListener _tcp;
-        private readonly List<Client> _clients = new();
-        private readonly object _clientLock = new();
-        private readonly Queue<string> _messageQueue = new();
+        public readonly int Port = 9092;
 
-        private Thread _serverThread;
-        private Thread _readThread;
-
-        private bool _isRunning = true;
-        private const int Port = 9092;
+        private TcpListener _listener;
+        private NetworkStream _clientStream;
+        private TcpClient _client;
+        private readonly Queue<string> _incomingMessages = new();
+        private Thread _thread;
 
         public void Init()
         {
-            _tcp = new TcpListener(IPAddress.Loopback, Port);
-            _tcp.Start();
-            
-            _serverThread = new Thread(ServerThread);
-            _serverThread.Start();
+            _listener = new TcpListener(IPAddress.Loopback, Port);
+            _listener.Start();
 
-            _readThread = new Thread(ReadThread);
-            _readThread.Start();
+            _thread = new Thread(TcpWorker);
+            _thread.Start();
+        }
+
+        private void TcpWorker()
+        {
+            while (true)
+            {
+                Debug.Log("[PyScrabby] Waiting for client...");
+                _client = _listener.AcceptTcpClient();
+                _clientStream = _client.GetStream();
+                var buffer = new byte[_client.ReceiveBufferSize];
+
+                Debug.Log("[PyScrabby] Client connected");
+                while (_client.Connected)
+                {
+                    int bytesRead;
+                    try
+                    {
+                        bytesRead = _clientStream.Read(buffer, 0, _client.ReceiveBufferSize);
+                    }
+                    catch (Exception)
+                    {
+                        break;
+                    }
+
+                    var message = System.Text.Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                    Debug.Log("[PyScrabby] Received: " + message);
+                    _incomingMessages.Enqueue(message);
+                }
+
+                _clientStream = null;
+                Debug.Log("[PyScrabby] Client disconnected");
+            }
+
+// ReSharper disable once FunctionNeverReturns
         }
 
         public void Publish(string topic, string type, JObject data)
@@ -43,191 +67,85 @@ namespace Scrabby.Networking.PyScrabby
             {
                 ["op"] = "publish",
                 ["topic"] = topic,
-                ["msg"] = data
+                ["type"] = type,
+                ["data"] = data
             };
-            var json = message.ToString();
-            if (ScrabbyState.ShowOutgoingMessages)
+
+            string json;
+            try
             {
-                Debug.Log($"[PyScrabby] Sending: {json}");
+                json = message.ToString();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("[PyScrabby] Failed to serialize message: " + e.Message);
+                return;
             }
 
-            lock (_clientLock)
+            if (_clientStream == null)
             {
-                for (var i = _clients.Count - 1; i >= 0; i--)
-                {
-                    var client = _clients[i];
-                    try
-                    {
-                        client.Send(json);
-                    }
-                    catch (Exception)
-                    {
-                        _clients.RemoveAt(i);
-                    }
-                }
+                return;
             }
-        }
 
-        public void Destroy()
-        {
-            _isRunning = false;
-            _serverThread?.Abort();
-            _readThread?.Abort();
-            _tcp?.Stop();
-            lock (_clientLock)
+            try
             {
-                foreach (var client in _clients)
-                {
-                    client.Close();
-                }
-                
-                _clients.Clear();
+                var bytes = System.Text.Encoding.ASCII.GetBytes(json);
+                _clientStream.Write(bytes, 0, bytes.Length);
+                _clientStream.Flush();
             }
-            
-            _serverThread = null;
-            _readThread = null;
-            _tcp = null;
-        }
-        
-        public int GetPort()
-        {
-            return Port;
-        }
-        
-        public int GetNumClients()
-        {
-            lock (_clientLock)
+            catch (Exception e)
             {
-                return _clients.Count;
-            }
-        }
-        
-        public int MessagesInQueue()
-        {
-            return _messageQueue.Count;
-        }
-
-        private void ServerThread()
-        {
-            while (_isRunning)
-            {
-                var client = _tcp.AcceptTcpClient();
-                lock (_clientLock)
-                {
-                    _clients.Add(new Client(client));
-                }
-            }
-        }
-
-        private void ReadThread()
-        {
-            while (_isRunning)
-            {
-                lock (_clientLock)
-                {
-                    for (var index = 0; index < _clients.Count; index++)
-                    {
-                        var client = _clients[index];
-                        if (!client.HasData())
-                        {
-                            continue;
-                        }
-
-                        var message = client.Receive();
-                        if (ScrabbyState.ShowIncomingMessages)
-                        {
-                            Debug.Log($"[PyScrabby] Received: {message}");
-                        }
-                        _messageQueue.Enqueue(message);
-                    }
-                }
-            }
-        }
-
-        private void RemoveDeadClients()
-        {
-            var removedClients = new List<Client>();
-            lock (_clientLock)
-            {
-                removedClients.AddRange(_clients.Where(client => client.IsDead()));
-
-                foreach (var client in removedClients)
-                {
-                    _clients.Remove(client);
-                }
+                Debug.LogError("[PyScrabby] Failed to send message: " + e.Message);
             }
         }
 
         public void Update()
         {
-            if (_messageQueue.Count == 0)
+            if (_incomingMessages.Count == 0)
             {
                 return;
             }
 
-            var message = _messageQueue.Dequeue();
+            var message = _incomingMessages.Dequeue();
             JObject json;
             try
             {
                 json = JObject.Parse(message);
-            } catch (Exception)
+            }
+            catch (Exception e)
             {
-                Debug.LogError($"Failed to parse message: {message}");
+                Debug.LogError("[PyScrabby] Failed to parse message: " + e.Message);
                 return;
             }
+
             var op = json["op"]?.ToString();
             var topic = json["topic"]?.ToString();
             if (op == null || topic == null || !json.TryGetValue("msg", out var data))
             {
+                Debug.LogError("[PyScrabby] Invalid message received");
                 return;
             }
 
+            Debug.Log("[PyScrabby] Received message: " + message);
             Network.PublishNetworkInstruction(new NetworkInstruction(topic, data.ToObject<JObject>()));
         }
 
         public void Subscribe(string topic, string type)
         {
         }
-    }
-    
-    internal readonly struct Client
-    {
-        private readonly TcpClient _client;
-        private readonly NetworkStream _stream;
-
-        public Client(TcpClient client)
-        {
-            _client = client;
-            _stream = client.GetStream();
-        }
-
-        public void Send(string message)
-        {
-            var bytes = System.Text.Encoding.UTF8.GetBytes(message);
-            _stream.Write(bytes, 0, bytes.Length);
-        }
-
-        public string Receive()
-        {
-            var bytes = new byte[_client.ReceiveBufferSize];
-            var read = _stream.Read(bytes, 0, _client.ReceiveBufferSize);
-            return System.Text.Encoding.UTF8.GetString(bytes, 0, read);
-        }
-
-        public bool HasData()
-        {
-            return _stream.DataAvailable;
-        }
-
-        public bool IsDead()
-        {
-            return !_client.Connected;
-        }
 
         public void Close()
         {
-            _stream.Close();
-            _client.Close();
+            _client?.Close();
+            _clientStream?.Close();
+        }
+
+        public void Destroy()
+        {
+            _client?.Close();
+            _clientStream?.Close();
+            _thread.Abort();
+            _listener.Stop();
         }
     }
 }

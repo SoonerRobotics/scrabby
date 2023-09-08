@@ -23,5 +23,9 @@ namespace Scrabby.Networking.STORM
         public void Destroy()
         {
         }
+
+        public void Close()
+        {
+        }
     }
 }

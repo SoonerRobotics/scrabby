@@ -9,5 +9,6 @@ namespace Scrabby.Networking
         public void Update();
         public void Subscribe(string topic, string type);
         public void Destroy();
+        public void Close();
     }
 }

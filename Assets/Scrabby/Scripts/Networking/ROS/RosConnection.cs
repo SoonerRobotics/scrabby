@@ -165,6 +165,11 @@ namespace Scrabby.Networking.ROS
             _dead = true;
             _socket?.Close();
         }
+
+        public void Close()
+        {
+            Destroy();
+        }
     }
 
     internal struct TopicInfo

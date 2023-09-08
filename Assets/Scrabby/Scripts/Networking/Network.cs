@@ -66,6 +66,11 @@ namespace Scrabby.Networking
             }
         }
 
+        public void Close()
+        {
+            _networks.ForEach(n => n.Close()); 
+        }
+
         private void OnDestroy()
         {
             _networks.ForEach(n => n.Destroy()); 
@@ -73,7 +78,7 @@ namespace Scrabby.Networking
 
         private void OnApplicationQuit()
         {
-            _networks.ForEach(n => n.Destroy());
+            _networks.ForEach(n => n.Destroy()); 
         }
     }
 }
