@@ -11,11 +11,6 @@ namespace Scrabby.Utilities
             SceneManager.LoadScene(index);
         }
 
-        public static bool Exists(int index)
-        {
-            return SceneManager.GetSceneByBuildIndex(index).IsValid();
-        }
-
         public static void Quit()
         {
 #if UNITY_EDITOR
