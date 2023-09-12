@@ -20,8 +20,6 @@ namespace Scrabby.State
         protected override void Init()
         {
             DontDestroyOnLoad(gameObject);
-            
-            Screen.SetResolution(Display.main.systemHeight, Display.main.systemWidth, false);
         }
 
         public Robot GetRobotById(string id)

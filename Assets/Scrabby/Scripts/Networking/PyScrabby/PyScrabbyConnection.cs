@@ -19,6 +19,7 @@ namespace Scrabby.Networking.PyScrabby
         private TcpClient _client;
         private readonly Queue<string> _incomingMessages = new();
         private Thread _thread;
+        private bool _needsReset = false;
 
         public void Init()
         {
@@ -61,8 +62,7 @@ namespace Scrabby.Networking.PyScrabby
 
                 if (ScrabbyState.instance.resetSceneOnConnectionLost)
                 {
-                    ScrabbyState.instance.movementEnabled = true;
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    _needsReset = true;
                 }
             }
 
@@ -109,6 +109,14 @@ namespace Scrabby.Networking.PyScrabby
 
         public void Update()
         {
+            if (_needsReset)
+            {
+                _needsReset = false;
+                ScrabbyState.instance.movementEnabled = true;
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                return;
+            }
+            
             if (_incomingMessages.Count == 0)
             {
                 return;
