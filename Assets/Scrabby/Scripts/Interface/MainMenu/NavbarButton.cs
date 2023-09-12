@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scrabby.Interface.MainMenu
+namespace Scrabby.Interface
 {
     public class NavbarButton : MonoBehaviour
     {

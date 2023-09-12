@@ -1,11 +1,10 @@
-using System;
 using Scrabby.State;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Network = Scrabby.Networking.Network;
 
-namespace Scrabby
+namespace Scrabby.Interface
 {
     public class PauseMenuController : MonoBehaviour
     {
@@ -18,6 +17,7 @@ namespace Scrabby
 
         [Header("Other")] 
         public Toggle manualControlToggle;
+        public Toggle resetNetworkToggle;
         
         private void Start()
         {
@@ -27,6 +27,8 @@ namespace Scrabby
             
             manualControlToggle.onValueChanged.AddListener(OnManualControlToggleChanged);
             manualControlToggle.isOn = ScrabbyState.instance.canMoveManually;
+            
+            pauseMenuContainer.SetActive(false);
         }
 
         private void OnDestroy()

@@ -15,6 +15,7 @@ namespace Scrabby.State
         public List<Map> maps;
         public bool movementEnabled = true;
         public bool canMoveManually = false;
+        public bool resetSceneOnConnectionLost = true;
 
         protected override void Init()
         {

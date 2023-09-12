@@ -4,7 +4,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Newtonsoft.Json.Linq;
+using Scrabby.State;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Scrabby.Networking.PyScrabby
 {
@@ -56,6 +58,12 @@ namespace Scrabby.Networking.PyScrabby
 
                 _clientStream = null;
                 Debug.Log("[PyScrabby] Client disconnected");
+
+                if (ScrabbyState.instance.resetSceneOnConnectionLost)
+                {
+                    ScrabbyState.instance.movementEnabled = true;
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
             }
 
 // ReSharper disable once FunctionNeverReturns

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Scrabby
+namespace Scrabby.Interface
 {
     public class MainMenuController : MonoBehaviour
     {
