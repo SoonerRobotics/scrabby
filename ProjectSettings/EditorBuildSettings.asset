@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scrabby/Scenes/Maps/Onboarding/Day 2.unity
     guid: ed7a4c167d5051d4294383da9c0fd9f8
+  - enabled: 1
+    path: Assets/Scrabby/Scenes/Maps/Onboarding/AStar.unity
+    guid: 960789d6962cf4f40a2d0785ee54774c
   m_configObjects: {}

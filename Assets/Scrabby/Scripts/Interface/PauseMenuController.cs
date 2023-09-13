@@ -42,7 +42,10 @@ namespace Scrabby.Interface
 
         private void OnMainMenuPressed()
         {
+            var originalResetNetworkValue = resetNetworkToggle.isOn;
+            ScrabbyState.instance.resetSceneOnConnectionLost = false;
             Network.instance.Close();
+            ScrabbyState.instance.resetSceneOnConnectionLost = originalResetNetworkValue;
             ScrabbyState.instance.movementEnabled = true;
             SceneManager.LoadScene(0);
             gameObject.SetActive(false);
