@@ -525,6 +525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 131186521}
   - component: {fileID: 131186522}
+  - component: {fileID: 131186523}
   m_Layer: 5
   m_Name: Home Page
   m_TagString: Untagged
@@ -580,6 +581,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!114 &131186523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131186520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae63c80791a9e3246996408a00a8d165, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotDropdown: {fileID: 2773060775308610410}
+  categoryDropdown: {fileID: 144166321}
+  mapDropdown: {fileID: 1453102456}
+  playButton: {fileID: 2684230265302228008}
 --- !u!1 &144166319
 GameObject:
   m_ObjectHideFlags: 0
@@ -6176,10 +6193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87645c04bc8e0444ea2638e2c0718675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robotDropdown: {fileID: 2773060775308610410}
-  categoryDropdown: {fileID: 144166321}
-  mapDropdown: {fileID: 1453102456}
-  playButton: {fileID: 2684230265302228008}
   quitButton: {fileID: 1065411763}
   resolutionDropdown: {fileID: 1571350135}
   screenModeDropdown: {fileID: 1440629560}
