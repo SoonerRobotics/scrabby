@@ -26,6 +26,7 @@ namespace Scrabby.Interface
         [Header("Settings")]
         public TMP_Dropdown resolutionDropdown;
         public TMP_Dropdown screenModeDropdown;
+        public TMP_Dropdown robotOptionDropdown;
         
         private void Start()
         {
@@ -52,6 +53,10 @@ namespace Scrabby.Interface
             screenModeDropdown.AddOptions(Enum.GetNames(typeof(FullScreenMode)).ToList());
             screenModeDropdown.value = screenModeDropdown.options.FindIndex(o => o.text == Screen.fullScreenMode.ToString());
             screenModeDropdown.onValueChanged.AddListener(OnScreenModeSelected);
+
+            robotOptionDropdown.ClearOptions();
+            robotOptionDropdown.AddOptions(ScrabbyState.instance.robots.Select(r => r.name).ToList());
+            //robotOptionDropdown.onValueChanged.AddListener();
             
             playButton.onClick.AddListener(OnPlay);
             quitButton.onClick.AddListener(OnQuit);

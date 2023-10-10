@@ -17,9 +17,10 @@ namespace Scrabby.Interface
         private void Start()
         {
             robotDropdown.onValueChanged.AddListener(OnValueChanged);
+            
         }
 
-        public void Init()
+        private void OnEnable()
         {
             OnValueChanged(0);
         }

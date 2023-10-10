@@ -3846,7 +3846,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 631122235}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad63971631c874d1aa33146b8079b8a5, type: 3}
   m_Name: 
@@ -6183,6 +6183,7 @@ MonoBehaviour:
   quitButton: {fileID: 1065411763}
   resolutionDropdown: {fileID: 1571350135}
   screenModeDropdown: {fileID: 1440629560}
+  robotOptionDropdown: {fileID: 899536183}
 --- !u!1 &1025602296
 GameObject:
   m_ObjectHideFlags: 0
@@ -7754,7 +7755,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1391731427
 RectTransform:
   m_ObjectHideFlags: 0
