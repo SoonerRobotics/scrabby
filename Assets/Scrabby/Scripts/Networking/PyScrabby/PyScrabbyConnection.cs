@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -154,6 +154,8 @@ namespace Scrabby.Networking.PyScrabby
         {
             _client?.Close();
             _clientStream?.Close();
+            _thread.Abort();
+            _listener.Stop();
         }
 
         public void Destroy()

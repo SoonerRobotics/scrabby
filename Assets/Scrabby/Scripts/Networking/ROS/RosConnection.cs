@@ -18,6 +18,8 @@ namespace Scrabby.Networking.ROS
 
         public void Init()
         {
+            _dead = false;
+            
             _socket = new WebSocket("ws://localhost:9090");
             _socket.OnClose += OnClose;
             _socket.OnError += OnError;
