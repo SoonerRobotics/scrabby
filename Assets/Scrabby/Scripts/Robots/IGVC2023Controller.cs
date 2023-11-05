@@ -61,7 +61,7 @@ namespace Scrabby.Robots
         private void OnNetworkInstruction(NetworkInstruction instruction)
         {
             var inputTopic = robot.GetOption("topics.input", "/autonav/MotorInput");
-            Debug.Log(inputTopic);
+            // Debug.Log(inputTopic);
             if (inputTopic != instruction.Topic)
             {
                 return;
@@ -109,8 +109,8 @@ namespace Scrabby.Robots
             vl = drag * left + (1.0f - drag) * vl;
             vr = drag * right + (1.0f - drag) * vr;
 
-            var dotX = wheelRadius / 2.0f * (vl + vr) * Mathf.Sin(psi);
-            var dotY = wheelRadius / 2.0f * (vl + vr) * Mathf.Cos(psi);
+            var dotX = wheelRadius * (vl + vr) / 2.0f * Mathf.Sin(psi);
+            var dotY = wheelRadius * (vl + vr) / 2.0f * Mathf.Cos(psi);
             var newLinearVel = new Vector3(dotX, 0, dotY);
 
             LinearVelocity = newLinearVel;
@@ -125,9 +125,9 @@ namespace Scrabby.Robots
         private void PublishFeedback()
         {
             var deltaT = Time.fixedDeltaTime;
-            var deltaTheta = (float)((vr - vl) * 0.1016 / 0.4826) * deltaT;
-            var deltaX = (float)((vl + vr) / 2.0 * Mathf.Cos(deltaTheta)) * deltaT;
-            var deltaY = (float)((vl + vr) / 2.0 * Mathf.Sin(deltaTheta)) * deltaT;
+            var deltaTheta = (float)((vr - vl) * wheelRadius / axleLength) * deltaT;
+            var deltaX = wheelRadius * (vl + vr) / 2.0f * Mathf.Cos(deltaTheta) * deltaT;
+            var deltaY = wheelRadius * (vl + vr) / 2.0f * Mathf.Sin(deltaTheta) * deltaT;
 
             if (_deltaXField == null || _deltaYField == null || _deltaThetaField == null)
             {
