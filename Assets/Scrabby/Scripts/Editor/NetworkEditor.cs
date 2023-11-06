@@ -15,8 +15,14 @@ namespace Scrabby.Editor
             
             var network = (Network) target;
             var pyscrabby = network.GetPyScrabbyConnection();
-            
-            EditorGUILayout.LabelField("Port", pyscrabby.Port.ToString());
+
+            var port = "NONE";
+            if (pyscrabby != null)
+            {
+                port = pyscrabby.Port.ToString();
+            }
+
+            EditorGUILayout.LabelField("Port", port);
             ScrabbyState.ShowIncomingMessages = EditorGUILayout.Toggle("Show Incoming Messages", ScrabbyState.ShowIncomingMessages);
             ScrabbyState.ShowOutgoingMessages = EditorGUILayout.Toggle("Show Outgoing Messages", ScrabbyState.ShowOutgoingMessages);
         }
