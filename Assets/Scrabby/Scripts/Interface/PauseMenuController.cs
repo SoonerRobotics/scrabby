@@ -1,6 +1,7 @@
 using Scrabby.State;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Network = Scrabby.Networking.Network;
 
@@ -11,7 +12,7 @@ namespace Scrabby.Interface
         public GameObject pauseMenuContainer;
         
         [Header("Buttons")]
-        public Button mainMenuButton;
+        public Button quitButton;
         public Button restartButton;
         public Button resumeButton;
 
@@ -21,7 +22,7 @@ namespace Scrabby.Interface
         
         private void Start()
         {
-            mainMenuButton.onClick.AddListener(OnMainMenuPressed);
+            quitButton.onClick.AddListener(OnMainMenuPressed);
             restartButton.onClick.AddListener(OnRestartPressed);
             resumeButton.onClick.AddListener(TogglePauseMenu);
             
@@ -33,7 +34,7 @@ namespace Scrabby.Interface
 
         private void OnDestroy()
         {
-            mainMenuButton.onClick.RemoveListener(OnMainMenuPressed);
+            quitButton.onClick.RemoveListener(OnMainMenuPressed);
             restartButton.onClick.RemoveListener(OnRestartPressed);
             resumeButton.onClick.RemoveListener(TogglePauseMenu);
             
