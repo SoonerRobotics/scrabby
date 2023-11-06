@@ -23,6 +23,10 @@ namespace Scrabby.Networking
                 new StormConnection()
             };
             
+            // _networks.ForEach(n => n.Init());
+        }
+
+        public void Init() {
             _networks.ForEach(n => n.Init());
         }
         

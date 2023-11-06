@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Network = Scrabby.Networking.Network;
 
 namespace Scrabby.Interface
 {
@@ -84,6 +85,9 @@ namespace Scrabby.Interface
 
             Map.Active = map;
             Robot.Active = robot;
+
+            Network.instance.Init();
+
             SceneManager.LoadScene(map.sceneIndex);
         }
 
