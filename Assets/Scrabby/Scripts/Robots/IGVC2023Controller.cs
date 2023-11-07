@@ -39,7 +39,7 @@ namespace Scrabby.Robots
 
         private void Start()
         {
-            Network.onNetworkInstruction += OnNetworkInstruction;
+            Network.OnNetworkInstruction += OnNetworkInstruction;
 
             _inputForwardField = robot.GetOption("topics.input.forward", "forward_velocity");
             _inputAngularField = robot.GetOption("topics.input.angular", "angular_velocity");
@@ -55,7 +55,7 @@ namespace Scrabby.Robots
 
         private void OnDestroy()
         {
-            Network.onNetworkInstruction -= OnNetworkInstruction;
+            Network.OnNetworkInstruction -= OnNetworkInstruction;
         }
 
         private void OnNetworkInstruction(NetworkInstruction instruction)
@@ -81,7 +81,7 @@ namespace Scrabby.Robots
             }
             
             var psi = transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
-            if (ScrabbyState.instance.canMoveManually)
+            if (ScrabbyState.Instance.canMoveManually)
             {
                 var horiz = Mathf.Pow(Input.GetAxis("Vertical"), 3);
                 var vertical = Input.GetAxis("Horizontal");
@@ -140,7 +140,7 @@ namespace Scrabby.Robots
                 { _deltaYField, deltaY },
                 { _deltaThetaField, deltaTheta }
             };
-            Network.instance.Publish(_feedbackTopic, _feedbackType, data);
+            Network.Instance.Publish(_feedbackTopic, _feedbackType, data);
         }
     }
 }

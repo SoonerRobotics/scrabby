@@ -60,7 +60,7 @@ namespace Scrabby.Networking.PyScrabby
                 _clientStream = null;
                 Debug.Log("[PyScrabby] Client disconnected");
 
-                if (ScrabbyState.instance.resetSceneOnConnectionLost)
+                if (ScrabbyState.Instance.resetSceneOnConnectionLost)
                 {
                     _needsReset = true;
                 }
@@ -112,7 +112,7 @@ namespace Scrabby.Networking.PyScrabby
             if (_needsReset)
             {
                 _needsReset = false;
-                ScrabbyState.instance.movementEnabled = true;
+                ScrabbyState.Instance.movementEnabled = true;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 return;
             }
@@ -154,16 +154,16 @@ namespace Scrabby.Networking.PyScrabby
         {
             _client?.Close();
             _clientStream?.Close();
-            _thread.Abort();
-            _listener.Stop();
+            _thread?.Abort();
+            _listener?.Stop();
         }
 
         public void Destroy()
         {
             _client?.Close();
             _clientStream?.Close();
-            _thread.Abort();
-            _listener.Stop();
+            _thread?.Abort();
+            _listener?.Stop();
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Scrabby.Networking
 
             _texture.ReadPixels(_rect, 0, 0);
             var bytes = _texture.EncodeToJPG(_quality);
-            Network.instance.PublishCompressedImage(_topic, bytes);
+            Network.Instance.PublishCompressedImage(_topic, bytes);
         }
     }
 }

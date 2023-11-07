@@ -50,7 +50,7 @@ namespace Scrabby.Networking
             // _gpsData["is_locked"] = false;
             // _gpsData["satellites"] = 0;
             // Debug.Log($"Publishing GPS: {_gpsData}");
-            Network.instance.Publish(_gpsTopic, _gpsType, _gpsData);
+            Network.Instance.Publish(_gpsTopic, _gpsType, _gpsData);
         }
     }
 }

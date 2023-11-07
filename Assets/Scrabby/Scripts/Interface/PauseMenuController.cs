@@ -27,7 +27,7 @@ namespace Scrabby.Interface
             resumeButton.onClick.AddListener(TogglePauseMenu);
             
             manualControlToggle.onValueChanged.AddListener(OnManualControlToggleChanged);
-            manualControlToggle.isOn = ScrabbyState.instance.canMoveManually;
+            manualControlToggle.isOn = ScrabbyState.Instance.canMoveManually;
             
             pauseMenuContainer.SetActive(false);
         }
@@ -44,29 +44,29 @@ namespace Scrabby.Interface
         private void OnMainMenuPressed()
         {
             var originalResetNetworkValue = resetNetworkToggle.isOn;
-            ScrabbyState.instance.resetSceneOnConnectionLost = false;
-            Network.instance.Close();
-            ScrabbyState.instance.resetSceneOnConnectionLost = originalResetNetworkValue;
-            ScrabbyState.instance.movementEnabled = true;
+            ScrabbyState.Instance.resetSceneOnConnectionLost = false;
+            Network.Instance.Close();
+            ScrabbyState.Instance.resetSceneOnConnectionLost = originalResetNetworkValue;
+            ScrabbyState.Instance.movementEnabled = true;
             SceneManager.LoadScene(0);
             gameObject.SetActive(false);
         }
 
         private static void OnRestartPressed()
         {
-            ScrabbyState.instance.movementEnabled = true;
+            ScrabbyState.Instance.movementEnabled = true;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         
         private static void OnManualControlToggleChanged(bool isOn)
         {
-            ScrabbyState.instance.canMoveManually = isOn;
+            ScrabbyState.Instance.canMoveManually = isOn;
         }
 
         public void TogglePauseMenu()
         {
             pauseMenuContainer.SetActive(!pauseMenuContainer.activeSelf);
-            ScrabbyState.instance.movementEnabled = !pauseMenuContainer.activeSelf;
+            ScrabbyState.Instance.movementEnabled = !pauseMenuContainer.activeSelf;
         }
 
         private void Update()

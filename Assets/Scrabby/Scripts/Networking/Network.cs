@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Scrabby.Networking.PyScrabby;
 using Scrabby.Networking.ROS;
 using Scrabby.Networking.STORM;
+using Scrabby.State;
 using Scrabby.Utilities;
 
 namespace Scrabby.Networking
@@ -10,23 +11,31 @@ namespace Scrabby.Networking
     public class Network : MonoSingleton<Network>
     {
         public delegate void NetworkInstructionEvent(NetworkInstruction instruction);
-        public static event NetworkInstructionEvent onNetworkInstruction;
+        public static event NetworkInstructionEvent OnNetworkInstruction;
 
         private List<INetwork> _networks = new();
 
         private void Start()
         {
-            _networks = new List<INetwork>
+            _networks = new List<INetwork>();
+            if (ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Ros))
             {
-                new PyScrabbyConnection(),
-                new RosConnection(),
-                new StormConnection()
-            };
-            
-            // _networks.ForEach(n => n.Init());
+                _networks.Add(new RosConnection());
+            }
+
+            if (ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Storm))
+            {
+                _networks.Add(new StormConnection());
+            }
+
+            if (ScrabbyState.Instance.IsNetworkEnabled(NetworkType.PyScrabby))
+            {
+                _networks.Add(new PyScrabbyConnection());
+            }
         }
 
-        public void Init() {
+        public void Initialize() 
+        {
             _networks.ForEach(n => n.Init());
         }
         
@@ -37,7 +46,7 @@ namespace Scrabby.Networking
 
         public static void PublishNetworkInstruction(NetworkInstruction instruction)
         {
-            onNetworkInstruction?.Invoke(instruction);
+            OnNetworkInstruction?.Invoke(instruction);
         }
 
         public void PublishCompressedImage(string topic, byte[] data)

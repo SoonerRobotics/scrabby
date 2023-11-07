@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Scrabby.Networking;
 using Scrabby.ScriptableObjects;
 using Scrabby.State;
 using TMPro;
@@ -27,19 +28,22 @@ namespace Scrabby.Interface
         [Header("Settings")]
         public TMP_Dropdown resolutionDropdown;
         public TMP_Dropdown screenModeDropdown;
+        public Toggle rosNetworkToggle;
+        public Toggle pyScrabbyNetworkToggle;
+        public Toggle stormNetworkToggle;
         
         private void Start()
         {
             robotDropdown.ClearOptions();
-            robotDropdown.AddOptions(ScrabbyState.instance.robots.Select(r => r.name).ToList());
+            robotDropdown.AddOptions(ScrabbyState.Instance.robots.Select(r => r.name).ToList());
             robotDropdown.onValueChanged.AddListener(OnRobotSelected);
             
             categoryDropdown.ClearOptions();
-            categoryDropdown.AddOptions(ScrabbyState.instance.maps.Select(m => m.category).Distinct().ToList());
+            categoryDropdown.AddOptions(ScrabbyState.Instance.maps.Select(m => m.category).Distinct().ToList());
             categoryDropdown.onValueChanged.AddListener(OnCategorySelected);
             
             mapDropdown.ClearOptions();
-            mapDropdown.AddOptions(ScrabbyState.instance.maps.Select(m => m.name).ToList());
+            mapDropdown.AddOptions(ScrabbyState.Instance.maps.Select(m => m.name).ToList());
             mapDropdown.onValueChanged.AddListener(OnMapSelected);
             
             RestoreLastOptions();
@@ -56,6 +60,15 @@ namespace Scrabby.Interface
             
             playButton.onClick.AddListener(OnPlay);
             quitButton.onClick.AddListener(OnQuit);
+
+            rosNetworkToggle.isOn = ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Ros);
+            rosNetworkToggle.onValueChanged.AddListener(OnRosNetworkToggle);
+            
+            pyScrabbyNetworkToggle.isOn = ScrabbyState.Instance.IsNetworkEnabled(NetworkType.PyScrabby);
+            pyScrabbyNetworkToggle.onValueChanged.AddListener(OnPyScrabbyNetworkToggle);
+            
+            stormNetworkToggle.isOn = ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Storm);
+            stormNetworkToggle.onValueChanged.AddListener(OnStormNetworkToggle);
         }
 
         private void OnDestroy()
@@ -67,6 +80,9 @@ namespace Scrabby.Interface
             screenModeDropdown.onValueChanged.RemoveListener(OnScreenModeSelected);
             playButton.onClick.RemoveListener(OnPlay);
             quitButton.onClick.RemoveListener(OnQuit);
+            rosNetworkToggle.onValueChanged.RemoveListener(OnRosNetworkToggle);
+            pyScrabbyNetworkToggle.onValueChanged.RemoveListener(OnPyScrabbyNetworkToggle);
+            stormNetworkToggle.onValueChanged.RemoveListener(OnStormNetworkToggle);
         }
 
         private void OnPlay()
@@ -74,8 +90,8 @@ namespace Scrabby.Interface
             var robotName = robotDropdown.options[robotDropdown.value].text;
             var mapName = mapDropdown.options[mapDropdown.value].text;
             
-            var robot = ScrabbyState.instance.robots.Find(r => r.name == robotName);
-            var map = ScrabbyState.instance.maps.Find(m => m.name == mapName);
+            var robot = ScrabbyState.Instance.robots.Find(r => r.name == robotName);
+            var map = ScrabbyState.Instance.maps.Find(m => m.name == mapName);
             
             if (robot == null || map == null)
             {
@@ -86,8 +102,7 @@ namespace Scrabby.Interface
             Map.Active = map;
             Robot.Active = robot;
 
-            Network.instance.Init();
-
+            Network.Instance.Initialize();
             SceneManager.LoadScene(map.sceneIndex);
         }
 
@@ -108,7 +123,7 @@ namespace Scrabby.Interface
         private void OnCategorySelected(int index)
         {
             var category = categoryDropdown.options[index].text;
-            var maps = ScrabbyState.instance.maps.Where(m => m.category == category).ToList();
+            var maps = ScrabbyState.Instance.maps.Where(m => m.category == category).ToList();
             _selectedCategory = category;
             
             mapDropdown.GetComponentInChildren<TMP_Dropdown>().ClearOptions();
@@ -140,6 +155,21 @@ namespace Scrabby.Interface
         {
             var screenMode = (FullScreenMode) Enum.Parse(typeof(FullScreenMode), screenModeDropdown.options[index].text);
             Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, screenMode);
+        }
+        
+        private static void OnRosNetworkToggle(bool value)
+        {
+            ScrabbyState.Instance.SetNetworkEnabled(NetworkType.Ros, value);
+        }
+        
+        private static void OnPyScrabbyNetworkToggle(bool value)
+        {
+            ScrabbyState.Instance.SetNetworkEnabled(NetworkType.PyScrabby, value);
+        }
+        
+        private static void OnStormNetworkToggle(bool value)
+        {
+            ScrabbyState.Instance.SetNetworkEnabled(NetworkType.Storm, value);
         }
 
         private void RestoreLastOptions()
