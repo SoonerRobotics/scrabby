@@ -72,7 +72,7 @@ namespace Scrabby.Robots
             angularControl = angular;
         }
 
-        public void FixedUpdate()
+        protected override void RobotUpdate()
         {
             if (!CanMove())
             {
