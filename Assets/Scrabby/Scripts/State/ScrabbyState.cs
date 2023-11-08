@@ -12,7 +12,7 @@ namespace Scrabby.State
         public static bool ShowIncomingMessages = true;
         public static bool ShowOutgoingMessages = true;
 
-        public NetworkType enabledNetworks = NetworkType.All;
+        public NetworkType enabledNetworks = NetworkType.PyScrabby | NetworkType.Ros;
         
         public List<Robot> robots;
         public List<Map> maps;
