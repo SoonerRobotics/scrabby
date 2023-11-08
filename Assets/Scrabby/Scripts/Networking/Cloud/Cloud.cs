@@ -141,8 +141,8 @@ namespace Scrabby.Networking
                 return;
             }
 
-            var robot = ScrabbyState.instance.GetRobotById(challenge.robotId);
-            var map = ScrabbyState.instance.GetMapById(challenge.mapId);
+            var robot = ScrabbyState.Instance.GetRobotById(challenge.robotId);
+            var map = ScrabbyState.Instance.GetMapById(challenge.mapId);
 
             if (robot == null)
             {
@@ -161,11 +161,11 @@ namespace Scrabby.Networking
             Robot.Active = robot;
             Map.Active = map;
 
-            ScrabbyState.instance.movementEnabled = false;
+            ScrabbyState.Instance.movementEnabled = false;
             ConfigManager.RobotConfig.EnsureRobot(robot);
             SceneManager.sceneLoaded += async (_, _) =>
             {
-                ScrabbyState.instance.movementEnabled = true;
+                ScrabbyState.Instance.movementEnabled = true;
                 await SetRunStatus(RunStatus.Simulating);
                 Invoke(nameof(OnTimeout), challenge.timeout / 1000.0f);
             };

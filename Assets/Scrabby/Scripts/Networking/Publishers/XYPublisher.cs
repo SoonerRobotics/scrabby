@@ -22,7 +22,7 @@ namespace Scrabby.Networking.Publishers
             var t = transform.position;
             _xyData["x"] = t.x;
             _xyData["y"] = t.z;
-            Network.instance.Publish("/onboarding/position", "geometry_msgs/Point", _xyData);
+            Network.Instance.Publish("/onboarding/position", "geometry_msgs/Point", _xyData);
         }
     }
 }

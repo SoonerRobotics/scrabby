@@ -5,8 +5,8 @@ namespace Scrabby.Configuration
 {
     public class ConfigManager : MonoSingleton<ConfigManager>
     {
-        public static RobotConfigManager RobotConfig => instance._robotConfig;
-        public static GameConfig GameConfig => instance._gameConfig;
+        public static RobotConfigManager RobotConfig => Instance._robotConfig;
+        public static GameConfig GameConfig => Instance._gameConfig;
         
         private RobotConfigManager _robotConfig;
         private GameConfig _gameConfig;

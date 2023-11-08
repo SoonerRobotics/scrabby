@@ -15,10 +15,17 @@ namespace Scrabby.Networking.ROS
         private readonly List<string> _subscriptions = new();
         private readonly List<string> _advertisements = new();
         private int _sequence;
+        private bool _initialized = false;
 
         public void Init()
         {
+            if (_initialized)
+            {
+                return;
+            }
+
             _dead = false;
+            _initialized = true;
             
             _socket = new WebSocket("ws://localhost:9090");
             _socket.OnClose += OnClose;
