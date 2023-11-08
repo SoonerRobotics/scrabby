@@ -20,14 +20,22 @@ namespace Scrabby.Networking.PyScrabby
         private readonly Queue<string> _incomingMessages = new();
         private Thread _thread;
         private bool _needsReset = false;
+        private bool _initalized = false;
 
         public void Init()
         {
+            if (_initalized)
+            {
+                return;
+            }
+            
             _listener = new TcpListener(IPAddress.Loopback, Port);
             _listener.Start();
 
             _thread = new Thread(TcpWorker);
             _thread.Start();
+
+            _initalized = true;
         }
 
         private void TcpWorker()
