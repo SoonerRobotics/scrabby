@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Network = Scrabby.Networking.Network;
+using Random = UnityEngine.Random;
 
 namespace Scrabby.Interface
 {
@@ -31,6 +32,7 @@ namespace Scrabby.Interface
         public Toggle rosNetworkToggle;
         public Toggle pyScrabbyNetworkToggle;
         public Toggle stormNetworkToggle;
+        public TMP_InputField randomnessSeedInput;
 
         private void Start()
         {
@@ -69,6 +71,10 @@ namespace Scrabby.Interface
 
             stormNetworkToggle.isOn = ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Storm);
             stormNetworkToggle.onValueChanged.AddListener(OnStormNetworkToggle);
+            
+            randomnessSeedInput.text = Random.state.GetHashCode().ToString();
+            randomnessSeedInput.onValueChanged.AddListener(OnRandomSeedChanged);
+            OnRandomSeedChanged(randomnessSeedInput.text);
         }
 
         private void OnDestroy()
@@ -83,6 +89,7 @@ namespace Scrabby.Interface
             rosNetworkToggle.onValueChanged.RemoveListener(OnRosNetworkToggle);
             pyScrabbyNetworkToggle.onValueChanged.RemoveListener(OnPyScrabbyNetworkToggle);
             stormNetworkToggle.onValueChanged.RemoveListener(OnStormNetworkToggle);
+            randomnessSeedInput.onValueChanged.RemoveListener(OnRandomSeedChanged);
         }
 
         private void OnPlay()
@@ -193,6 +200,14 @@ namespace Scrabby.Interface
             else
             {
                 Network.Instance.OnNetworkDisabled(NetworkType.Storm);
+            }
+        }
+
+        private static void OnRandomSeedChanged(string value)
+        {
+            if (int.TryParse(value, out var seed))
+            {
+                Random.InitState(seed);
             }
         }
 
