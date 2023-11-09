@@ -71,8 +71,8 @@ namespace Scrabby.Interface
 
             stormNetworkToggle.isOn = ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Storm);
             stormNetworkToggle.onValueChanged.AddListener(OnStormNetworkToggle);
-            
-            randomnessSeedInput.text = Random.state.GetHashCode().ToString();
+
+            randomnessSeedInput.text = ScrabbyState.Instance.randomSeed.ToString();
             randomnessSeedInput.onValueChanged.AddListener(OnRandomSeedChanged);
             OnRandomSeedChanged(randomnessSeedInput.text);
         }
@@ -205,10 +205,13 @@ namespace Scrabby.Interface
 
         private static void OnRandomSeedChanged(string value)
         {
-            if (int.TryParse(value, out var seed))
+            if (!int.TryParse(value, out var seed))
             {
-                Random.InitState(seed);
+                return;
             }
+            
+            ScrabbyState.Instance.randomSeed = seed;
+            Random.InitState(seed);
         }
 
         private void RestoreLastOptions()

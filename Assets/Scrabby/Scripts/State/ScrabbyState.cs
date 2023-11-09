@@ -19,10 +19,12 @@ namespace Scrabby.State
         public bool movementEnabled = true;
         public bool canMoveManually = false;
         public bool resetSceneOnConnectionLost = true;
+        public int randomSeed;
 
         protected override void Init()
         {
             DontDestroyOnLoad(gameObject);
+            randomSeed = Random.state.GetHashCode();
         }
 
         public Robot GetRobotById(string id)
