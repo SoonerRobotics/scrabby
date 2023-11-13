@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using Scrabby.ScriptableObjects;
 using UnityEngine;
 
 namespace Scrabby.Networking.Publishers

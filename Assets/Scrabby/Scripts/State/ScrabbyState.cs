@@ -19,6 +19,8 @@ namespace Scrabby.State
         public bool movementEnabled = true;
         public bool canMoveManually = false;
         public bool resetSceneOnConnectionLost = true;
+
+        public bool randomizeSeed;
         public int randomSeed;
 
         protected override void Init()

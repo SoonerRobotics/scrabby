@@ -1,9 +1,8 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Scrabby.ScriptableObjects;
 using UnityEngine;
 
-namespace Scrabby.Networking
+namespace Scrabby.Networking.Publishers
 {
     public class GpsPublisher : MonoBehaviour
     {

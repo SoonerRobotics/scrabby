@@ -32,8 +32,10 @@ namespace Scrabby.Interface
         public Toggle rosNetworkToggle;
         public Toggle pyScrabbyNetworkToggle;
         public Toggle stormNetworkToggle;
+        public TMP_Text randomnessSeedText;
         public TMP_InputField randomnessSeedInput;
-
+        public Toggle randomizeSeedToggle;
+        
         private void Start()
         {
             robotDropdown.ClearOptions();
@@ -72,9 +74,17 @@ namespace Scrabby.Interface
             stormNetworkToggle.isOn = ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Storm);
             stormNetworkToggle.onValueChanged.AddListener(OnStormNetworkToggle);
 
+            if (ScrabbyState.Instance.randomizeSeed)
+            {
+                ScrabbyState.Instance.randomSeed = Random.Range(0, int.MaxValue);
+            }
+
             randomnessSeedInput.text = ScrabbyState.Instance.randomSeed.ToString();
             randomnessSeedInput.onValueChanged.AddListener(OnRandomSeedChanged);
             OnRandomSeedChanged(randomnessSeedInput.text);
+            
+            randomizeSeedToggle.isOn = ScrabbyState.Instance.randomizeSeed;
+            randomizeSeedToggle.onValueChanged.AddListener(OnRandomizeSeedToggle);
         }
 
         private void OnDestroy()
@@ -203,7 +213,7 @@ namespace Scrabby.Interface
             }
         }
 
-        private static void OnRandomSeedChanged(string value)
+        private void OnRandomSeedChanged(string value)
         {
             if (!int.TryParse(value, out var seed))
             {
@@ -211,7 +221,10 @@ namespace Scrabby.Interface
             }
             
             ScrabbyState.Instance.randomSeed = seed;
+            ScrabbyState.Instance.randomizeSeed = false;
             Random.InitState(seed);
+            var direction = Random.Range(0, 2) == 0 ? "N" : "S";
+            randomnessSeedText.text = $"Seed ({direction})";
         }
 
         private void RestoreLastOptions()
@@ -245,6 +258,18 @@ namespace Scrabby.Interface
                 mapDropdown.value = mapDropdown.options.FindIndex(o => o.text == _selectedMap);
             }
             OnMapSelected(mapDropdown.value);
+        }
+        
+        private void OnRandomizeSeedToggle(bool value)
+        {
+            ScrabbyState.Instance.randomizeSeed = value;
+            if (!value)
+            {
+                return;
+            }
+            
+            ScrabbyState.Instance.randomSeed = Random.Range(0, int.MaxValue);
+            randomnessSeedInput.text = ScrabbyState.Instance.randomSeed.ToString();
         }
     }
 }
