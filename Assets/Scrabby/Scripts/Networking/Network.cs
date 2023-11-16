@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Scrabby.Networking.PyScrabby;
 using Scrabby.Networking.ROS;
 using Scrabby.Networking.STORM;
+using Scrabby.State;
 using Scrabby.Utilities;
 
 namespace Scrabby.Networking
@@ -10,34 +11,41 @@ namespace Scrabby.Networking
     public class Network : MonoSingleton<Network>
     {
         public delegate void NetworkInstructionEvent(NetworkInstruction instruction);
-        public static event NetworkInstructionEvent onNetworkInstruction;
-
-        private List<INetwork> _networks = new();
+        public static event NetworkInstructionEvent OnNetworkInstruction;
+        public List<INetwork> Networks = new();
 
         private void Start()
         {
-            _networks = new List<INetwork>
+            Networks = new List<INetwork>();
+            if (ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Ros))
             {
-                new PyScrabbyConnection(),
-                new RosConnection(),
-                new StormConnection()
-            };
-            
-            // _networks.ForEach(n => n.Init());
+                Networks.Add(new RosConnection());
+            }
+
+            if (ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Storm))
+            {
+                Networks.Add(new StormConnection());
+            }
+
+            if (ScrabbyState.Instance.IsNetworkEnabled(NetworkType.PyScrabby))
+            {
+                Networks.Add(new PyScrabbyConnection());
+            }
         }
 
-        public void Init() {
-            _networks.ForEach(n => n.Init());
+        public void Initialize() 
+        {
+            Networks.ForEach(n => n.Init());
         }
         
         public PyScrabbyConnection GetPyScrabbyConnection()
         {
-            return (PyScrabbyConnection) _networks.Find(n => n is PyScrabbyConnection);
+            return (PyScrabbyConnection) Networks.Find(n => n is PyScrabbyConnection);
         }
 
         public static void PublishNetworkInstruction(NetworkInstruction instruction)
         {
-            onNetworkInstruction?.Invoke(instruction);
+            OnNetworkInstruction?.Invoke(instruction);
         }
 
         public void PublishCompressedImage(string topic, byte[] data)
@@ -54,17 +62,61 @@ namespace Scrabby.Networking
 
         public void Publish(string topic, string type, JObject data)
         {
-            _networks.ForEach(n => n.Publish(topic, type, data));
+            Networks.ForEach(n => n.Publish(topic, type, data));
         }
 
         public void Subscribe(string topic, string type)
         {
-            _networks.ForEach(n => n.Subscribe(topic, type));
+            Networks.ForEach(n => n.Subscribe(topic, type));
+        }
+
+        public void OnNetworkDisabled(NetworkType type)
+        {
+            if (type == NetworkType.Storm)
+            {
+                var stormConnection = (StormConnection) Networks.Find(n => n is StormConnection);
+                stormConnection?.Close();
+                Networks.RemoveAll(n => n is StormConnection);
+            }
+            else if (type == NetworkType.Ros)
+            {
+                var rosConnection = (RosConnection) Networks.Find(n => n is RosConnection);
+                rosConnection?.Close();
+                Networks.RemoveAll(n => n is RosConnection);
+            }
+            else if (type == NetworkType.PyScrabby)
+            {
+                var pyScrabbyConnection = (PyScrabbyConnection) Networks.Find(n => n is PyScrabbyConnection);
+                pyScrabbyConnection?.Close();
+                Networks.RemoveAll(n => n is PyScrabbyConnection);
+            }
+        }
+
+        public void OnNetworkEnabled(NetworkType type)
+        {
+            if (type == NetworkType.Storm)
+            {
+                var n = new StormConnection();
+                n.Init();
+                Networks.Add(n);
+            }
+            else if (type == NetworkType.Ros)
+            {
+                var n = new RosConnection();
+                n.Init();
+                Networks.Add(n);
+            }
+            else if (type == NetworkType.PyScrabby)
+            {
+                var n = new PyScrabbyConnection();
+                n.Init();
+                Networks.Add(n);
+            }
         }
 
         private void Update()
         {
-            foreach (var network in _networks)
+            foreach (var network in Networks)
             {
                 network.Update();
             }
@@ -72,17 +124,17 @@ namespace Scrabby.Networking
 
         public void Close()
         {
-            _networks.ForEach(n => n.Close()); 
+            Networks.ForEach(n => n.Close()); 
         }
 
         private void OnDestroy()
         {
-            _networks.ForEach(n => n.Destroy()); 
+            Networks.ForEach(n => n.Destroy()); 
         }
 
         private void OnApplicationQuit()
         {
-            _networks.ForEach(n => n.Destroy()); 
+            Networks.ForEach(n => n.Destroy()); 
         }
     }
 }

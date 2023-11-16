@@ -1,9 +1,8 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Scrabby.ScriptableObjects;
 using UnityEngine;
 
-namespace Scrabby.Networking
+namespace Scrabby.Networking.Publishers
 {
     public class GpsPublisher : MonoBehaviour
     {
@@ -45,12 +44,12 @@ namespace Scrabby.Networking
             var origin = Map.Active.origin;
             _gpsData[_gpsLatField] = (pos.z + Utilities.Math.GetRandomNormal(0, _gpsLatNoise)) / length.x + origin.x;
             _gpsData[_gpsLonField] = (pos.x + Utilities.Math.GetRandomNormal(0, _gpsLonNoise)) / length.y + origin.y;
-            // _gpsData["altitude"] = 0.0f;
-            // _gpsData["gps_fix"] = 0;
-            // _gpsData["is_locked"] = false;
-            // _gpsData["satellites"] = 0;
+            _gpsData["altitude"] = 0.0f;
+            _gpsData["gps_fix"] = 3;
+            _gpsData["is_locked"] = true;
+            _gpsData["satellites"] = 7;
             // Debug.Log($"Publishing GPS: {_gpsData}");
-            Network.instance.Publish(_gpsTopic, _gpsType, _gpsData);
+            Network.Instance.Publish(_gpsTopic, _gpsType, _gpsData);
         }
     }
 }

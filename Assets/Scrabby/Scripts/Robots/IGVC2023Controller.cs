@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Scrabby.Interface;
 using Scrabby.Networking;
 using Scrabby.ScriptableObjects;
 using Scrabby.State;
@@ -39,7 +40,7 @@ namespace Scrabby.Robots
 
         private void Start()
         {
-            Network.onNetworkInstruction += OnNetworkInstruction;
+            Network.OnNetworkInstruction += OnNetworkInstruction;
 
             _inputForwardField = robot.GetOption("topics.input.forward", "forward_velocity");
             _inputAngularField = robot.GetOption("topics.input.angular", "angular_velocity");
@@ -55,13 +56,13 @@ namespace Scrabby.Robots
 
         private void OnDestroy()
         {
-            Network.onNetworkInstruction -= OnNetworkInstruction;
+            Network.OnNetworkInstruction -= OnNetworkInstruction;
         }
 
         private void OnNetworkInstruction(NetworkInstruction instruction)
         {
             var inputTopic = robot.GetOption("topics.input", "/autonav/MotorInput");
-            // Debug.Log(inputTopic);
+            Debug.Log(inputTopic);
             if (inputTopic != instruction.Topic)
             {
                 return;
@@ -69,11 +70,17 @@ namespace Scrabby.Robots
 
             var forward = instruction.GetData<float>(_inputForwardField);
             var angular = instruction.GetData<float>(_inputAngularField);
+            Debug.Log($"Forward: {forward}, Angular: {angular}");
             forwardControl = forward;
             angularControl = angular;
+            
+            if ((forward > 0 || angular > 0) && !RunTimer.Instance.IsStarted)
+            {
+                RunTimer.Instance.Begin();
+            }
         }
 
-        public void FixedUpdate()
+        protected override void RobotUpdate()
         {
             if (!CanMove())
             {
@@ -81,7 +88,7 @@ namespace Scrabby.Robots
             }
             
             var psi = transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
-            if (ScrabbyState.instance.canMoveManually)
+            if (ScrabbyState.Instance.canMoveManually)
             {
                 var horiz = Mathf.Pow(Input.GetAxis("Vertical"), 3);
                 var vertical = Input.GetAxis("Horizontal");
@@ -140,7 +147,7 @@ namespace Scrabby.Robots
                 { _deltaYField, deltaY },
                 { _deltaThetaField, deltaTheta }
             };
-            Network.instance.Publish(_feedbackTopic, _feedbackType, data);
+            Network.Instance.Publish(_feedbackTopic, _feedbackType, data);
         }
     }
 }

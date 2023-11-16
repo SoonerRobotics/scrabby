@@ -20,14 +20,22 @@ namespace Scrabby.Networking.PyScrabby
         private readonly Queue<string> _incomingMessages = new();
         private Thread _thread;
         private bool _needsReset = false;
+        private bool _initalized = false;
 
         public void Init()
         {
+            if (_initalized)
+            {
+                return;
+            }
+            
             _listener = new TcpListener(IPAddress.Loopback, Port);
             _listener.Start();
 
             _thread = new Thread(TcpWorker);
             _thread.Start();
+
+            _initalized = true;
         }
 
         private void TcpWorker()
@@ -60,7 +68,7 @@ namespace Scrabby.Networking.PyScrabby
                 _clientStream = null;
                 Debug.Log("[PyScrabby] Client disconnected");
 
-                if (ScrabbyState.instance.resetSceneOnConnectionLost)
+                if (ScrabbyState.Instance.resetSceneOnConnectionLost)
                 {
                     _needsReset = true;
                 }
@@ -112,7 +120,7 @@ namespace Scrabby.Networking.PyScrabby
             if (_needsReset)
             {
                 _needsReset = false;
-                ScrabbyState.instance.movementEnabled = true;
+                ScrabbyState.Instance.movementEnabled = true;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 return;
             }
@@ -154,16 +162,16 @@ namespace Scrabby.Networking.PyScrabby
         {
             _client?.Close();
             _clientStream?.Close();
-            _thread.Abort();
-            _listener.Stop();
+            _thread?.Abort();
+            _listener?.Stop();
         }
 
         public void Destroy()
         {
             _client?.Close();
             _clientStream?.Close();
-            _thread.Abort();
-            _listener.Stop();
+            _thread?.Abort();
+            _listener?.Stop();
         }
     }
 }

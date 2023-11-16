@@ -28,6 +28,10 @@ namespace Scrabby.Gameplay
             var robot = Robot.Active;
             var robotGameObject = Instantiate(robot.prefab);
             robotGameObject.transform.position = spawnPoint;
+            
+            // Choose a random direction (either 0 rotation or 180 rotation)
+            var direction = Random.Range(0, 2) == 0 ? 0 : 180;
+            robotGameObject.transform.rotation = Quaternion.Euler(0, direction, 0);
         }
     }
 }

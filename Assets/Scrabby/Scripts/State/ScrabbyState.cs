@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Scrabby.Networking;
 using Scrabby.ScriptableObjects;
 using Scrabby.Utilities;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Scrabby.State
     {
         public static bool ShowIncomingMessages = true;
         public static bool ShowOutgoingMessages = true;
+
+        public NetworkType enabledNetworks = NetworkType.PyScrabby | NetworkType.Ros;
         
         public List<Robot> robots;
         public List<Map> maps;
@@ -17,9 +20,13 @@ namespace Scrabby.State
         public bool canMoveManually = false;
         public bool resetSceneOnConnectionLost = true;
 
+        public bool randomizeSeed;
+        public int randomSeed;
+
         protected override void Init()
         {
             DontDestroyOnLoad(gameObject);
+            randomSeed = Random.state.GetHashCode();
         }
 
         public Robot GetRobotById(string id)
@@ -36,6 +43,23 @@ namespace Scrabby.State
 
             Debug.LogWarning("Map with id " + id + " not found.");
             return null;
+        }
+
+        public bool IsNetworkEnabled(NetworkType type)
+        {
+            return enabledNetworks.HasFlag(type);
+        }
+        
+        public void SetNetworkEnabled(NetworkType type, bool isEnabled)
+        {
+            if (isEnabled)
+            {
+                enabledNetworks |= type;
+            }
+            else
+            {
+                enabledNetworks &= ~type;
+            }
         }
     }
 }

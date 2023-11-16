@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Scrabby.Networking
+namespace Scrabby.Networking.Publishers
 {
     public class ImagePublisher : MonoBehaviour
     {
@@ -25,14 +25,17 @@ namespace Scrabby.Networking
             _quality = robot.GetOption("topics.camera.quality", 75);
             _topic = robot.GetOption("topics.camera", "/autonav/camera/compressed");
 
-            Debug.Log(
-                $"Publishing camera to {_topic} at {_frameRate} FPS with {_quality}% quality at {width}x{height}");
             _texture = new Texture2D(width, height, TextureFormat.RGB24, false);
             _rect = new Rect(0, 0, width, height);
             camera.targetTexture = new RenderTexture(width, height, 24);
             camera.targetTexture.Create();
 
             RenderPipelineManager.endCameraRendering += OnCameraRender;
+        }
+
+        private void OnDestroy()
+        {
+            RenderPipelineManager.endCameraRendering -= OnCameraRender;
         }
 
         private void OnCameraRender(ScriptableRenderContext context, Camera targetCamera)
@@ -47,7 +50,7 @@ namespace Scrabby.Networking
 
             _texture.ReadPixels(_rect, 0, 0);
             var bytes = _texture.EncodeToJPG(_quality);
-            Network.instance.PublishCompressedImage(_topic, bytes);
+            Network.Instance.PublishCompressedImage(_topic, bytes);
         }
     }
 }
