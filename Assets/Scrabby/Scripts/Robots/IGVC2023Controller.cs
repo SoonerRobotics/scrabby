@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Scrabby.Interface;
 using Scrabby.Networking;
 using Scrabby.ScriptableObjects;
 using Scrabby.State;
@@ -61,7 +62,7 @@ namespace Scrabby.Robots
         private void OnNetworkInstruction(NetworkInstruction instruction)
         {
             var inputTopic = robot.GetOption("topics.input", "/autonav/MotorInput");
-            // Debug.Log(inputTopic);
+            Debug.Log(inputTopic);
             if (inputTopic != instruction.Topic)
             {
                 return;
@@ -69,8 +70,14 @@ namespace Scrabby.Robots
 
             var forward = instruction.GetData<float>(_inputForwardField);
             var angular = instruction.GetData<float>(_inputAngularField);
+            Debug.Log($"Forward: {forward}, Angular: {angular}");
             forwardControl = forward;
             angularControl = angular;
+            
+            if ((forward > 0 || angular > 0) && !RunTimer.Instance.IsStarted)
+            {
+                RunTimer.Instance.Begin();
+            }
         }
 
         protected override void RobotUpdate()

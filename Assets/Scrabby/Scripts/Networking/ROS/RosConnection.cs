@@ -16,30 +16,41 @@ namespace Scrabby.Networking.ROS
         private readonly List<string> _advertisements = new();
         private int _sequence;
         private bool _initialized = false;
+        
+        private Queue<string> _messageQueue = new();
 
         public void Init()
         {
             if (_initialized)
             {
+                Debug.LogWarning("[ROS] Already initialized");
                 return;
             }
 
+            Debug.Log("[ROS] Initializing");
             _dead = false;
-            _initialized = true;
             
             _socket = new WebSocket("ws://localhost:9090");
             _socket.OnClose += OnClose;
             _socket.OnError += OnError;
             _socket.OnMessage += OnMessage;
+            _socket.OnOpen += OnOpen;
 
             Connect();
         }
 
         private bool SendJson(JObject jObject)
         {
+            if (!_initialized)
+            {
+                _messageQueue.Enqueue(JsonConvert.SerializeObject(jObject));
+                return true;
+            }
+            
             var json = JsonConvert.SerializeObject(jObject);
             if (_socket is not { State: WebSocketState.Open })
             {
+                Debug.LogWarning("[ROS] Socket is not open");
                 return false;
             }
 
@@ -60,9 +71,20 @@ namespace Scrabby.Networking.ROS
 
             await _socket.Connect();
         }
+        
+        private void OnOpen()
+        {
+            _initialized = true;
+            while (_messageQueue.Count > 0)
+            {
+                var message = _messageQueue.Dequeue();
+                _socket.SendText(message);
+            }
+        }
 
         private void OnClose(WebSocketCloseCode code)
         {
+            _initialized = false;
             Connect();
         }
 
@@ -71,6 +93,7 @@ namespace Scrabby.Networking.ROS
             var message = System.Text.Encoding.UTF8.GetString(bytes);
             var json = JObject.Parse(message);
             var op = json[RosField.Op]?.ToObject<string>();
+            Debug.Log(message);
 
             switch (op)
             {
@@ -122,12 +145,15 @@ namespace Scrabby.Networking.ROS
 
         public void Subscribe(string topic, string type)
         {
+            Debug.Log($"[ROS] Subscribing to {topic}");
             if (_subscriptions.Contains(topic))
             {
+                Debug.Log($"[ROS] Already subscribed to {topic}");
                 return;
             }
 
             var id = $"subscribe:{type}:{++_sequence}";
+            Debug.Log($"[ROS] Subscribing to {topic} with id {id}");
             var json = new JObject
             {
                 { RosField.Op, RosOpcode.Subscribe },
@@ -137,10 +163,16 @@ namespace Scrabby.Networking.ROS
                 { RosField.Compression, RosCompression.None },
                 { RosField.ThrottleRate, 0 }
             };
+            Debug.Log(json);
 
             if (SendJson(json))
             {
+                Debug.Log($"[ROS] Subscribed to {topic}");
                 _subscriptions.Add(topic);
+            }
+            else
+            {
+                Debug.LogWarning($"[ROS] Failed to subscribe to {topic}");
             }
         }
 
