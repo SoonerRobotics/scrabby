@@ -35,6 +35,7 @@ namespace Scrabby.Interface
         public TMP_Text randomnessSeedText;
         public TMP_InputField randomnessSeedInput;
         public Toggle randomizeSeedToggle;
+        public Button randomizeSeedButton;
         
         private void Start()
         {
@@ -85,6 +86,8 @@ namespace Scrabby.Interface
             
             randomizeSeedToggle.isOn = ScrabbyState.Instance.randomizeSeed;
             randomizeSeedToggle.onValueChanged.AddListener(OnRandomizeSeedToggle);
+            
+            randomizeSeedButton.onClick.AddListener(RandomizeSeed);
         }
 
         private void OnDestroy()
@@ -100,6 +103,7 @@ namespace Scrabby.Interface
             pyScrabbyNetworkToggle.onValueChanged.RemoveListener(OnPyScrabbyNetworkToggle);
             stormNetworkToggle.onValueChanged.RemoveListener(OnStormNetworkToggle);
             randomnessSeedInput.onValueChanged.RemoveListener(OnRandomSeedChanged);
+            randomizeSeedToggle.onValueChanged.RemoveListener(OnRandomizeSeedToggle);
         }
 
         private void OnPlay()
@@ -221,7 +225,6 @@ namespace Scrabby.Interface
             }
             
             ScrabbyState.Instance.randomSeed = seed;
-            ScrabbyState.Instance.randomizeSeed = false;
             Random.InitState(seed);
             var direction = Random.Range(0, 2) == 0 ? "N" : "S";
             randomnessSeedText.text = $"Seed ({direction})";
@@ -268,8 +271,13 @@ namespace Scrabby.Interface
                 return;
             }
             
+            RandomizeSeed();
+        }
+
+        private void RandomizeSeed()
+        {
             ScrabbyState.Instance.randomSeed = Random.Range(0, int.MaxValue);
-            randomnessSeedInput.text = ScrabbyState.Instance.randomSeed.ToString();
+            randomnessSeedInput.text = ScrabbyState.Instance.randomSeed.ToString();   
         }
     }
 }

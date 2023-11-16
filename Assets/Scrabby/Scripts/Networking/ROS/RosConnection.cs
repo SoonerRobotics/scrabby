@@ -27,9 +27,7 @@ namespace Scrabby.Networking.ROS
                 return;
             }
 
-            Debug.Log("[ROS] Initializing");
             _dead = false;
-            
             _socket = new WebSocket("ws://localhost:9090");
             _socket.OnClose += OnClose;
             _socket.OnError += OnError;
@@ -145,15 +143,12 @@ namespace Scrabby.Networking.ROS
 
         public void Subscribe(string topic, string type)
         {
-            Debug.Log($"[ROS] Subscribing to {topic}");
             if (_subscriptions.Contains(topic))
             {
-                Debug.Log($"[ROS] Already subscribed to {topic}");
                 return;
             }
 
             var id = $"subscribe:{type}:{++_sequence}";
-            Debug.Log($"[ROS] Subscribing to {topic} with id {id}");
             var json = new JObject
             {
                 { RosField.Op, RosOpcode.Subscribe },
@@ -163,16 +158,10 @@ namespace Scrabby.Networking.ROS
                 { RosField.Compression, RosCompression.None },
                 { RosField.ThrottleRate, 0 }
             };
-            Debug.Log(json);
 
             if (SendJson(json))
             {
-                Debug.Log($"[ROS] Subscribed to {topic}");
                 _subscriptions.Add(topic);
-            }
-            else
-            {
-                Debug.LogWarning($"[ROS] Failed to subscribe to {topic}");
             }
         }
 
