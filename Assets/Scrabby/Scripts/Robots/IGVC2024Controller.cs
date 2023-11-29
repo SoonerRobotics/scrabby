@@ -8,7 +8,7 @@ using Network = Scrabby.Networking.Network;
 
 namespace Scrabby.Robots
 {
-    public class Igvc2023Controller : BaseRobot
+    public class Igvc2024Controller : BaseRobot
     {
         public Robot robot;
 

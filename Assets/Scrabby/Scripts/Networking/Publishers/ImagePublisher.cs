@@ -11,6 +11,8 @@ namespace Scrabby.Networking.Publishers
         private Texture2D _texture;
         private Rect _rect;
 
+        public string overrideTopic = "";
+
         private int _quality;
         private int _frameRate;
         private string _topic;
@@ -50,7 +52,9 @@ namespace Scrabby.Networking.Publishers
 
             _texture.ReadPixels(_rect, 0, 0);
             var bytes = _texture.EncodeToJPG(_quality);
-            Network.Instance.PublishCompressedImage(_topic, bytes);
+
+            var realTopic = string.IsNullOrEmpty(overrideTopic) ? _topic : overrideTopic.Trim();
+            Network.Instance.PublishCompressedImage(realTopic, bytes);
         }
     }
 }
