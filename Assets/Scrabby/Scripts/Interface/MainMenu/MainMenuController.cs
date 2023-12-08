@@ -29,6 +29,7 @@ namespace Scrabby.Interface
         [Header("Settings")]
         public TMP_Dropdown resolutionDropdown;
         public TMP_Dropdown screenModeDropdown;
+        public TMP_Dropdown frameRateDropdown;
         public Toggle rosNetworkToggle;
         public Toggle pyScrabbyNetworkToggle;
         public Toggle stormNetworkToggle;
@@ -36,6 +37,7 @@ namespace Scrabby.Interface
         public TMP_InputField randomnessSeedInput;
         public Toggle randomizeSeedToggle;
         public Button randomizeSeedButton;
+        private int[] refreshRates = {30, 60};
         
         private void Start()
         {
@@ -57,6 +59,15 @@ namespace Scrabby.Interface
             resolutionDropdown.AddOptions(Screen.resolutions.Select(r => r.width + "x" + r.height).Reverse().ToList());
             resolutionDropdown.value = resolutionDropdown.options.FindIndex(o => o.text == Screen.currentResolution.width + "x" + Screen.currentResolution.height);
             resolutionDropdown.onValueChanged.AddListener(OnResolutionSelected);
+
+            refreshRates.Append((int)(Screen.currentResolution.refreshRateRatio.numerator / Screen.currentResolution.refreshRateRatio.denominator));
+            QualitySettings.vSyncCount = 1;
+            Application.targetFrameRate = 60;
+
+            frameRateDropdown.ClearOptions();
+            frameRateDropdown.AddOptions(refreshRates.Select(r => "" + r).ToList());
+            frameRateDropdown.value = frameRateDropdown.options.FindIndex(o => o.text == "60");
+            frameRateDropdown.onValueChanged.AddListener(OnFrameRateSelected);
 
             screenModeDropdown.ClearOptions();
             screenModeDropdown.AddOptions(Enum.GetNames(typeof(FullScreenMode)).ToList());
@@ -170,6 +181,12 @@ namespace Scrabby.Interface
             var resolution = Screen.resolutions[index];
             var screenMode = (FullScreenMode)Enum.Parse(typeof(FullScreenMode), screenModeDropdown.options[index].text);
             Screen.SetResolution(resolution.width, resolution.height, screenMode);
+        }
+
+        private void OnFrameRateSelected(int index)
+        {
+            var refreshRate = refreshRates[index];
+            Application.targetFrameRate = refreshRate;
         }
 
         private void OnScreenModeSelected(int index)
