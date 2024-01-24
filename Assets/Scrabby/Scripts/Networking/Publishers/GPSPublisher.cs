@@ -49,7 +49,7 @@ namespace Scrabby.Networking.Publishers
             _gpsData["is_locked"] = true;
             _gpsData["satellites"] = 7;
             // Debug.Log($"Publishing GPS: {_gpsData}");
-            Network.Instance.Publish(_gpsTopic, _gpsType, _gpsData);
+            RosConnector.Instance.Publish(_gpsTopic, _gpsType, _gpsData);
         }
     }
 }

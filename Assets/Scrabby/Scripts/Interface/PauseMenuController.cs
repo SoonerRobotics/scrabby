@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using Network = Scrabby.Networking.Network;
 
 namespace Scrabby.Interface
 {
@@ -45,7 +44,6 @@ namespace Scrabby.Interface
         {
             var originalResetNetworkValue = resetNetworkToggle.isOn;
             ScrabbyState.Instance.resetSceneOnConnectionLost = false;
-            Network.Instance.Close();
             ScrabbyState.Instance.resetSceneOnConnectionLost = originalResetNetworkValue;
             ScrabbyState.Instance.movementEnabled = true;
             SceneManager.LoadScene(0);

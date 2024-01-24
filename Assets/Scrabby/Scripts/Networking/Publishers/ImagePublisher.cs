@@ -50,7 +50,7 @@ namespace Scrabby.Networking.Publishers
 
             _texture.ReadPixels(_rect, 0, 0);
             var bytes = _texture.EncodeToJPG(_quality);
-            Network.Instance.PublishCompressedImage(_topic, bytes);
+            RosConnector.Instance.PublishCompressedImage(_topic, bytes);
         }
     }
 }

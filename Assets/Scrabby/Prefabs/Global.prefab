@@ -1,50 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &790176057401116702
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8091851257964939719}
-  - component: {fileID: 1548305950119527905}
-  m_Layer: 0
-  m_Name: Cloud
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8091851257964939719
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790176057401116702}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2379813361525904022}
-  m_RootOrder: -2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1548305950119527905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790176057401116702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72676a8be539430f8e4f5ae7d41ce596, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  apiVersion: v1
 --- !u!1 &1257713567776025616
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,10 +31,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8919753316510952228}
-  - {fileID: 8091851257964939719}
   - {fileID: 5121674719873298845}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1954536190277721762
 MonoBehaviour:
@@ -168,7 +122,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8919753316510952228}
-  - component: {fileID: 8348653697671578163}
+  - component: {fileID: 8292326052271004997}
   m_Layer: 0
   m_Name: Network
   m_TagString: Untagged
@@ -191,7 +145,7 @@ Transform:
   m_Father: {fileID: 2379813361525904022}
   m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8348653697671578163
+--- !u!114 &8292326052271004997
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,6 +154,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8119374511398643187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efc985f3fc06407e8d812a5dd02cd344, type: 3}
+  m_Script: {fileID: 11500000, guid: 63220d6adf51442db6ca4326df9101f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  port: 9090
+  host: 127.0.0.1
+  secure: 0
+  reconnectDelay: 0.5
