@@ -7,6 +7,7 @@ namespace Scrabby.Networking.Publishers
     public class ImagePublisher : MonoBehaviour
     {
         public new Camera camera;
+        public string topic;
 
         private Texture2D _texture;
         private Rect _rect;
@@ -19,11 +20,11 @@ namespace Scrabby.Networking.Publishers
         private void Start()
         {
             var robot = Robot.Active;
-            var width = robot.GetOption("topics.camera.width", 640);
-            var height = robot.GetOption("topics.camera.height", 480);
-            _frameRate = robot.GetOption("topics.camera.fps", 8);
+            var width = 480;
+            var height = 680;
+            _frameRate = 3;
             _quality = robot.GetOption("topics.camera.quality", 75);
-            _topic = robot.GetOption("topics.camera", "/autonav/camera/compressed");
+            _topic = robot.GetOption("topics.camera", topic);
 
             _texture = new Texture2D(width, height, TextureFormat.RGB24, false);
             _rect = new Rect(0, 0, width, height);
@@ -50,7 +51,7 @@ namespace Scrabby.Networking.Publishers
 
             _texture.ReadPixels(_rect, 0, 0);
             var bytes = _texture.EncodeToJPG(_quality);
-            RosConnector.Instance.PublishCompressedImage(_topic, bytes);
+            RosConnector.Instance.PublishCompressedImage(topic, bytes);
         }
     }
 }
