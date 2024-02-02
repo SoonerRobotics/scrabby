@@ -17075,7 +17075,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2974950929304947533}
-  m_LocalRotation: {x: 0.58684134, y: -0.58559334, z: 0.3963337, w: 0.39448357}
+  m_LocalRotation: {x: 0.8156309, y: -0.14849482, z: -0.095154576, w: 0.5510364}
   m_LocalPosition: {x: -0.549011, y: 0.626041, z: 0.81211364}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17083,7 +17083,7 @@ Transform:
   - {fileID: 89015177826254027}
   m_Father: {fileID: 6478477848722532405}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 112.00101, y: -0.4830017, z: 89.552}
+  m_LocalEulerAnglesHint: {x: 119.468994, y: 40.405, z: 44.875}
 --- !u!20 &617133303203952453
 Camera:
   m_ObjectHideFlags: 0
@@ -17126,7 +17126,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -17192,7 +17192,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 617133303203952453}
+  quality: 75
+  frameRate: 1
   topic: /autonav/camera/compressed/left
+  lastCaptureTime: 0
 --- !u!1 &2985284330804322327
 GameObject:
   m_ObjectHideFlags: 0
@@ -21663,7 +21666,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3715150552190122626}
-  m_LocalRotation: {x: 0.59098643, y: -0.58136296, z: 0.4025135, w: 0.3882463}
+  m_LocalRotation: {x: 0.82092583, y: 0.11545087, z: 0.11642163, w: 0.5469899}
   m_LocalPosition: {x: -0.08199933, y: 0.62601864, z: 0.8120436}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21671,7 +21674,7 @@ Transform:
   - {fileID: 997958209398717896}
   m_Father: {fileID: 6478477848722532405}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 112.04199, y: -3.7180176, z: 86.553}
+  m_LocalEulerAnglesHint: {x: 119.40201, y: -40.286987, z: -40.205994}
 --- !u!20 &253286210626299923
 Camera:
   m_ObjectHideFlags: 0
@@ -21714,7 +21717,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 2
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -21780,7 +21783,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 253286210626299923}
+  quality: 75
+  frameRate: 1
   topic: /autonav/camera/compressed/right
+  lastCaptureTime: 0
 --- !u!1 &3721974870593331637
 GameObject:
   m_ObjectHideFlags: 0

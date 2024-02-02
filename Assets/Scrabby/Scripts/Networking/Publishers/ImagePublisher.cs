@@ -6,31 +6,24 @@ namespace Scrabby.Networking.Publishers
 {
     public class ImagePublisher : MonoBehaviour
     {
-        public new Camera camera;
-        public string topic;
+        public Camera camera;
 
         private Texture2D _texture;
         private Rect _rect;
 
-        private int _quality;
-        private int _frameRate;
-        private string _topic;
-        private float _lastCaptureTime;
-
+        public int quality = 75;
+        public int frameRate = 8;
+        public string topic = "/autonav/camera/compressed/left";
+        public float lastCaptureTime = 0;
+        
         private void Start()
         {
-            var robot = Robot.Active;
-            var width = 480;
-            var height = 680;
-            _frameRate = 3;
-            _quality = robot.GetOption("topics.camera.quality", 75);
-            _topic = robot.GetOption("topics.camera", topic);
+            int width = 480;
+            int height = 680;
 
             _texture = new Texture2D(width, height, TextureFormat.RGB24, false);
             _rect = new Rect(0, 0, width, height);
             camera.targetTexture = new RenderTexture(width, height, 24);
-            camera.targetTexture.Create();
-
             RenderPipelineManager.endCameraRendering += OnCameraRender;
         }
 
@@ -41,8 +34,13 @@ namespace Scrabby.Networking.Publishers
 
         private void OnCameraRender(ScriptableRenderContext context, Camera targetCamera)
         {
-            if (Time.time - _lastCaptureTime < 1f / _frameRate) return;
-            _lastCaptureTime = Time.time;
+            if (targetCamera != camera)
+            {
+                return;
+            }
+            
+            if (Time.time - lastCaptureTime < 1f / frameRate) return;
+            lastCaptureTime = Time.time;
 
             if (_texture == null)
             {
@@ -50,7 +48,7 @@ namespace Scrabby.Networking.Publishers
             }
 
             _texture.ReadPixels(_rect, 0, 0);
-            var bytes = _texture.EncodeToJPG(_quality);
+            var bytes = _texture.EncodeToJPG(quality);
             RosConnector.Instance.PublishCompressedImage(topic, bytes);
         }
     }
