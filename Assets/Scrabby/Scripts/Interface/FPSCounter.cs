@@ -26,7 +26,7 @@ namespace Scrabby
 
         private void Update()
         {
-            fpsText.text = (1f / Time.unscaledDeltaTime).ToString("F0");
+            fpsText.text = (1f / Time.unscaledDeltaTime).ToString("F0") + " FPS";
             
             if (Input.GetKeyDown(KeyCode.P))
             {
