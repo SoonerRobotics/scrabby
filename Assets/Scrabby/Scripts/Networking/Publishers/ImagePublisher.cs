@@ -15,11 +15,17 @@ namespace Scrabby.Networking.Publishers
         public int frameRate = 8;
         public string topic = "/autonav/camera/compressed/left";
         public float lastCaptureTime = 0;
+
+        public int width = 480;
+        public int height = 680;
+        public bool flip = false;
         
         private void Start()
         {
-            int width = 480;
-            int height = 680;
+            if (flip)
+            {
+                (width, height) = (height, width);
+            }
 
             _texture = new Texture2D(width, height, TextureFormat.RGB24, false);
             _rect = new Rect(0, 0, width, height);
