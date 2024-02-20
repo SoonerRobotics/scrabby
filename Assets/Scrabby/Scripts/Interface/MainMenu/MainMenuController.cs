@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Network = Scrabby.Networking.Network;
 using Random = UnityEngine.Random;
 
 namespace Scrabby.Interface
@@ -29,9 +28,6 @@ namespace Scrabby.Interface
         [Header("Settings")]
         public TMP_Dropdown resolutionDropdown;
         public TMP_Dropdown screenModeDropdown;
-        public Toggle rosNetworkToggle;
-        public Toggle pyScrabbyNetworkToggle;
-        public Toggle stormNetworkToggle;
         public TMP_Text randomnessSeedText;
         public TMP_InputField randomnessSeedInput;
         public Toggle randomizeSeedToggle;
@@ -66,15 +62,6 @@ namespace Scrabby.Interface
             playButton.onClick.AddListener(OnPlay);
             quitButton.onClick.AddListener(OnQuit);
 
-            rosNetworkToggle.isOn = ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Ros);
-            rosNetworkToggle.onValueChanged.AddListener(OnRosNetworkToggle);
-
-            pyScrabbyNetworkToggle.isOn = ScrabbyState.Instance.IsNetworkEnabled(NetworkType.PyScrabby);
-            pyScrabbyNetworkToggle.onValueChanged.AddListener(OnPyScrabbyNetworkToggle);
-
-            stormNetworkToggle.isOn = ScrabbyState.Instance.IsNetworkEnabled(NetworkType.Storm);
-            stormNetworkToggle.onValueChanged.AddListener(OnStormNetworkToggle);
-
             if (ScrabbyState.Instance.randomizeSeed)
             {
                 ScrabbyState.Instance.randomSeed = Random.Range(0, int.MaxValue);
@@ -99,9 +86,6 @@ namespace Scrabby.Interface
             screenModeDropdown.onValueChanged.RemoveListener(OnScreenModeSelected);
             playButton.onClick.RemoveListener(OnPlay);
             quitButton.onClick.RemoveListener(OnQuit);
-            rosNetworkToggle.onValueChanged.RemoveListener(OnRosNetworkToggle);
-            pyScrabbyNetworkToggle.onValueChanged.RemoveListener(OnPyScrabbyNetworkToggle);
-            stormNetworkToggle.onValueChanged.RemoveListener(OnStormNetworkToggle);
             randomnessSeedInput.onValueChanged.RemoveListener(OnRandomSeedChanged);
             randomizeSeedToggle.onValueChanged.RemoveListener(OnRandomizeSeedToggle);
         }
@@ -122,8 +106,7 @@ namespace Scrabby.Interface
 
             Map.Active = map;
             Robot.Active = robot;
-
-            Network.Instance.Initialize();
+            
             SceneManager.LoadScene(map.sceneIndex);
         }
 
@@ -181,40 +164,16 @@ namespace Scrabby.Interface
         private static void OnRosNetworkToggle(bool value)
         {
             ScrabbyState.Instance.SetNetworkEnabled(NetworkType.Ros, value);
-            if (value)
-            {
-                Network.Instance.OnNetworkEnabled(NetworkType.Ros);
-            }
-            else
-            {
-                Network.Instance.OnNetworkDisabled(NetworkType.Ros);
-            }
         }
 
         private static void OnPyScrabbyNetworkToggle(bool value)
         {
             ScrabbyState.Instance.SetNetworkEnabled(NetworkType.PyScrabby, value);
-            if (value)
-            {
-                Network.Instance.OnNetworkEnabled(NetworkType.PyScrabby);
-            }
-            else
-            {
-                Network.Instance.OnNetworkDisabled(NetworkType.PyScrabby);
-            }
         }
 
         private static void OnStormNetworkToggle(bool value)
         {
             ScrabbyState.Instance.SetNetworkEnabled(NetworkType.Storm, value);
-            if (value)
-            {
-                Network.Instance.OnNetworkEnabled(NetworkType.Storm);
-            }
-            else
-            {
-                Network.Instance.OnNetworkDisabled(NetworkType.Storm);
-            }
         }
 
         private void OnRandomSeedChanged(string value)

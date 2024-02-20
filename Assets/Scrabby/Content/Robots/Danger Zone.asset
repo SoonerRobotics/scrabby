@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809a625d30e28c24481abbdb813740b7, type: 3}
+  m_Name: Danger Zone
+  m_EditorClassIdentifier: 
+  id: 2024/IGVC/DangerZone
+  name: Danger Zone
+  year: 2024
+  prefab: {fileID: 2183161118067911390, guid: c2f78b2880b8bba40bae7d62d6dce213, type: 3}
+  options:
+  - key: topics.input
+    type: 0
+    value: /autonav/MotorInput
+  - key: topics.input.type
+    type: 0
+    value: autonav_msgs/MotorInput
+  - key: topics.feedback
+    type: 0
+    value: /autonav/MotorFeedback
+  - key: topics.feedback.type
+    type: 0
+    value: autonav_msgs/MotorFeedback
+  - key: topics.camera
+    type: 0
+    value: /autonav/camera/compressed
+  - key: topics.camera.type
+    type: 0
+    value: sensor_msgs/CompressedImage
+  - key: topics.camera.fps
+    type: 1
+    value: 12
+  - key: topics.camera.width
+    type: 1
+    value: 640
+  - key: topics.camera.height
+    type: 1
+    value: 480
+  - key: topics.camera.quality
+    type: 1
+    value: 75
+  - key: topics.feedback.deltax
+    type: 0
+    value: delta_x
+  - key: topics.feedback.deltay
+    type: 0
+    value: delta_y
+  - key: topics.feedback.deltatheta
+    type: 0
+    value: delta_theta
+  - key: topics.gps
+    type: 0
+    value: /autonav/gps
+  - key: topics.gps.type
+    type: 0
+    value: autonav_msgs/GPSFeedback
+  - key: topics.gps.lat_field
+    type: 0
+    value: latitude
+  - key: topics.gps.lon_field
+    type: 0
+    value: longitude
+  - key: topics.gps.rate
+    type: 2
+    value: 2.0
+  - key: topics.gps.lat_noise
+    type: 2
+    value: 0.0
+  - key: topics.gps.lon_noise
+    type: 2
+    value: 0.0

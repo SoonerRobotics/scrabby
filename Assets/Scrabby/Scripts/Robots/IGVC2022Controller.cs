@@ -3,7 +3,6 @@ using Scrabby.Networking;
 using Scrabby.ScriptableObjects;
 using Scrabby.State;
 using UnityEngine;
-using Network = Scrabby.Networking.Network;
 
 namespace Scrabby.Robots
 {
@@ -39,7 +38,7 @@ namespace Scrabby.Robots
 
         private void Start()
         {
-            Network.OnNetworkInstruction += OnNetworkInstruction;
+            RosConnector.OnNetworkInstruction.AddListener(OnNetworkInstruction);
 
             _inputForwardField = robot.GetOption("topics.input.forward", "forward_velocity");
             _inputAngularField = robot.GetOption("topics.input.angular", "angular_velocity");
@@ -55,7 +54,7 @@ namespace Scrabby.Robots
 
         private void OnDestroy()
         {
-            Network.OnNetworkInstruction -= OnNetworkInstruction;
+            RosConnector.OnNetworkInstruction.RemoveListener(OnNetworkInstruction);
         }
 
         private void OnNetworkInstruction(NetworkInstruction instruction)
@@ -139,7 +138,7 @@ namespace Scrabby.Robots
                 { _deltaYField, deltaY },
                 { _deltaThetaField, deltaTheta }
             };
-            Network.Instance.Publish(_feedbackTopic, _feedbackType, data);
+            RosConnector.Instance.Publish(_feedbackTopic, _feedbackType, data);
         }
     }
 }

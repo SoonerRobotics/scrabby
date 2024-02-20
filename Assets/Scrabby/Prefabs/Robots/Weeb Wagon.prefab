@@ -11534,6 +11534,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 9160219684447509538}
+  quality: 75
+  frameRate: 8
+  topic: /autonav/camera/compressed
+  lastCaptureTime: 0
+  width: 680
+  height: 480
+  flip: 0
 --- !u!1 &5800803937793467133
 GameObject:
   m_ObjectHideFlags: 0

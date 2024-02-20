@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Scrabby.Interface;
+using Scrabby.Networking;
 using Scrabby.ScriptableObjects;
 using Scrabby.State;
 using UnityEngine;
-using Network = Scrabby.Networking.Network;
 
 namespace Scrabby.Robots
 {
@@ -31,7 +30,7 @@ namespace Scrabby.Robots
             }
             
             var type = options.FirstOrDefault(x => x.key == $"{option.key}.type")?.value ?? "std_msgs/Empty";
-            Network.Instance.Subscribe(option.value, type);
+            RosConnector.Instance.Subscribe(option.value, type);
         }
 
         private void FixedUpdate()

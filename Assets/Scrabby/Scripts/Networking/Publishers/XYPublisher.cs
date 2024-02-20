@@ -21,7 +21,7 @@ namespace Scrabby.Networking.Publishers
             var t = transform.position;
             _xyData["x"] = t.x;
             _xyData["y"] = t.z;
-            Network.Instance.Publish("/onboarding/position", "geometry_msgs/Point", _xyData);
+            RosConnector.Instance.Publish("/onboarding/position", "geometry_msgs/Point", _xyData);
         }
     }
 }
