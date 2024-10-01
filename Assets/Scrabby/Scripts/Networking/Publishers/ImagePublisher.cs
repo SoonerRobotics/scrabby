@@ -16,12 +16,19 @@ namespace Scrabby.Networking.Publishers
         public string topic = "/autonav/camera/compressed/left";
         public float lastCaptureTime = 0;
 
+        private int _fps = 8;
+        private int _quality = 75;
+
         public int width = 480;
         public int height = 680;
         public bool flip = false;
         
         private void Start()
         {
+            var robot = Robot.Active;
+            _fps = robot.GetOption("topics.camera.fps", 8.0);
+            _quality = robot.GetOption("topics.camera.quality", 75);
+
             if (flip)
             {
                 (width, height) = (height, width);
@@ -45,7 +52,7 @@ namespace Scrabby.Networking.Publishers
                 return;
             }
             
-            if (Time.time - lastCaptureTime < 1f / frameRate) return;
+            if (Time.time - lastCaptureTime < 1f / _fps) return;
             lastCaptureTime = Time.time;
 
             if (_texture == null)
@@ -54,7 +61,7 @@ namespace Scrabby.Networking.Publishers
             }
 
             _texture.ReadPixels(_rect, 0, 0);
-            var bytes = _texture.EncodeToJPG(quality);
+            var bytes = _texture.EncodeToJPG(_quality);
             RosConnector.Instance.PublishCompressedImage(topic, bytes);
         }
     }
