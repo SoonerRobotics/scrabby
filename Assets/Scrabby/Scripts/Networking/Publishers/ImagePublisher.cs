@@ -26,7 +26,7 @@ namespace Scrabby.Networking.Publishers
         private void Start()
         {
             var robot = Robot.Active;
-            _fps = robot.GetOption("topics.camera.fps", 8.0);
+            _fps = robot.GetOption("topics.camera.fps", 8);
             _quality = robot.GetOption("topics.camera.quality", 75);
 
             if (flip)
