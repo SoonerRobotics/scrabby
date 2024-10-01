@@ -14,7 +14,7 @@ namespace Scrabby
 
         private void Start()
         {
-            Application.targetFrameRate = 75;
+            // Application.targetFrameRate = 75;
             UpdateVisibility();
         }
 
