@@ -135,6 +135,10 @@ namespace Scrabby.Networking
             {
                 _subscriptions.Add(new KeyValuePair<string, string>(topic, type));
             }
+            else
+            {
+                return;
+            }
 
             Debug.Log($"[RosConnector.Subscribe] {json}");
             SendJson(json);
@@ -154,6 +158,10 @@ namespace Scrabby.Networking
             if (!_advertisements.Contains(new KeyValuePair<string, string>(topic, type)))
             {
                 _advertisements.Add(new KeyValuePair<string, string>(topic, type));
+            }
+            else
+            {
+                return;
             }
             
             Debug.Log($"[RosConnector.Advertise] {json}");
