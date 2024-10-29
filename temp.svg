@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="1024" height="1024" viewBox="0 0 1024 1024">
+     width="2000" height="2000" viewBox="0 0 2000 2000">
 <defs>
 </defs>
-<path d="M-36.639999999999986,1014 L1060.6399999999999,1014" stroke="black" fill="none" stroke-width="3" />
+<path d="M1000,1457.2 L1548.6399999999999,1457.2" stroke="black" fill="none" stroke-width="3" />
+<path d="M1548.6399999999999,1457.2 Q1731.52,1457.2,1731.52,1274.3200000000002" stroke="black" fill="none" stroke-width="3" />
+<path d="M1731.52,1274.3200000000002 Q1548.6399999999999,1274.3200000000002,1548.6399999999999,1274.3200000000002" stroke="black" fill="none" stroke-width="3" />
+<path d="M1751.52,1457.2 L1751.52,177.0400000000002" stroke="black" fill="none" stroke-width="3" />
 </svg>

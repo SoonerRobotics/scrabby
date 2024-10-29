@@ -6,7 +6,7 @@ inchesToCm = 2.54
 cmToM = 1/100
 
 # image dimensions
-IMG_WIDTH = IMG_HEIGHT = 1024
+IMG_WIDTH = IMG_HEIGHT = 2000
 
 metersToPixels = 30
 
@@ -25,17 +25,36 @@ class LaneLine(draw.Line):
     def __init__(self, start_x, start_y, end_x, end_y):
         super().__init__(start_x, start_y, end_x, end_y, stroke="black", fill="none", stroke_width=ceil(TAPE_WIDTH))
 
+        self.end_x = end_x
+        self.end_y = end_y
+
+class LaneCurve(draw.Path):
+    def __init__(self, start_x, start_y, end_x, end_y, ctrl_x, ctrl_y):
+        super().__init__(stroke="black", fill="none", stroke_width=ceil(TAPE_WIDTH))
+
+        self.M(start_x, start_y).Q(end_x, start_y, end_x, end_y)
+
+        self.end_x = end_x
+        self.end_y = end_y
+
+
 # at the start (bottom of the image aka eastwards-ish I think)
-# straightaways should go the full length of the course, so draw the first one
-straightaway1 = LaneLine()
+# straightaways should go the full length of the course, so draw the first half of one
+straightAwayStartOutside = LaneLine(center(0), center(COURSE_WIDTH/2), center(COURSE_LENGTH/2), center(COURSE_WIDTH/2))
+
+# draw the first turn
+firstTurnOutside = LaneCurve(straightAwayStartOutside.end_x, straightAwayStartOutside.end_y, center(COURSE_LENGTH/2 + MAX_LANE_WIDTH), straightAwayStartOutside.end_y-MAX_LANE_WIDTH, IMG_WIDTH, IMG_HEIGHT)
+firstTurnOutside2 = LaneCurve(firstTurnOutside.end_x, firstTurnOutside.end_y, straightAwayStartOutside.end_x, straightAwayStartOutside.end_y-MAX_LANE_WIDTH, IMG_WIDTH, IMG_HEIGHT)
 
 
 
-# straightaway1 = draw.Line(300, 100, COURSE_LENGTH/2, IMG_HEIGHT/2 - TAPE_WIDTH, stroke="black", fill="none", stroke_width=ceil(TAPE_WIDTH))
+markerOutside = LaneLine(firstTurnOutside.end_x+20, straightAwayStartOutside.end_y, firstTurnOutside.end_x+20, firstTurnOutside.end_y-COURSE_LENGTH)
 
 d = draw.Drawing(IMG_WIDTH, IMG_HEIGHT)
-d.append(straightaway1)
-# d.append(draw.Line(-100, 0, 100, 0, stroke="black", fill="none", stroke_width=ceil(TAPE_WIDTH)))
+d.append(straightAwayStartOutside)
+d.append(firstTurnOutside)
+d.append(firstTurnOutside2)
+d.append(markerOutside)
 
 d.display_image()
 d.save_svg("temp.svg")
