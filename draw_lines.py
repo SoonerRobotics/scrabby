@@ -8,7 +8,7 @@ cmToM = 1/100
 # image dimensions
 IMG_WIDTH = IMG_HEIGHT = 2000
 
-metersToPixels = 30
+metersToPixels = 40
 
 # course dimensions
 COURSE_LENGTH = 120 * feetToInches * inchesToCm * cmToM * metersToPixels
@@ -29,10 +29,13 @@ class LaneLine(draw.Line):
         self.end_y = end_y
 
 class LaneCurve(draw.Path):
-    def __init__(self, start_x, start_y, end_x, end_y, ctrl_x, ctrl_y):
+    def __init__(self, start_x, start_y, end_x, end_y, reflect=False):
         super().__init__(stroke="black", fill="none", stroke_width=ceil(TAPE_WIDTH))
 
-        self.M(start_x, start_y).Q(end_x, start_y, end_x, end_y)
+        if not reflect:
+            self.M(start_x, start_y).Q(end_x, start_y, end_x, end_y)
+        else:
+            self.M(start_x, start_y).Q(start_x, end_y, end_x, end_y)
 
         self.end_x = end_x
         self.end_y = end_y
@@ -43,8 +46,8 @@ class LaneCurve(draw.Path):
 straightAwayStartOutside = LaneLine(center(0), center(COURSE_WIDTH/2), center(COURSE_LENGTH/2), center(COURSE_WIDTH/2))
 
 # draw the first turn
-firstTurnOutside = LaneCurve(straightAwayStartOutside.end_x, straightAwayStartOutside.end_y, center(COURSE_LENGTH/2 + MAX_LANE_WIDTH), straightAwayStartOutside.end_y-MAX_LANE_WIDTH, IMG_WIDTH, IMG_HEIGHT)
-firstTurnOutside2 = LaneCurve(firstTurnOutside.end_x, firstTurnOutside.end_y, straightAwayStartOutside.end_x, straightAwayStartOutside.end_y-MAX_LANE_WIDTH, IMG_WIDTH, IMG_HEIGHT)
+firstTurnOutside = LaneCurve(straightAwayStartOutside.end_x, straightAwayStartOutside.end_y, center(COURSE_LENGTH/2 + MAX_LANE_WIDTH), straightAwayStartOutside.end_y-MAX_LANE_WIDTH)
+firstTurnOutside2 = LaneCurve(firstTurnOutside.end_x, firstTurnOutside.end_y, straightAwayStartOutside.end_x, firstTurnOutside.end_y-MAX_LANE_WIDTH, reflect=True)
 
 
 

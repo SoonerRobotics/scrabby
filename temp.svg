@@ -3,8 +3,8 @@
      width="2000" height="2000" viewBox="0 0 2000 2000">
 <defs>
 </defs>
-<path d="M1000,1457.2 L1548.6399999999999,1457.2" stroke="black" fill="none" stroke-width="3" />
-<path d="M1548.6399999999999,1457.2 Q1731.52,1457.2,1731.52,1274.3200000000002" stroke="black" fill="none" stroke-width="3" />
-<path d="M1731.52,1274.3200000000002 Q1548.6399999999999,1274.3200000000002,1548.6399999999999,1274.3200000000002" stroke="black" fill="none" stroke-width="3" />
-<path d="M1751.52,1457.2 L1751.52,177.0400000000002" stroke="black" fill="none" stroke-width="3" />
+<path d="M1000,1609.6 L1731.52,1609.6" stroke="black" fill="none" stroke-width="4" />
+<path d="M1731.52,1609.6 Q1975.3600000000001,1609.6,1975.3600000000001,1365.76" stroke="black" fill="none" stroke-width="4" />
+<path d="M1975.3600000000001,1365.76 Q1975.3600000000001,1121.92,1731.52,1121.92" stroke="black" fill="none" stroke-width="4" />
+<path d="M1995.3600000000001,1609.6 L1995.3600000000001,-97.27999999999997" stroke="black" fill="none" stroke-width="4" />
 </svg>
