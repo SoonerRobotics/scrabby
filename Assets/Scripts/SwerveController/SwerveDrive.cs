@@ -10,14 +10,23 @@ public class SwerveDrive : MonoBehaviour
     private SwerveModule[] modules;
 
     // everything here should be in meters
-    const float wheelbase = 0.6096f; // measurements are from Micah's CAD, unsure of accuracy
-    const float trackwidth = 0.6096f; // wheelbase is a square for swerve drive, but chassis itself is rectangle to meet minimum size requirements
-    const float halfWheelbase = wheelbase/2;
-    const float halfTrackwidth = trackwidth/2;
+    private const float wheelbase = 0.6096f; // measurements are from Micah's CAD, unsure of accuracy
+    private const float trackwidth = 0.6096f; // wheelbase is a square for swerve drive, but chassis itself is rectangle to meet minimum size requirements
+    private const float halfWheelbase = wheelbase/2;
+    private const float halfTrackwidth = trackwidth/2;
+
+    Rigidbody rigidBody;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // https://docs.unity3d.com/6000.0/Documentation/Manual/WheelColliderTutorial.html
+        // rigidBody = GetComponent<Rigidbody>();
+
+        // Adjust center of mass vertically, to help prevent the robot from rolling
+        // rigidBody.centerOfMass += Vector3.up * 1;
+
+
         // Find all child GameObjects that have the SwerveModule script attached
         modules = GetComponentsInChildren<SwerveModule>();
         

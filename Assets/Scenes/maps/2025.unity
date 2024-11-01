@@ -5771,6 +5771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 1835197299}
   wheelCollider: {fileID: 176278147}
+  pos: 0
 --- !u!1 &177370447 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2836819319387312741, guid: 1f38c74b7998c4b4982791e87d9ca44e, type: 3}
@@ -7399,6 +7400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 1415256582}
   wheelCollider: {fileID: 215160851}
+  pos: 2
 --- !u!1001 &216841770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8914,6 +8916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 908619032}
   wheelCollider: {fileID: 260155043}
+  pos: 1
 --- !u!1 &260373023 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2836819319387312741, guid: 1f38c74b7998c4b4982791e87d9ca44e, type: 3}
@@ -15251,7 +15254,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 1770979755}
-  wheelCollider: {fileID: 260155043}
+  wheelCollider: {fileID: 450182357}
+  pos: 3
+--- !u!146 &450182357 stripped
+WheelCollider:
+  m_CorrespondingSourceObject: {fileID: 8012853228733047024, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &452075936 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2836819319387312741, guid: 1f38c74b7998c4b4982791e87d9ca44e, type: 3}
@@ -50401,12 +50410,36 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_Drag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       propertyPath: m_Mass
       value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       propertyPath: m_Constraints
-      value: 48
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_ImplicitCom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_CenterOfMass.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_CenterOfMass.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_CenterOfMass.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_ImplicitTensor
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2100269491158145847, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       propertyPath: m_Name
@@ -50504,6 +50537,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 91e2451801c96d742ad9ed56f1070f71, type: 2}
+    - target: {fileID: 8518528853618717926, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_TargetDisplay
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9143162812384560785, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.12

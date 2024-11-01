@@ -36,7 +36,7 @@ public class Robot : MonoBehaviour
                 strafe = 0.0f;
             }
 
-            drivetrain.Drive(drive*100f, strafe, steer);
+            drivetrain.Drive(drive*-100f, strafe*-100f, steer*100f);
         } else {
             // MotorInput msg = motorInputSubscriber.get();
             // drivetrain.Drive(drive, strafe, steer); //TODO this isn't python this is C#

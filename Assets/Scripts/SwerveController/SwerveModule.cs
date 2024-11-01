@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-enum ModulePosition {
+public enum ModulePosition {
     FrontLeft,
     FrontRight,
     BackLeft,
@@ -27,9 +27,12 @@ public class SwerveModule : MonoBehaviour
     private Vector3 position;
     private Quaternion rotation;
 
-    private ModulePosition pos;
+    public ModulePosition pos;
 
     private const float wheelRadius = 0.2032f; // TODO in Unity the wheel radius is 4 but in CAD the wheel radius is 8 inches, so what do we use here? Fundamental problem is trying to scale everything in Unity right...
+
+    private float lastAngle = 0.0f;
+    private float maxAllowedAngleChange = 5.0f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -55,6 +58,14 @@ public class SwerveModule : MonoBehaviour
     public void SetSetpoints(float wheelVel, float steerAngle) {
         drivePID.SetSetpoint(wheelVel);
         steerPID.SetSetpoint(steerAngle);
+
+        //FIXME this is supposed to be the not-rotate-more-than 90 degrees logic, not sure if it works or not tho
+        if (Mathf.Abs(wheelCollider.steerAngle - Mathf.Abs(steerPID.GetSetpoint())) > 100) {
+            steerPID.SetSetpoint(steerAngle-180);
+            drivePID.SetSetpoint(-drivePID.GetSetpoint());
+        } 
+
+        // steerPID.SetSetpoint(steerAngle);
         // steerPID.SetSetpoint(Mathf.Clamp(steerAngle, -90, 90));
     }
 
@@ -77,7 +88,6 @@ public class SwerveModule : MonoBehaviour
 
         //TODO
         wheelCollider.motorTorque = Mathf.Clamp(drivePID.Calculate(GetWheelVelocity()), -1000, 1000);
-        wheelCollider.steerAngle += Time.fixedDeltaTime * steerPID.Calculate(Mathf.Clamp(GetAngle(), -5, 5)); //TODO this needs to be able to handle angle wrapping and like have torque and stuff
-        // wheelCollider.steerAngle = Mathf.Clamp(wheelCollider.steerAngle, -90, 90);
+        wheelCollider.steerAngle = Mathf.Clamp(steerPID.GetSetpoint(), wheelCollider.steerAngle-maxAllowedAngleChange, wheelCollider.steerAngle+maxAllowedAngleChange);
     }
 }

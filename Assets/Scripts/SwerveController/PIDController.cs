@@ -26,6 +26,10 @@ public class PIDController
         this.setpoint = s;
     }
 
+    public float GetSetpoint() {
+        return setpoint;
+    }
+
     public void SetConstants(float p, float i, float d) {
         this.kP = p;
         this.kI = i;
