@@ -23,6 +23,8 @@ public class Robot : MonoBehaviour
             float strafe = Input.GetAxis("Horizontal");
             float steer = Input.GetAxis("Horizontal2");
 
+            strafe = Mathf.Clamp(strafe, -1, 1);
+
             // deadband
             if (Mathf.Abs(steer) < 0.1) {
                 steer = 0.0f;

@@ -52,9 +52,10 @@ public class SwerveModule : MonoBehaviour
         steerPID.Reset();
     }
 
-    public void SetSetpoints(float wheelVel, float steerVel) {
+    public void SetSetpoints(float wheelVel, float steerAngle) {
         drivePID.SetSetpoint(wheelVel);
-        steerPID.SetSetpoint(steerVel);
+        steerPID.SetSetpoint(steerAngle);
+        // steerPID.SetSetpoint(Mathf.Clamp(steerAngle, -90, 90));
     }
 
     public float GetWheelVelocity() {
@@ -76,7 +77,7 @@ public class SwerveModule : MonoBehaviour
 
         //TODO
         wheelCollider.motorTorque = Mathf.Clamp(drivePID.Calculate(GetWheelVelocity()), -1000, 1000);
-        // wheelCollider.steerAngle += Time.fixedDeltaTime * steerPID.Calculate(Mathf.Clamp(GetAngle(), -5, 5)); //TODO this needs to be able to handle angle wrapping and like have torque and stuff
-        wheelCollider.steerAngle = 0.0f;
+        wheelCollider.steerAngle += Time.fixedDeltaTime * steerPID.Calculate(Mathf.Clamp(GetAngle(), -5, 5)); //TODO this needs to be able to handle angle wrapping and like have torque and stuff
+        // wheelCollider.steerAngle = Mathf.Clamp(wheelCollider.steerAngle, -90, 90);
     }
 }
