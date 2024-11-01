@@ -2,7 +2,7 @@ using UnityEngine;
 
 // truly a classic
 // https://github.com/wpilibsuite/allwpilib/blob/main/wpimath/src/main/java/edu/wpi/first/math/controller/PIDController.java
-public class PIDController : MonoBehaviour
+public class PIDController
 {
     private float kP;
     private float kI;
@@ -11,6 +11,7 @@ public class PIDController : MonoBehaviour
     private float setpoint = 0f;
     private float error = 0f;
     private float lastError = 0f;
+    private float totalError = 0.0f;
 
     private float lastTime;
 
@@ -18,7 +19,7 @@ public class PIDController : MonoBehaviour
     void Start()
     {
         //TODO
-        lastTime = -1;
+        lastTime = -1.0f;
     }
 
     public void SetSetpoint(float s) {
@@ -32,13 +33,13 @@ public class PIDController : MonoBehaviour
     }
 
     public float Calculate(float reading) {
-        float output = 0.0;
+        float output = 0.0f;
         float e = setpoint - reading;
-        float dt = time.now() - lastTime;
+        float dt = Time.time - lastTime;
 
         if (lastTime == -1) {
-            lastTime = time.now();
-            return 0;
+            lastTime = Time.time;
+            return 0.0f;
         }
 
         totalError += e * dt;
@@ -47,15 +48,15 @@ public class PIDController : MonoBehaviour
         output += totalError * kI;
         output += (error - lastError) / dt  *  kD;
 
-        lastTime = time.now();
+        lastTime = Time.time;
 
         return output;
     }
 
     public void Reset() {
-        lastTime = -1;
-        totalError = 0.0;
-        setpoint = 0.0;
+        lastTime = -1f;
+        totalError = 0.0f;
+        setpoint = 0.0f;
     }
 
     // Update is called once per frame
