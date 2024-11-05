@@ -18440,6 +18440,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4838405801484499717, guid: 1f38c74b7998c4b4982791e87d9ca44e, type: 3}
   m_PrefabInstance: {fileID: 532991772}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &537029736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6038452864022524759, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &537029740 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5533988587421443465, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &537029741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 537029736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d035ef5b8e3863419916778d2ccaf01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ros: {fileID: 0}
+  topicName: /autonav/camera/right
+  camera: {fileID: 537029740}
 --- !u!1001 &537858255
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41142,6 +41167,31 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1077775560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8590054307612676665, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1077775564 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6127163721991360243, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1077775565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077775560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d035ef5b8e3863419916778d2ccaf01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ros: {fileID: 0}
+  topicName: /autonav/camera/back
+  camera: {fileID: 1077775564}
 --- !u!1001 &1078882029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50619,7 +50669,44 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1840701983670778020, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       insertIndex: -1
       addedObject: {fileID: 176278148}
+    - targetCorrespondingSourceObject: {fileID: 8590054307612676665, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1077775565}
+    - targetCorrespondingSourceObject: {fileID: 2799015645598927199, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1288745287}
+    - targetCorrespondingSourceObject: {fileID: 7850006732108450847, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1454854958}
+    - targetCorrespondingSourceObject: {fileID: 6038452864022524759, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 537029741}
   m_SourcePrefab: {fileID: 100100000, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+--- !u!1 &1288745285 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2799015645598927199, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1288745286 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2003213520003370882, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1288745287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288745285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d035ef5b8e3863419916778d2ccaf01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ros: {fileID: 0}
+  topicName: /autonav/camera/front
+  camera: {fileID: 1288745286}
 --- !u!1001 &1289104148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58099,6 +58186,31 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2836819319387312741, guid: 1f38c74b7998c4b4982791e87d9ca44e, type: 3}
   m_PrefabInstance: {fileID: 2017447947}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1454854953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7850006732108450847, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1454854957 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4232470027967802732, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1454854958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454854953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d035ef5b8e3863419916778d2ccaf01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ros: {fileID: 0}
+  topicName: /autonav/camera/left
+  camera: {fileID: 1454854957}
 --- !u!1001 &1455369280
 PrefabInstance:
   m_ObjectHideFlags: 0
