@@ -79,8 +79,8 @@ public class SwerveModule : MonoBehaviour
         return wheelCollider.transform.rotation.eulerAngles.y;
     }
 
-    // Update is called once per frame
-    void Update()
+    // void Update()
+    void FixedUpdate() // probably should have this be fixed update because it's physics related?
     {
         wheelCollider.GetWorldPose(out position, out rotation);
         wheelModel.transform.position = position;

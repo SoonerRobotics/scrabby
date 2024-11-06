@@ -19667,7 +19667,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 537029736}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d035ef5b8e3863419916778d2ccaf01, type: 3}
   m_Name: 
@@ -36023,6 +36023,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3724515de715a8f4e8ceba5c18255ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBody: {fileID: 1288745288}
+  chassisModel: {fileID: 1288745289}
 --- !u!1001 &909822208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43519,7 +43521,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1077775560}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d035ef5b8e3863419916778d2ccaf01, type: 3}
   m_Name: 
@@ -53292,7 +53294,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1288745285}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d035ef5b8e3863419916778d2ccaf01, type: 3}
   m_Name: 
@@ -53300,6 +53302,16 @@ MonoBehaviour:
   ros: {fileID: 0}
   topicName: /autonav/camera/front
   camera: {fileID: 1288745286}
+--- !u!54 &1288745288 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1288745289 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9143162812384560785, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1289104148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61280,7 +61292,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454854953}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d035ef5b8e3863419916778d2ccaf01, type: 3}
   m_Name: 

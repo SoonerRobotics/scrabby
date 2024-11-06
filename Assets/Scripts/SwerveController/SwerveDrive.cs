@@ -15,13 +15,18 @@ public class SwerveDrive : MonoBehaviour
     private const float halfWheelbase = wheelbase/2;
     private const float halfTrackwidth = trackwidth/2;
 
-    Rigidbody rigidBody;
+    private float lastX = 0.0f;
+    private float lastY = 0.0f;
+    private float lastTheta = 0.0f;
+
+    public Rigidbody rigidBody;
+    public Transform chassisModel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         // https://docs.unity3d.com/6000.0/Documentation/Manual/WheelColliderTutorial.html
-        // rigidBody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
 
         // Adjust center of mass vertically, to help prevent the robot from rolling
         // rigidBody.centerOfMass += Vector3.up * 1;
@@ -52,6 +57,29 @@ public class SwerveDrive : MonoBehaviour
         backLeftModule.SetSetpoints(Mathf.Sqrt(A*A + D*D), Mathf.Atan2(A, D) * 180/Mathf.PI);
         backRightModule.SetSetpoints(Mathf.Sqrt(A*A + C*C), Mathf.Atan2(A, C) * 180/Mathf.PI);
     }
+
+    public float GetDeltaX() {
+        float output = lastX - chassisModel.transform.position.x;
+
+        lastX = chassisModel.transform.position.x;
+        return output;
+    }
+
+    public float GetDeltaY() {
+        float output = lastY - chassisModel.transform.position.y;
+
+        lastY = chassisModel.transform.position.y;
+        return output;
+    }
+
+    public float GetDeltaTheta() {
+        //FIXME
+        float output = lastTheta - chassisModel.transform.rotation.eulerAngles.y;
+
+        lastTheta = chassisModel.transform.rotation.eulerAngles.y;
+        return output;
+    }
+
 
     // Update is called once per frame
     void Update()

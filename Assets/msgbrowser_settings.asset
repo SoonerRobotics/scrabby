@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: msgbrowser_settings
   m_EditorClassIdentifier: 
   inputPath: C:/Users/isasq/Documents/GitHub/autonav_software_2025/autonav_ws
-  relativeOutPath: RosMessages
+  relativeOutPath: Scripts\RosInterface\Messages

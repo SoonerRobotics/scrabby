@@ -53,9 +53,12 @@ public class ImagePublisher : MonoBehaviour {
             return;
         }
 
-        _texture.ReadPixels(_rect, 0, 0);
-        var bytes = _texture.EncodeToJPG();
-        // https://github.com/Unity-Technologies/ROS-TCP-Connector/blob/main/com.unity.robotics.ros-tcp-connector/Runtime/Messages/Sensor/msg/CompressedImageMsg.cs
-        ros.Publish(topicName, new CompressedImageMsg(new HeaderMsg(), "jpeg", bytes)); //TODO give the message a proper Header
+        // don't kill the framerate trying to publish if we haven't established a connection yet
+        if (!ros.HasConnectionError) {
+            _texture.ReadPixels(_rect, 0, 0);
+            var bytes = _texture.EncodeToJPG();
+            // https://github.com/Unity-Technologies/ROS-TCP-Connector/blob/main/com.unity.robotics.ros-tcp-connector/Runtime/Messages/Sensor/msg/CompressedImageMsg.cs
+            ros.Publish(topicName, new CompressedImageMsg(new HeaderMsg(), "jpeg", bytes)); //TODO give the message a proper Header
+        }
     }
 }
