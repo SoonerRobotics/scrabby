@@ -17,6 +17,11 @@ public class Robot : MonoBehaviour
     private float timeElapsed = 0.0f;
     private float motorFeedbackFrequency = 0.5f; // twice a second TODO make real-life-accurate
 
+    // for manual control, you don't want to return the wheels to 0 even if you're not actively pressing the right arrow, the robot should coast along its current path
+    float drive = 0.0f;
+    float strafe = 0.0f;
+    float steer = 0.0f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,31 +42,31 @@ public class Robot : MonoBehaviour
         if (manual) {
             //TODO should this be field-oriented? or like, if the 3rd person camera is stationary (doesn't rotate with robot) then camera oriented? idk.
 
-            float drive = Input.GetAxis("Vertical");
-            float strafe = Input.GetAxis("Horizontal");
-            float steer = Input.GetAxis("Horizontal2");
+            // basically the robot should coast instead of trying to reset the wheels to 0 upon not getting something on a certain axis
+            // TODO: see https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/subsystems/SwerveDrive.cpp line 155 VectorTeleOpDrive()
+           
+            drive = Input.GetAxis("Vertical");
+            strafe = Input.GetAxis("Horizontal");
+            steer = Input.GetAxis("Horizontal2");
 
-            strafe = Mathf.Clamp(strafe, -1, 1);
+           // if any of the inputs is being pressed, then steer the wheels (because otherwise we don't want to move the wheels back to 0 degrees rotation)
+           if (Mathf.Abs(drive) > 0.05 || Mathf.Abs(strafe) > 0.05 || Mathf.Abs(steer) > 0.05) {
+                drivetrain.Drive(drive * -500f, strafe * -500f, steer * 100f, true);
+            // if everything is less than 0 then set everything to 0
+           } else if (Mathf.Abs(drive) < 0.05 && Mathf.Abs(strafe) < 0.05 && Mathf.Abs(steer) < 0.05) {
+                drivetrain.Drive(0.0f, 0.0f, 0.0f, false);
+           // otherwise, we don't want to steer th wheels
+           } else {
+                drivetrain.Drive(drive * -500f, strafe * -500f, steer * 100f, false);
+           }
 
-            // deadband
-            if (Mathf.Abs(steer) < 0.1) {
-                steer = 0.0f;
-            }
-            if (Mathf.Abs(drive) < 0.1) {
-                drive = 0.0f;
-            }
-            if (Mathf.Abs(strafe) < 0.1) {
-                strafe = 0.0f;
-            }
-
-            drivetrain.Drive(drive*-100f, strafe*-100f, steer*100f); //FIXME
         } else {
             //TODO shouldn't we not make new variables every loop, split across the if statement?
             float drive = motorInputMsg.forward_velocity;
             float strafe = motorInputMsg.sideways_velocity;
             float steer = motorInputMsg.angular_velocity;
 
-            drivetrain.Drive(drive*-100f, strafe*-100f, steer*100f); //FIXME
+            drivetrain.Drive(drive*-100f, strafe*-100f, steer*100f, true); //FIXME
         }
 
         timeElapsed += Time.deltaTime;

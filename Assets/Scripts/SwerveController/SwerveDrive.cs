@@ -41,7 +41,7 @@ public class SwerveDrive : MonoBehaviour
         backRightModule = modules[3];
     }
 
-    public void Drive(float forward_vel, float sideways_vel, float theta_vel) {
+    public void Drive(float forward_vel, float sideways_vel, float theta_vel, bool allowSteer) {
         // another classic FRC link https://www.chiefdelphi.com/t/paper-4-wheel-independent-drive-independent-steering-swerve/107383
         // and some *really* bad code: https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/subsystems/SwerveDrive.cpp
 
@@ -50,12 +50,19 @@ public class SwerveDrive : MonoBehaviour
         float C = forward_vel - (theta_vel * halfTrackwidth);
         float D = forward_vel + (theta_vel * halfTrackwidth);
 
-        //TODO make the modules never turn more than 90 degrees thing
+        //TODO make the modules never turn more than 90 degrees thing (they currently do that in SwerveModule.cs)
 
-        frontLeftModule.SetSetpoints(Mathf.Sqrt(B*B + D*D), Mathf.Atan2(B, D) * 180/Mathf.PI);
-        frontRightModule.SetSetpoints(Mathf.Sqrt(B*B + C*C), Mathf.Atan2(B, C) * 180/Mathf.PI);
-        backLeftModule.SetSetpoints(Mathf.Sqrt(A*A + D*D), Mathf.Atan2(A, D) * 180/Mathf.PI);
-        backRightModule.SetSetpoints(Mathf.Sqrt(A*A + C*C), Mathf.Atan2(A, C) * 180/Mathf.PI);
+        if (allowSteer) {
+            frontLeftModule.SetSetpoints(Mathf.Sqrt(B*B + D*D), Mathf.Atan2(B, D) * 180/Mathf.PI);
+            frontRightModule.SetSetpoints(Mathf.Sqrt(B*B + C*C), Mathf.Atan2(B, C) * 180/Mathf.PI);
+            backLeftModule.SetSetpoints(Mathf.Sqrt(A*A + D*D), Mathf.Atan2(A, D) * 180/Mathf.PI);
+            backRightModule.SetSetpoints(Mathf.Sqrt(A*A + C*C), Mathf.Atan2(A, C) * 180/Mathf.PI);
+        } else {
+            frontLeftModule.SetSetpoints(Mathf.Sqrt(B*B + D*D), frontLeftModule.GetSteerSetpoint());
+            frontRightModule.SetSetpoints(Mathf.Sqrt(B*B + C*C), frontRightModule.GetSteerSetpoint());
+            backLeftModule.SetSetpoints(Mathf.Sqrt(A*A + D*D), backLeftModule.GetSteerSetpoint());
+            backRightModule.SetSetpoints(Mathf.Sqrt(A*A + C*C), backRightModule.GetSteerSetpoint());
+        }
     }
 
     public float GetDeltaX() {

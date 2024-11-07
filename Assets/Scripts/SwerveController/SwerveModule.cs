@@ -10,6 +10,12 @@ public enum ModulePosition {
 
 // for reference (but don't copy it's bad code)
 // https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/SwerveModule.cpp
+// https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/subsystems/SwerveDrive.cpp
+
+// FRC whitepapers
+// https://www.first1684.com/uploads/2/0/1/6/20161347/chimiswerve_whitepaper__2_.pdf
+// https://www.chiefdelphi.com/t/paper-4-wheel-independent-drive-independent-steering-swerve/107383/7
+
 
 // also unity tutorial
 // https://docs.unity3d.com/6000.0/Documentation/Manual/WheelColliderTutorial.html
@@ -32,7 +38,12 @@ public class SwerveModule : MonoBehaviour
     private const float wheelRadius = 0.2032f; // TODO in Unity the wheel radius is 4 but in CAD the wheel radius is 8 inches, so what do we use here? Fundamental problem is trying to scale everything in Unity right...
 
     private float lastAngle = 0.0f;
-    private float maxAllowedAngleChange = 5.0f;
+    private float maxAllowedAngleChange = 7.0f;
+
+    public float debugRotation = 0.0f; //FIXME
+    public float debugSteerSetpoint = 0.0f;
+    public float debugDriveSetpoint = 0.0f;
+    public float debugVelocity = 0.0f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,7 +51,7 @@ public class SwerveModule : MonoBehaviour
         drivePID = new PIDController();
         steerPID = new PIDController();
 
-        drivePID.SetConstants(200f, 0.0f, 0.0f); //TODO
+        drivePID.SetConstants(.5f, 0.0f, 0.0f); //TODO
         steerPID.SetConstants(1.5f, 0.0f, 0.0f); //TODO
 
         drivePID.Reset();
@@ -55,18 +66,19 @@ public class SwerveModule : MonoBehaviour
         steerPID.Reset();
     }
 
+    public float GetSteerSetpoint() {
+        return steerPID.GetSetpoint();
+    }
+
     public void SetSetpoints(float wheelVel, float steerAngle) {
         drivePID.SetSetpoint(wheelVel);
-        steerPID.SetSetpoint(steerAngle);
+        steerPID.SetSetpoint(WrapAngle(steerAngle));
 
         //FIXME this is supposed to be the not-rotate-more-than 90 degrees logic, not sure if it works or not tho
-        if (Mathf.Abs(wheelCollider.steerAngle - Mathf.Abs(steerPID.GetSetpoint())) > 100) {
-            steerPID.SetSetpoint(steerAngle-180);
-            drivePID.SetSetpoint(-drivePID.GetSetpoint());
-        } 
-
-        // steerPID.SetSetpoint(steerAngle);
-        // steerPID.SetSetpoint(Mathf.Clamp(steerAngle, -90, 90));
+        // if (Mathf.Abs(wheelCollider.steerAngle - Mathf.Abs(steerPID.GetSetpoint())) > 100) {
+            // steerPID.SetSetpoint(steerAngle-180);
+            // drivePID.SetSetpoint(-drivePID.GetSetpoint());
+        // }
     }
 
     public float GetWheelVelocity() {
@@ -79,6 +91,16 @@ public class SwerveModule : MonoBehaviour
         return wheelCollider.transform.rotation.eulerAngles.y;
     }
 
+    // https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/Utils.cpp
+    public float WrapAngle(float angle) {
+        if (angle < -180) {
+            return angle + 360;
+        } else if (angle > 180) {
+            return angle - 360;
+        }
+        return angle;
+    }
+
     // void Update()
     void FixedUpdate() // probably should have this be fixed update because it's physics related?
     {
@@ -89,5 +111,10 @@ public class SwerveModule : MonoBehaviour
         //TODO
         wheelCollider.motorTorque = Mathf.Clamp(drivePID.Calculate(GetWheelVelocity()), -1000, 1000);
         wheelCollider.steerAngle = Mathf.Clamp(steerPID.GetSetpoint(), wheelCollider.steerAngle-maxAllowedAngleChange, wheelCollider.steerAngle+maxAllowedAngleChange);
+
+        debugRotation = wheelCollider.steerAngle; //FIXME
+        debugSteerSetpoint = steerPID.GetSetpoint();
+        debugDriveSetpoint = drivePID.GetSetpoint();
+        debugVelocity = GetWheelVelocity();
     }
 }
