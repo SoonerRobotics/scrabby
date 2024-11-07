@@ -1,6 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement>
-        <ui:Label text="Scrabby2 Work in Progress" display-tooltip-when-elided="false" />
-        <ui:Button text="Start Scrabby" display-tooltip-when-elided="true" name="startButton" style="background-color: rgb(24, 140, 29); align-items: center; max-width: 50%;" />
+    <ui:VisualElement style="align-self: center;">
+        <ui:VisualElement style="flex-grow: 1; background-color: rgba(144, 144, 144, 0); flex-shrink: 0;">
+            <ui:Label text="Scrabby2 Work in Progress" display-tooltip-when-elided="false" style="align-items: center; font-size: 36px;" />
+            <ui:Button text="Start Scrabby" display-tooltip-when-elided="true" name="startButton" style="background-color: rgb(0, 202, 24); font-size: 24px;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
