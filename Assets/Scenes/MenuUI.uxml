@@ -3,6 +3,7 @@
         <ui:VisualElement style="flex-grow: 1; background-color: rgba(144, 144, 144, 0); flex-shrink: 0;">
             <ui:Label text="Scrabby2 Work in Progress" display-tooltip-when-elided="false" style="align-items: center; font-size: 36px;" />
             <ui:Button text="Start Scrabby" display-tooltip-when-elided="true" name="startButton" style="background-color: rgb(0, 202, 24); font-size: 24px;" />
+            <ui:Toggle label="Manual Control" style="font-size: 26px;" name="manualToggle" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

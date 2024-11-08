@@ -20,6 +20,9 @@ public class SwerveDrive : MonoBehaviour
     private float lastTheta = 0.0f;
 
     public Rigidbody rigidBody;
+    public float CogX = 0.0f;
+    public float CogY = 0.0f;
+    public float CogZ = 0.0f;
     public Transform chassisModel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,6 +30,9 @@ public class SwerveDrive : MonoBehaviour
     {
         // https://docs.unity3d.com/6000.0/Documentation/Manual/WheelColliderTutorial.html
         rigidBody = GetComponent<Rigidbody>();
+        CogX = rigidBody.centerOfMass[0];
+        CogY = rigidBody.centerOfMass[1];
+        CogZ = rigidBody.centerOfMass[2];
 
         // Adjust center of mass vertically, to help prevent the robot from rolling
         // rigidBody.centerOfMass += Vector3.up * 1;

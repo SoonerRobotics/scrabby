@@ -7,7 +7,6 @@ public class Robot : MonoBehaviour
     private ROSConnection ros;
     private SwerveDrive drivetrain;
     private bool connected;
-    private bool manual = true;
 
     private MotorInputMsg motorInputMsg;
 
@@ -39,7 +38,7 @@ public class Robot : MonoBehaviour
     void FixedUpdate() // probably should have this be fixed update because it's physics related?
     {
         // actually drive
-        if (manual) {
+        if (SettingsManager.manualEnabled) {
             //TODO should this be field-oriented? or like, if the 3rd person camera is stationary (doesn't rotate with robot) then camera oriented? idk.
 
             // basically the robot should coast instead of trying to reset the wheels to 0 upon not getting something on a certain axis
@@ -61,12 +60,14 @@ public class Robot : MonoBehaviour
            }
 
         } else {
-            //TODO shouldn't we not make new variables every loop, split across the if statement?
-            float drive = motorInputMsg.forward_velocity;
-            float strafe = motorInputMsg.sideways_velocity;
-            float steer = motorInputMsg.angular_velocity;
+            if (motorInputMsg != null) {
+                //TODO shouldn't we not make new variables every loop, split across the if statement?
+                drive = motorInputMsg.forward_velocity;
+                strafe = motorInputMsg.sideways_velocity;
+                steer = motorInputMsg.angular_velocity;
 
-            drivetrain.Drive(drive*-100f, strafe*-100f, steer*100f, true); //FIXME
+                drivetrain.Drive(drive*-100f, strafe*-100f, steer*100f, true); //FIXME
+            }
         }
 
         timeElapsed += Time.deltaTime;

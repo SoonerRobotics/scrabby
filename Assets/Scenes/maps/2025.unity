@@ -26727,11 +26727,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ce43c36286dcea4e80b3656329ba73a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5000007
+      value: 1.500001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ce43c36286dcea4e80b3656329ba73a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -91
+      value: -88
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ce43c36286dcea4e80b3656329ba73a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -42622,7 +42622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ce43c36286dcea4e80b3656329ba73a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -91
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ce43c36286dcea4e80b3656329ba73a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52866,24 +52866,32 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1406153199344676264, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_SuspensionSpring.spring
+      value: 35000
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406153199344676264, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_SuspensionSpring.targetPosition
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       propertyPath: m_Mass
-      value: 1000
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_Constraints
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       propertyPath: m_ImplicitCom
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       propertyPath: m_ImplicitTensor
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
-      propertyPath: m_InertiaTensor.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
-      propertyPath: m_InertiaTensor.z
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2094054056846038145, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
@@ -52894,6 +52902,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwerveChassis
       objectReference: {fileID: 0}
+    - target: {fileID: 2809360073453790076, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_SuspensionSpring.spring
+      value: 35000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3330907936289703337, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: decf8e78a3da9124d95b07350b79deef, type: 2}
+    - target: {fileID: 3781738964313370011, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_SuspensionSpring.spring
+      value: 35000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3781738964313370011, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_SuspensionSpring.targetPosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4024499936186118942, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: decf8e78a3da9124d95b07350b79deef, type: 2}
+    - target: {fileID: 6097772660612877025, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: decf8e78a3da9124d95b07350b79deef, type: 2}
+    - target: {fileID: 8012853228733047024, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: m_SuspensionSpring.spring
+      value: 35000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8428280780636588199, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: decf8e78a3da9124d95b07350b79deef, type: 2}
     - target: {fileID: 9143162812384560785, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -87243,7 +87283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ce43c36286dcea4e80b3656329ba73a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -90
+      value: -89
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0ce43c36286dcea4e80b3656329ba73a, type: 3}
       propertyPath: m_LocalRotation.w
