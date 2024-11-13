@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c21dc35ac99cae45840a4b85bdde07b, type: 3}
+  m_Name: IGVC 2024
+  m_EditorClassIdentifier: 
+  id: 2024/IGVC/AutoNav
+  name: AutoNav 2024
+  category: IGVC
+  sceneIndex: 2
+  availableRobots:
+  - {fileID: 11400000, guid: 835edcd824d474446b7a8dc7b1458611, type: 2}
+  - {fileID: 11400000, guid: 129b4581b296368498971c3c6ecedbab, type: 2}
+  - {fileID: 11400000, guid: 247e2a8924ff6bd48b0eb0f3a9b2e85d, type: 2}
+  origin: {x: 35.19488, y: -97.43862}
+  originLength: {x: 110944.21, y: 91065.46}

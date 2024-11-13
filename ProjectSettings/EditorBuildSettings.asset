@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scrabby/Scenes/Maps/IGVC 2023.unity
     guid: 4a0be46865230db4593c650c67635e36
+  - enabled: 1
+    path: Assets/Scrabby/Scenes/Maps/IGVC 2024.unity
+    guid: 49545b9e44c3b614b926f7942e55427b
   - enabled: 0
     path: Assets/Scrabby/Scenes/Maps/Onboarding/Day 1.unity
     guid: 2aad96cc83797244ea596d3979fcfce0
@@ -21,3 +24,4 @@ EditorBuildSettings:
     path: Assets/Scrabby/Scenes/Maps/Onboarding/AStar.unity
     guid: 960789d6962cf4f40a2d0785ee54774c
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0
