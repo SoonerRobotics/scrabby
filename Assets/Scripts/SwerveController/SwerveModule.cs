@@ -38,7 +38,7 @@ public class SwerveModule : MonoBehaviour
     private const float wheelRadius = 0.2032f; // TODO in Unity the wheel radius is 4 but in CAD the wheel radius is 8 inches, so what do we use here? Fundamental problem is trying to scale everything in Unity right...
 
     private float lastAngle = 0.0f;
-    private float maxAllowedAngleChange = 7.0f;
+    private float maxAllowedAngleChange = 15.0f;
 
     public float debugRotation = 0.0f; //FIXME
     public float debugSteerSetpoint = 0.0f;
@@ -74,10 +74,10 @@ public class SwerveModule : MonoBehaviour
         drivePID.SetSetpoint(wheelVel);
         steerPID.SetSetpoint(WrapAngle(steerAngle));
 
-        //FIXME this is supposed to be the not-rotate-more-than 90 degrees logic, not sure if it works or not tho
+        // FIXME this is supposed to be the not-rotate-more-than 90 degrees logic, not sure if it works or not tho
         // if (Mathf.Abs(wheelCollider.steerAngle - Mathf.Abs(steerPID.GetSetpoint())) > 100) {
-            // steerPID.SetSetpoint(steerAngle-180);
-            // drivePID.SetSetpoint(-drivePID.GetSetpoint());
+        //     steerPID.SetSetpoint(steerAngle-180);
+        //     drivePID.SetSetpoint(-drivePID.GetSetpoint());
         // }
     }
 
@@ -92,6 +92,7 @@ public class SwerveModule : MonoBehaviour
     }
 
     // https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/Utils.cpp
+    // https://github.com/BroncBotz3481/YAGSL/blob/main/swervelib/SwerveModule.java
     public float WrapAngle(float angle) {
         if (angle < -180) {
             return angle + 360;
@@ -101,15 +102,48 @@ public class SwerveModule : MonoBehaviour
         return angle;
     }
 
-    // void Update()
     void FixedUpdate() // probably should have this be fixed update because it's physics related?
     {
+        // YAGSL reference, should copy their design https://github.com/BroncBotz3481/YAGSL/blob/main/swervelib/SwerveModule.java
         wheelCollider.GetWorldPose(out position, out rotation);
         wheelModel.transform.position = position;
         wheelModel.transform.rotation = rotation;
 
+        // desiredState = SwerveModuleState.optimize(desiredState, Rotation2d.fromDegrees(getAbsolutePosition()));
+        // if (speed < 0.01) {
+        //     dontTryToChangeTheAngle();
+        // }
+        // // Cosine compensation.
+        // double velocity = configuration.useCosineCompensator
+        //                 ? getCosineCompensatedVelocity(desiredState)
+        //                 : desiredState.speedMetersPerSecond;
+        // double cosineScalar = 1.0;
+        //     // Taken from the CTRE SwerveModule class.
+        //     // https://api.ctr-electronics.com/phoenix6/release/java/src-html/com/ctre/phoenix6/mechanisms/swerve/SwerveModule.html#line.46
+        //     /* From FRC 900's whitepaper, we add a cosine compensator to the applied drive velocity */
+        //     /* To reduce the "skew" that occurs when changing direction */
+        //     /* If error is close to 0 rotations, we're already there, so apply full power */
+        //     /* If the error is close to 0.25 rotations, then we're 90 degrees, so movement doesn't help us at all */
+        //     cosineScalar = Rotation2d.fromDegrees(desiredState.angle.getDegrees())
+        //                             .minus(Rotation2d.fromDegrees(getAbsolutePosition()))
+        //                             .getCos(); // TODO: Investigate angle modulus by 180.
+        //     /* Make sure we don't invert our drive, even though we shouldn't ever target over 90 degrees anyway */
+        // if (cosineScalar < 0.0)
+        // {
+        // cosineScalar = 1;
+        // }
+        // return desiredState.speedMetersPerSecond * (cosineScalar);
+
         //TODO
-        wheelCollider.motorTorque = Mathf.Clamp(drivePID.Calculate(GetWheelVelocity()), -1000, 1000);
+        float motorPower = drivePID.GetSetpoint();
+        if (Mathf.Abs(motorPower) < 0.1) {
+            motorPower = 0.0f;
+            wheelCollider.brakeTorque = 500;
+        } else {
+            wheelCollider.brakeTorque = 0.0f;
+        }
+        // wheelCollider.motorTorque = Mathf.Clamp(drivePID.Calculate(GetWheelVelocity()), -1000, 1000);
+        wheelCollider.motorTorque = Mathf.Clamp(motorPower, -500, 500);
         wheelCollider.steerAngle = Mathf.Clamp(steerPID.GetSetpoint(), wheelCollider.steerAngle-maxAllowedAngleChange, wheelCollider.steerAngle+maxAllowedAngleChange);
 
         debugRotation = wheelCollider.steerAngle; //FIXME

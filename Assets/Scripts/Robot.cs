@@ -46,17 +46,17 @@ public class Robot : MonoBehaviour
            
             drive = Input.GetAxis("Vertical");
             strafe = Input.GetAxis("Horizontal");
-            steer = Input.GetAxis("Horizontal2");
+            steer = Input.GetAxis("Steer");
 
            // if any of the inputs is being pressed, then steer the wheels (because otherwise we don't want to move the wheels back to 0 degrees rotation)
            if (Mathf.Abs(drive) > 0.05 || Mathf.Abs(strafe) > 0.05 || Mathf.Abs(steer) > 0.05) {
-                drivetrain.Drive(drive * -500f, strafe * -500f, steer * 100f, true);
+                drivetrain.Drive(drive * -100f, strafe * -100f, steer * 100f, true);
             // if everything is less than 0 then set everything to 0
            } else if (Mathf.Abs(drive) < 0.05 && Mathf.Abs(strafe) < 0.05 && Mathf.Abs(steer) < 0.05) {
                 drivetrain.Drive(0.0f, 0.0f, 0.0f, false);
-           // otherwise, we don't want to steer th wheels
+           // otherwise, we don't want to steer the wheels
            } else {
-                drivetrain.Drive(drive * -500f, strafe * -500f, steer * 100f, false);
+                drivetrain.Drive(drive * -700f, strafe * -700f, steer * 100f, false);
            }
 
         } else {
