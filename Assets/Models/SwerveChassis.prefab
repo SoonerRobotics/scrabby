@@ -91,6 +91,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 2094054056846038145}
+  CogX: 0
+  CogY: 0
+  CogZ: 0
   chassisModel: {fileID: 9143162812384560785}
 --- !u!1 &2110196124466543421
 GameObject:
@@ -203,7 +206,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 5ead6f3cf08028c4692c5e0c2859c624, type: 2}
   m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
@@ -391,7 +394,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 651160af896142245b1b04212e074da3, type: 2}
   m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
@@ -579,7 +582,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 4bd990bfef27fcf4cb5274d59f319b15, type: 2}
   m_TargetDisplay: 2
   m_TargetEye: 3
   m_HDR: 1
