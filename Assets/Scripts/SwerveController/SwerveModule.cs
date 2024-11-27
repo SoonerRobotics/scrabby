@@ -104,6 +104,10 @@ public class SwerveModule : MonoBehaviour
 
     void FixedUpdate() // probably should have this be fixed update because it's physics related?
     {
+        if (SettingsManager.paused) {
+            return;
+        }
+
         // YAGSL reference, should copy their design https://github.com/BroncBotz3481/YAGSL/blob/main/swervelib/SwerveModule.java
         wheelCollider.GetWorldPose(out position, out rotation);
         wheelModel.transform.position = position;

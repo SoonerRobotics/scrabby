@@ -39,6 +39,11 @@ public class ImagePublisher : MonoBehaviour {
     }
 
     private void OnCameraRender(ScriptableRenderContext context, Camera targetCamera) {
+        // don't trigger the vision pipeline if we're paused
+        if (SettingsManager.paused) {
+            return;
+        }
+
         if (targetCamera != camera) {
             return;
         }

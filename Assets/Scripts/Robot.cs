@@ -10,6 +10,7 @@ public class Robot : MonoBehaviour
 
     private MotorInputMsg motorInputMsg;
 
+    // TODO make these configurable
     private string motorFeedbackTopicName = "/autonav/motor_feedback";
     private string motorInputTopicName = "/autonav/motor_input";
 
@@ -37,6 +38,14 @@ public class Robot : MonoBehaviour
     // void Update() {
     void FixedUpdate() // probably should have this be fixed update because it's physics related?
     {
+        // if game is paused
+        if (SettingsManager.paused) {
+            // do not register input
+            // do not send commands to the swerve drive
+            // and do not publish messages
+            return;
+        }
+
         // actually drive
         if (SettingsManager.manualEnabled) {
             //TODO should this be field-oriented? or like, if the 3rd person camera is stationary (doesn't rotate with robot) then camera oriented? idk.
