@@ -10,7 +10,6 @@ public class SettingsManager : MonoBehaviour {
     public static bool paused = false;
     public static bool showHUD = true;
     public static bool fieldOriented = false;
-    public static GameObject pauseUIDoc;
 
     void Awake() {
         if (Instance != null) {
@@ -18,9 +17,10 @@ public class SettingsManager : MonoBehaviour {
         } else {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            manualEnabled = false;
-            pauseUIDoc = GameObject.Find("PauseUIDoc");
-            DontDestroyOnLoad(pauseUIDoc);
+            // manualEnabled = false;
+            // paused = false;
+            // showHUD = true;
+            // fieldOriented = false;
         }
     }
 
@@ -32,19 +32,15 @@ public class SettingsManager : MonoBehaviour {
 
         if (paused) {
             Time.timeScale = 0.0f;
-            // pauseUIDoc.SetActive(true);
-            pauseUIDoc.GetComponent<UIDocument>().rootVisualElement.style.opacity = 1.0f;
-            // pauseUIDoc.GetComponent<UIDocument>().rootVisualElement.SetEnabled(true);
+
+            if (SceneManager.sceneCount == 1) {
+                SceneManager.LoadScene("pauseMenu", LoadSceneMode.Additive);
+            }
         } else {
             Time.timeScale = 1.0f;
-
-            // if (pauseUIDoc.GetComponent<UIDocument>().rootVisualElement != null) {
-                // pauseUIDoc.GetComponent<UIDocument>().rootVisualElement.ElementAt(0).visible = false;
-                // pauseUIDoc.GetComponent<UIDocument>().rootVisualElement.SetEnabled(false);
-
-                pauseUIDoc.GetComponent<UIDocument>().rootVisualElement.style.opacity = 0.0f;
-                // pauseUIDoc.SetActive(false);
-            // }
+            if (SceneManager.sceneCount == 2) {
+                SceneManager.UnloadSceneAsync("pauseMenu");
+            }
         }
     }
 }

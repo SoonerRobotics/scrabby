@@ -1,5 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement name="back" style="flex-grow: 1; opacity: 0.5; align-items: stretch; top: auto; left: auto; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-size: 75% 100%; max-width: 50%; align-self: center;">
+    <engine:VisualElement name="back" style="flex-grow: 1; opacity: 1; align-items: stretch; top: auto; left: auto; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-size: 75% 100%; max-width: 60%; align-self: center;">
         <engine:Label text="Paused" style="align-items: auto; align-self: center;" />
         <engine:Toggle label="Manual Control" name="manualToggle" />
         <engine:Toggle label="Field oriented control" name="fieldOrientedToggle" />

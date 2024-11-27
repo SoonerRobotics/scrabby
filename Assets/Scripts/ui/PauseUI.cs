@@ -12,11 +12,27 @@ public class PauseUI : MonoBehaviour
     private DropdownField cameraDropdown;
     private Button restartButton;
     private Button mainMenuButton;
+
+    void Awake() {
+        SetupCallbacks();
+    }
+
+    void OnLoad() {
+        SetupCallbacks();
+    }
     
-    private void OnEnable()
+    private void SetupCallbacks()
     {
         // The UXML is already instantiated by the UIDocument component
         var uiDocument = GetComponent<UIDocument>();
+
+        Debug.Log("getting to setup callbacks yes very much yes");
+
+        Debug.Log("logging in order of in the lines of code");
+
+        Debug.Log(SettingsManager.manualEnabled);
+        Debug.Log(SettingsManager.fieldOriented);
+        Debug.Log(SettingsManager.showHUD);
 
         manualControlToggle = uiDocument.rootVisualElement.Q("manualToggle") as Toggle;
         fieldOrientedControl = uiDocument.rootVisualElement.Q("fieldOrientedToggle") as Toggle;
@@ -35,7 +51,7 @@ public class PauseUI : MonoBehaviour
         manualControlToggle.RegisterCallback<ClickEvent>(ToggleManualControl);
         fieldOrientedControl.RegisterCallback<ClickEvent>(ToggleFieldOriented);
         showHUD.RegisterCallback<ClickEvent>(ToggleHUD);
-        cameraDropdown.RegisterCallback<ClickEvent>(TODO);
+        cameraDropdown.RegisterCallback<ClickEvent>(SwitchCamera);
         restartButton.RegisterCallback<ClickEvent>(RestartCallback);
         mainMenuButton.RegisterCallback<ClickEvent>(BackToMenu);
     }
@@ -45,7 +61,7 @@ public class PauseUI : MonoBehaviour
         manualControlToggle.UnregisterCallback<ClickEvent>(ToggleManualControl);
         fieldOrientedControl.UnregisterCallback<ClickEvent>(ToggleFieldOriented);
         showHUD.UnregisterCallback<ClickEvent>(ToggleHUD);
-        cameraDropdown.UnregisterCallback<ClickEvent>(TODO);
+        cameraDropdown.UnregisterCallback<ClickEvent>(SwitchCamera);
         mainMenuButton.UnregisterCallback<ClickEvent>(BackToMenu);
     }
 
@@ -63,15 +79,14 @@ public class PauseUI : MonoBehaviour
         SettingsManager.showHUD = !SettingsManager.showHUD;
     }
 
-    private void TODO(ClickEvent evt) {
+    private void SwitchCamera(ClickEvent evt) {
         //TODO
     }
 
     private void BackToMenu(ClickEvent evt)
     {
-        //FIXME
-        SceneManager.UnloadSceneAsync("2025");
-        SceneManager.LoadScene("menu");
+        SettingsManager.paused = false;
+        SceneManager.LoadScene("menu", LoadSceneMode.Single);
     }
 
     private void RestartCallback(ClickEvent evt) {
