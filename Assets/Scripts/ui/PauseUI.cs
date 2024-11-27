@@ -26,14 +26,6 @@ public class PauseUI : MonoBehaviour
         // The UXML is already instantiated by the UIDocument component
         var uiDocument = GetComponent<UIDocument>();
 
-        Debug.Log("getting to setup callbacks yes very much yes");
-
-        Debug.Log("logging in order of in the lines of code");
-
-        Debug.Log(SettingsManager.manualEnabled);
-        Debug.Log(SettingsManager.fieldOriented);
-        Debug.Log(SettingsManager.showHUD);
-
         manualControlToggle = uiDocument.rootVisualElement.Q("manualToggle") as Toggle;
         fieldOrientedControl = uiDocument.rootVisualElement.Q("fieldOrientedToggle") as Toggle;
         showHUD = uiDocument.rootVisualElement.Q("showHUDToggle") as Toggle;
@@ -62,6 +54,7 @@ public class PauseUI : MonoBehaviour
         fieldOrientedControl.UnregisterCallback<ClickEvent>(ToggleFieldOriented);
         showHUD.UnregisterCallback<ClickEvent>(ToggleHUD);
         cameraDropdown.UnregisterCallback<ClickEvent>(SwitchCamera);
+        restartButton.UnregisterCallback<ClickEvent>(RestartCallback);
         mainMenuButton.UnregisterCallback<ClickEvent>(BackToMenu);
     }
 
