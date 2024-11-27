@@ -26,19 +26,21 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         // The UXML is already instantiated by the UIDocument component
         var uiDocument = GetComponent<UIDocument>();
 
+        SettingsManager.LoadPreferences();
+
         manualControlToggle = uiDocument.rootVisualElement.Q("manualToggle") as Toggle;
         fieldOrientedControl = uiDocument.rootVisualElement.Q("fieldOrientedToggle") as Toggle;
         showHUD = uiDocument.rootVisualElement.Q("showHUDToggle") as Toggle;
         cameraDropdown = uiDocument.rootVisualElement.Q("cameraDropdown") as DropdownField;
         
         startScrabbyButton = uiDocument.rootVisualElement.Q("startButton") as Button;
-        
-        manualControlToggle.value = SettingsManager.manualEnabled;
-        fieldOrientedControl.value = SettingsManager.fieldOriented;
-        showHUD.value = SettingsManager.showHUD;
 
         cameraDropdown.choices = new List<string> { "fixed", "mouse", "auto", "bird's eye", "cinematic"};
-        cameraDropdown.value = cameraDropdown.choices[0];
+
+        manualControlToggle.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("manualEnabled", 0));
+        fieldOrientedControl.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("fieldOriented", 0));
+        showHUD.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("showHUD", 1));
+        cameraDropdown.value = PlayerPrefs.GetString("cameraDropdown", "fixed");
 
         manualControlToggle.RegisterCallback<ClickEvent>(ToggleManualControl);
         fieldOrientedControl.RegisterCallback<ClickEvent>(ToggleFieldOriented);
@@ -75,6 +77,7 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
     }
 
     private void StartScrabby(ClickEvent evt) {
+        SettingsManager.SavePreferences();
         SceneManager.LoadScene("2025", LoadSceneMode.Single);
     }
 }

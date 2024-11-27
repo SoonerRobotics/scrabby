@@ -7,9 +7,10 @@ using UnityEngine.SceneManagement;
 public class SettingsManager : MonoBehaviour {
     public static SettingsManager Instance;
     public static bool manualEnabled;
-    public static bool paused = false;
-    public static bool showHUD = true;
-    public static bool fieldOriented = false;
+    public static bool paused;
+    public static bool showHUD;
+    public static bool fieldOriented;
+    public static string cameraView;
 
     void Awake() {
         if (Instance != null) {
@@ -17,10 +18,7 @@ public class SettingsManager : MonoBehaviour {
         } else {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            // manualEnabled = false;
-            // paused = false;
-            // showHUD = true;
-            // fieldOriented = false;
+            LoadPreferences();
         }
     }
 
@@ -30,6 +28,7 @@ public class SettingsManager : MonoBehaviour {
             // as long as we're not on the main menu, allow user to pause simulation
             if (SceneManager.GetSceneAt(0).name != "menu") {
                 paused = !paused;
+                SavePreferences();
             }
         }
 
@@ -45,5 +44,33 @@ public class SettingsManager : MonoBehaviour {
                 SceneManager.UnloadSceneAsync("pauseMenu");
             }
         }
+    }
+
+    public static void SavePreferences() {
+        PlayerPrefs.SetInt("manualEnabled", BoolToInt(manualEnabled));
+        PlayerPrefs.SetInt("showHUD", BoolToInt(showHUD));
+        PlayerPrefs.SetInt("fieldOriented", BoolToInt(fieldOriented));
+        PlayerPrefs.SetString("cameraView", cameraView);
+    }
+
+    public static void LoadPreferences() {
+        manualEnabled = IntToBool(PlayerPrefs.GetInt("manualEnabled", 0));
+        showHUD = IntToBool(PlayerPrefs.GetInt("showHUD", 1));
+        fieldOriented = IntToBool(PlayerPrefs.GetInt("fieldOriented", 0));
+        cameraView = PlayerPrefs.GetString("cameraView", "fixed");
+    }
+
+    public static bool IntToBool(int x) {
+        if (x == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public static int BoolToInt(bool x) {
+        if (x) {
+            return 1;
+        }
+        return 0;
     }
 }

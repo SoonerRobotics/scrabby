@@ -38,7 +38,7 @@ public class PauseUI : MonoBehaviour
         showHUD.value = SettingsManager.showHUD;
 
         cameraDropdown.choices = new List<string> { "fixed", "mouse", "auto", "bird's eye", "cinematic"};
-        cameraDropdown.value = cameraDropdown.choices[0];
+        cameraDropdown.value = SettingsManager.cameraView;
 
         manualControlToggle.RegisterCallback<ClickEvent>(ToggleManualControl);
         fieldOrientedControl.RegisterCallback<ClickEvent>(ToggleFieldOriented);
