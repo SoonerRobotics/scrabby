@@ -27,7 +27,10 @@ public class SettingsManager : MonoBehaviour {
     void Update() {
         // https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Input.GetKeyDown.html
         if (Input.GetKeyDown("p")) {
-            paused = !paused;
+            // as long as we're not on the main menu, allow user to pause simulation
+            if (SceneManager.GetSceneAt(0).name != "menu") {
+                paused = !paused;
+            }
         }
 
         if (paused) {
