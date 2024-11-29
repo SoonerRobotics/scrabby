@@ -10,7 +10,11 @@ public class SettingsManager : MonoBehaviour {
     public static bool paused;
     public static bool showHUD;
     public static bool fieldOriented;
+    public static float positionOffset;
+    public static float initialHeading;
     public static string cameraView;
+    
+    public static bool needToSetPosition = false;
 
     void Awake() {
         if (Instance != null) {
@@ -19,6 +23,7 @@ public class SettingsManager : MonoBehaviour {
             Instance = this;
             DontDestroyOnLoad(gameObject);
             LoadPreferences();
+            needToSetPosition = false;
         }
     }
 
@@ -52,12 +57,16 @@ public class SettingsManager : MonoBehaviour {
         PlayerPrefs.SetInt("showHUD", BoolToInt(showHUD));
         PlayerPrefs.SetInt("fieldOriented", BoolToInt(fieldOriented));
         PlayerPrefs.SetString("cameraView", cameraView);
+        PlayerPrefs.SetFloat("positionOffset", positionOffset);
+        PlayerPrefs.SetFloat("initialHeading", initialHeading);
     }
 
     public static void LoadPreferences() {
         manualEnabled = IntToBool(PlayerPrefs.GetInt("manualEnabled", 0));
         showHUD = IntToBool(PlayerPrefs.GetInt("showHUD", 1));
         fieldOriented = IntToBool(PlayerPrefs.GetInt("fieldOriented", 0));
+        positionOffset = PlayerPrefs.GetFloat("positionOffset", 0.0f);
+        initialHeading = PlayerPrefs.GetFloat("initialHeading", 0.0f);
         cameraView = PlayerPrefs.GetString("cameraView", "fixed");
     }
 

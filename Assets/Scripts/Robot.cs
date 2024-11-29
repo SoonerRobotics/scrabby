@@ -30,6 +30,9 @@ public class Robot : MonoBehaviour
     private Vector3 mousePos = new Vector3(0, 0, 0);
     private const float mouseScaleFactor = 100f; //TODO tune this, configurable idk
 
+    private Vector3 initialPosition = new Vector3(47f, .6f, 26f);
+    private Vector3 initialHeading = new Vector3(0, 90, 0);
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -54,6 +57,13 @@ public class Robot : MonoBehaviour
             // do not send commands to the swerve drive
             // and do not publish messages
             return;
+        }
+
+        if (SettingsManager.needToSetPosition) {
+            transform.position = initialPosition + new Vector3(0, 0, SettingsManager.positionOffset);
+            transform.eulerAngles = initialHeading + new Vector3(0, SettingsManager.initialHeading, 0);
+
+            SettingsManager.needToSetPosition = false;
         }
 
         // actually drive

@@ -11,6 +11,9 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
     private Toggle showHUD;
     private DropdownField cameraDropdown;
 
+    private Slider positionSlider;
+    private Slider headingSlider;
+
     private Button startScrabbyButton;
 
      void Awake() {
@@ -32,6 +35,8 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         fieldOrientedControl = uiDocument.rootVisualElement.Q("fieldOrientedToggle") as Toggle;
         showHUD = uiDocument.rootVisualElement.Q("showHUDToggle") as Toggle;
         cameraDropdown = uiDocument.rootVisualElement.Q("cameraDropdown") as DropdownField;
+        positionSlider = uiDocument.rootVisualElement.Q("positionSlider") as Slider;
+        headingSlider = uiDocument.rootVisualElement.Q("headingSlider") as Slider;
         
         startScrabbyButton = uiDocument.rootVisualElement.Q("startButton") as Button;
 
@@ -41,11 +46,15 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         fieldOrientedControl.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("fieldOriented", 0));
         showHUD.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("showHUD", 1));
         cameraDropdown.value = PlayerPrefs.GetString("cameraDropdown", "fixed");
+        positionSlider.value = PlayerPrefs.GetFloat("positionOffset", 0.0f);
+        headingSlider.value = PlayerPrefs.GetFloat("initialHeading", 0.0f);
 
         manualControlToggle.RegisterCallback<ClickEvent>(ToggleManualControl);
         fieldOrientedControl.RegisterCallback<ClickEvent>(ToggleFieldOriented);
         showHUD.RegisterCallback<ClickEvent>(ToggleHUD);
         cameraDropdown.RegisterCallback<ClickEvent>(SwitchCamera);
+        positionSlider.RegisterCallback<ChangeEvent<float>>(ChangeInitialPosition);
+        headingSlider.RegisterCallback<ChangeEvent<float>>(ChangeInitialHeading);
         startScrabbyButton.RegisterCallback<ClickEvent>(StartScrabby);
     }
 
@@ -55,6 +64,8 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         fieldOrientedControl.UnregisterCallback<ClickEvent>(ToggleFieldOriented);
         showHUD.UnregisterCallback<ClickEvent>(ToggleHUD);
         cameraDropdown.UnregisterCallback<ClickEvent>(SwitchCamera);
+        positionSlider.UnregisterCallback<ChangeEvent<float>>(ChangeInitialPosition);
+        headingSlider.UnregisterCallback<ChangeEvent<float>>(ChangeInitialHeading);
         startScrabbyButton.UnregisterCallback<ClickEvent>(StartScrabby);
     }
 
@@ -76,8 +87,17 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         //TODO
     }
 
+    private void ChangeInitialPosition(ChangeEvent<float> evt) {
+        SettingsManager.positionOffset = evt.newValue;
+    }
+
+    private void ChangeInitialHeading(ChangeEvent<float> evt) {
+        SettingsManager.initialHeading = evt.newValue;
+    }
+
     private void StartScrabby(ClickEvent evt) {
         SettingsManager.SavePreferences();
+        SettingsManager.needToSetPosition = true;
         SceneManager.LoadScene("2025", LoadSceneMode.Single);
     }
 }

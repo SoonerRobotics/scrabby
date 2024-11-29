@@ -11,5 +11,7 @@
         <engine:DropdownField label="Map Select" name="mapDropdown" />
         <engine:Slider label="Time of Day" value="9" high-value="18" name="timeSlider" low-value="6" fill="false" show-input-field="false" />
         <engine:Slider label="Sensor Noise" value="0.5" high-value="1" name="noiseSlider" low-value="0" fill="false" show-input-field="false" />
+        <engine:Slider label="Initial Heading" value="180" high-value="360" name="headingSlider" low-value="0" fill="false" show-input-field="true" />
+        <engine:Slider label="Initial Position" value="0" high-value="4" name="positionSlider" low-value="-4" fill="false" show-input-field="true" />
     </engine:VisualElement>
 </engine:UXML>
