@@ -37,6 +37,7 @@ public class SettingsManager : MonoBehaviour {
 
             if (SceneManager.sceneCount == 1) {
                 SceneManager.LoadScene("pauseMenu", LoadSceneMode.Additive);
+                UnityEngine.Cursor.lockState = CursorLockMode.None; // allow cursor to move if paused so user can interact with the UI
             }
         } else {
             Time.timeScale = 1.0f;

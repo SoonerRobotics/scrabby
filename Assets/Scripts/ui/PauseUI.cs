@@ -37,13 +37,13 @@ public class PauseUI : MonoBehaviour
         fieldOrientedControl.value = SettingsManager.fieldOriented;
         showHUD.value = SettingsManager.showHUD;
 
-        cameraDropdown.choices = new List<string> { "fixed", "mouse", "auto", "bird's eye", "cinematic"};
+        cameraDropdown.choices = new List<string> { "fixed", "mouse", "auto", "bird's eye", "follow", "cinematic"};
         cameraDropdown.value = SettingsManager.cameraView;
 
         manualControlToggle.RegisterCallback<ClickEvent>(ToggleManualControl);
         fieldOrientedControl.RegisterCallback<ClickEvent>(ToggleFieldOriented);
         showHUD.RegisterCallback<ClickEvent>(ToggleHUD);
-        cameraDropdown.RegisterCallback<ClickEvent>(SwitchCamera);
+        cameraDropdown.RegisterCallback<ChangeEvent<string>>(SwitchCamera);
         restartButton.RegisterCallback<ClickEvent>(RestartCallback);
         mainMenuButton.RegisterCallback<ClickEvent>(BackToMenu);
     }
@@ -53,7 +53,7 @@ public class PauseUI : MonoBehaviour
         manualControlToggle.UnregisterCallback<ClickEvent>(ToggleManualControl);
         fieldOrientedControl.UnregisterCallback<ClickEvent>(ToggleFieldOriented);
         showHUD.UnregisterCallback<ClickEvent>(ToggleHUD);
-        cameraDropdown.UnregisterCallback<ClickEvent>(SwitchCamera);
+        cameraDropdown.UnregisterCallback<ChangeEvent<string>>(SwitchCamera);
         restartButton.UnregisterCallback<ClickEvent>(RestartCallback);
         mainMenuButton.UnregisterCallback<ClickEvent>(BackToMenu);
     }
@@ -72,8 +72,8 @@ public class PauseUI : MonoBehaviour
         SettingsManager.showHUD = !SettingsManager.showHUD;
     }
 
-    private void SwitchCamera(ClickEvent evt) {
-        //TODO
+    private void SwitchCamera(ChangeEvent<string> evt) {
+        SettingsManager.cameraView = evt.newValue;
     }
 
     private void BackToMenu(ClickEvent evt)
