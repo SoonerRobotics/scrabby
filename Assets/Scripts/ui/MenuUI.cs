@@ -45,7 +45,7 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         manualControlToggle.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("manualEnabled", 0));
         fieldOrientedControl.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("fieldOriented", 0));
         showHUD.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("showHUD", 1));
-        cameraDropdown.value = PlayerPrefs.GetString("cameraDropdown", "fixed");
+        cameraDropdown.value = PlayerPrefs.GetString("cameraView", "fixed");
         positionSlider.value = PlayerPrefs.GetFloat("positionOffset", 0.0f);
         headingSlider.value = PlayerPrefs.GetFloat("initialHeading", 0.0f);
 

@@ -24,11 +24,11 @@ public class Robot : MonoBehaviour
     private float steer = 0.0f;
 
     // mouse-controlled orbit camera spherical coordinates stuff
-    private float theta = 0.0f; // controls azimuth
-    private float phi = 0.0f; // controls altitude
-    private float rho = Mathf.Sqrt((-15)*(-15) + (57)*57 + 47*47); //FIXME this should be configurable and not hard-coded
+    public float theta = 0.0f; // controls azimuth
+    public float phi = 0.0f; // controls altitude
+    private float rho = Mathf.Sqrt((-15)*(-15) + (57)*57 + 47*47) + 10; //FIXME this should be configurable and not hard-coded
     private Vector3 mousePos = new Vector3(0, 0, 0);
-    private const float mouseScaleFactor = 100f; //TODO tune this, configurable idk
+    private const float mouseScaleFactor = 400f; //TODO tune this, configurable idk
 
     private Vector3 initialPosition = new Vector3(47f, .6f, 26f);
     private Vector3 initialHeading = new Vector3(0, 90, 0);
@@ -131,19 +131,23 @@ public class Robot : MonoBehaviour
                 // theta = 0=2pi is at the front of the robot, theta = pi is at the back???
                 // although maybe we don't want them to go below the ground? also, what about barrels? do we clip through barrels? are we allowing zoom in and out?
                 // I don't want to, but it might be cool
-                theta += Input.mousePositionDelta.x / mouseScaleFactor;
-                phi += Input.mousePositionDelta.y / mouseScaleFactor;
+                theta -= Input.mousePositionDelta.x / mouseScaleFactor;
+                phi += Input.mousePositionDelta.y / mouseScaleFactor; // minus because phi is from the top/y axis and not from the x-z plane
+
+                if (theta > 2*Mathf.PI) {
+                    theta -= 2*Mathf.PI;
+                } else if (theta < 0) {
+                    theta += 2*Mathf.PI;
+                }
                 
-                theta = Mathf.Clamp(theta, 0.0f, 2*Mathf.PI);
-                phi = Mathf.Clamp(phi, 0.0f, Mathf.PI);
-                // phi %= Mathf.PI; // keep phi between [0, pi]
-                // theta %= 2*Mathf.PI; // keep theta between [0, 2pi]
+                phi = Mathf.Clamp(phi, 0.0f, Mathf.PI/2);
                 
-                thirdPersonCamera.transform.localPosition = new Vector3(rho*Mathf.Cos(theta)*Mathf.Sin(phi), rho*Mathf.Sin(theta)*Mathf.Sin(phi), rho*Mathf.Cos(phi));
+                thirdPersonCamera.transform.localPosition = new Vector3(rho*Mathf.Cos(theta)*Mathf.Sin(phi), rho*Mathf.Cos(phi), rho*Mathf.Sin(theta)*Mathf.Sin(phi));
 
                 // not sure how to calculate the rotation the camera should be at. probably involes trig. at phi=0 the camera should be tilted down by 90 degrees. at phi = pi/2 the camera should be level with the horizon
                 // at theta = 0 the camera should be 180 degrees (facing the robot), and theta = pi the camera should be facing the back of the robot (in the forwards direction)
-                thirdPersonCamera.transform.localEulerAngles = new Vector3(Mathf.Rad2Deg*Mathf.Cos(theta), 0, Mathf.Rad2Deg*Mathf.Sin(theta)); //TODO
+                thirdPersonCamera.transform.localEulerAngles = new Vector3(90 - Mathf.Rad2Deg*phi, 270 - Mathf.Rad2Deg*theta, 0); //TODO
+                // thirdPersonCamera.transform.localEulerAngles = new Vector3(Mathf.Rad2Deg*Mathf.Cos(theta), 0, Mathf.Rad2Deg*Mathf.Sin(theta)); //TODO
 
                 break;
             case "auto":
@@ -157,9 +161,6 @@ public class Robot : MonoBehaviour
                 thirdPersonCamera.transform.eulerAngles = new Vector3(90, 0, 90);
                 // this is somewhat shaky for some reason, in the future probably best to implement as a separate camera and just sitch to it while disabling original 3rd person
                 // when its not rendering and then disabling this camera and going back to the 3rd person one whenver we swap to like fixed for instance
-             break;
-            case "follow":
-                //TODO make camera like scrap mechanic follow
                 break;
             case "cinematic":
                 //TODO this is for issue #11, not our problem right now
