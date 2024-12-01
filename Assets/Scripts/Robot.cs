@@ -123,7 +123,7 @@ public class Robot : MonoBehaviour
                 // and face it forwards
                 thirdPersonCamera.transform.localEulerAngles = new Vector3(30, 180, 0); //FIXME
                 break;
-            case "mouse":
+            case "orbit":
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked; // https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Cursor-lockState.html
                 // spherical coordinates r(rho, theta, phi) = <rho*cos(theta)sin(phi), rho*sin(theta)sin(phi), rho*cos(phi)>
                 // where rho stays constant at whatever dist(-15, 57, 47) (from "fixed" view) is, and theta and phi are controlled by the mouse, going [0, 2pi] and [0, pi] respectively

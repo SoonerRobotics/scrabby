@@ -40,7 +40,7 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         
         startScrabbyButton = uiDocument.rootVisualElement.Q("startButton") as Button;
 
-        cameraDropdown.choices = new List<string> { "fixed", "mouse", "auto", "bird's eye", "cinematic"};
+        cameraDropdown.choices = new List<string> { "fixed", "orbit", "auto", "bird's eye", "cinematic"};
 
         manualControlToggle.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("manualEnabled", 0));
         fieldOrientedControl.value = SettingsManager.IntToBool(PlayerPrefs.GetInt("fieldOriented", 0));

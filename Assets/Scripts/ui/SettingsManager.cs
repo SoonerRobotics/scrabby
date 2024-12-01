@@ -15,7 +15,7 @@ public class SettingsManager : MonoBehaviour {
     public static string cameraView;
     
     public static bool needToSetPosition = false;
-    public static List<string> cameraViewModes = new List<string> { "fixed", "mouse", "auto", "bird's eye", "cinematic" };
+    public static List<string> cameraViewModes = new List<string> { "fixed", "orbit", "auto", "bird's eye", "cinematic" };
     private static int cameraViewIndex = 0;
 
     void Awake() {
