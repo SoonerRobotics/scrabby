@@ -52,7 +52,7 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         manualControlToggle.RegisterCallback<ClickEvent>(ToggleManualControl);
         fieldOrientedControl.RegisterCallback<ClickEvent>(ToggleFieldOriented);
         showHUD.RegisterCallback<ClickEvent>(ToggleHUD);
-        cameraDropdown.RegisterCallback<ClickEvent>(SwitchCamera);
+        cameraDropdown.RegisterCallback<ChangeEvent<string>>(SwitchCamera);
         positionSlider.RegisterCallback<ChangeEvent<float>>(ChangeInitialPosition);
         headingSlider.RegisterCallback<ChangeEvent<float>>(ChangeInitialHeading);
         startScrabbyButton.RegisterCallback<ClickEvent>(StartScrabby);
@@ -63,7 +63,7 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         manualControlToggle.UnregisterCallback<ClickEvent>(ToggleManualControl);
         fieldOrientedControl.UnregisterCallback<ClickEvent>(ToggleFieldOriented);
         showHUD.UnregisterCallback<ClickEvent>(ToggleHUD);
-        cameraDropdown.UnregisterCallback<ClickEvent>(SwitchCamera);
+        cameraDropdown.UnregisterCallback<ChangeEvent<string>>(SwitchCamera);
         positionSlider.UnregisterCallback<ChangeEvent<float>>(ChangeInitialPosition);
         headingSlider.UnregisterCallback<ChangeEvent<float>>(ChangeInitialHeading);
         startScrabbyButton.UnregisterCallback<ClickEvent>(StartScrabby);
@@ -83,8 +83,8 @@ public class MenuUI : MonoBehaviour //TODO should PauseUI be like a child of thi
         SettingsManager.showHUD = !SettingsManager.showHUD;
     }
 
-    private void SwitchCamera(ClickEvent evt) {
-        //TODO
+    private void SwitchCamera(ChangeEvent<string> evt) {
+        SettingsManager.cameraView = evt.newValue;
     }
 
     private void ChangeInitialPosition(ChangeEvent<float> evt) {
