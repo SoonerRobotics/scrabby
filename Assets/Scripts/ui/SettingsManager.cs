@@ -15,6 +15,8 @@ public class SettingsManager : MonoBehaviour {
     public static string cameraView;
     
     public static bool needToSetPosition = false;
+    public static List<string> cameraViewModes = new List<string> { "fixed", "mouse", "auto", "bird's eye", "cinematic" };
+    private static int cameraViewIndex = 0;
 
     void Awake() {
         if (Instance != null) {
@@ -49,6 +51,17 @@ public class SettingsManager : MonoBehaviour {
             if (SceneManager.sceneCount == 2) {
                 SceneManager.UnloadSceneAsync("pauseMenu");
             }
+        }
+
+        cameraViewIndex = cameraViewModes.FindIndex(x => x.Equals(cameraView));
+
+        if (Input.GetKeyDown("c") || Input.GetKeyDown("right ctrl") || Input.GetKeyDown("left ctrl")) {
+            cameraViewIndex += 1;
+            if (cameraViewIndex > cameraViewModes.Count-1) {
+                cameraViewIndex = 0;
+            }
+
+            cameraView = cameraViewModes[cameraViewIndex];
         }
     }
 
