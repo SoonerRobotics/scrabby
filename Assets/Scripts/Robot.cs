@@ -6,6 +6,7 @@ public class Robot : MonoBehaviour
 {
     private ROSConnection ros;
     private SwerveDrive drivetrain;
+    private Rigidbody rigidBody;
     private GameObject thirdPersonCamera;
     private bool connected;
 
@@ -19,20 +20,25 @@ public class Robot : MonoBehaviour
     private float motorFeedbackFrequency = 0.5f; // twice a second TODO make real-life-accurate
 
     // for manual control, you don't want to return the wheels to 0 even if you're not actively pressing the right arrow, the robot should coast along its current path
-    private float drive_ = 0.0f;
-    private float strafe_ = 0.0f;
-    private float steer_ = 0.0f;
+    public float drive_ = 0.0f; // FIXME make private once debugged
+    public float strafe_ = 0.0f;
+    public float steer_ = 0.0f;
 
-    private float drive = 0.0f;
-    private float strafe = 0.0f;
-    private float steer = 0.0f;
+    public float drive = 0.0f; // FIXME make private once debugged
+    public float strafe = 0.0f;
+    public float steer = 0.0f;
 
     // mouse-controlled orbit camera spherical coordinates stuff
-    public float theta = 0.0f; // controls azimuth
-    public float phi = 0.0f; // controls altitude
+    public float theta = 0.0f; // controls azimuth FIXME make private once debugged
+    public float phi = 0.0f; // controls altitude FIXME make private once debugged
     private float rho = Mathf.Sqrt((-15)*(-15) + (57)*57 + 47*47) + 10; //FIXME this should be configurable and not hard-coded
     private Vector3 mousePos = new Vector3(0, 0, 0);
     private const float mouseScaleFactor = 400f; //TODO tune this, configurable idk
+
+    // auto/trailmakers camera view stuff
+    private float cameraHeading = 0.0f;
+    private float camerInertia = 10.0f;
+    private float directionOfTravel = 0.0f;
 
     private Vector3 initialPosition = new Vector3(47f, .6f, 26f);
     private Vector3 initialHeading = new Vector3(0, 90, 0);
@@ -42,6 +48,8 @@ public class Robot : MonoBehaviour
     {
         //TODO subscribers/publishers
         drivetrain = GetComponent<SwerveDrive>();
+
+        rigidBody = GetComponent<Rigidbody>();
 
         thirdPersonCamera = GameObject.Find("thirdPersonCamera");
 
@@ -166,7 +174,27 @@ public class Robot : MonoBehaviour
 
                 break;
             case "auto":
-                //TODO make camera like that one trailmakers camera
+                // like that one trailmakers camera
+                //TODO this doesn't account for actual motion, just input. should rely on like transform.Velocity().x and z or something
+                // directionOfTravel = Mathf.Atan(strafe / drive); // assuming that the x-axis aka 0 degrees is forwards
+
+                directionOfTravel = Mathf.Atan(rigidBody.linearVelocity.x / rigidBody.linearVelocity.z);
+
+                // if (System.Single.IsNaN(directionOfTravel)) {
+                //     directionOfTravel = 0.0f;
+                // } else if (strafe == 0.0f) { // if there is only forwards/backwards input then `strafe / drive` returns 0, so handle that separately
+                //     directionOfTravel = Mathf.Deg2Rad * 180 * drive; // will be 0 if drive is 0 and 180 if drive is 1 (not sure how to handle -1)
+                // }
+
+                // directionOfTravel += Mathf.PI/2 + Mathf.PI;
+                // directionOfTravel %= Mathf.PI*2;
+
+                //TODO this does not take the camera intertia into account
+                // spherical coordinates except not mouse controlled and the math-z-axis but Unity-Y-axis coordinate is fixed and unchanging
+                thirdPersonCamera.transform.localPosition = new Vector3(rho*Mathf.Cos(directionOfTravel)*Mathf.Sin(Mathf.PI/3), 57, rho*Mathf.Sin(directionOfTravel)*Mathf.Sin(Mathf.PI/3));
+
+                // thirdPersonCamera.transform.localEulerAngles = new Vector3(30, 270 - (Mathf.Rad2Deg * directionOfTravel), 0);
+                // thirdPersonCamera.transform.localEulerAngles = new Vector3(30, 270 - Mathf.Rad2Deg*directionOfTravel -180, 0);
                 break;
             case "bird's eye": //TODO this should probably put us in field-oriented mode, no?
                 // place camera above the map
@@ -174,7 +202,7 @@ public class Robot : MonoBehaviour
 
                 // and face it downwards
                 thirdPersonCamera.transform.eulerAngles = new Vector3(90, 0, 90);
-                // this is somewhat shaky for some reason, in the future probably best to implement as a separate camera and just sitch to it while disabling original 3rd person
+                // FIXME this is somewhat shaky for some reason, in the future probably best to implement as a separate camera and just switch to it while disabling original 3rd person
                 // when its not rendering and then disabling this camera and going back to the 3rd person one whenver we swap to like fixed for instance
                 break;
             case "cinematic":
