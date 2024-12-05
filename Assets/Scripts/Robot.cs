@@ -71,6 +71,7 @@ public class Robot : MonoBehaviour
             return;
         }
 
+        // if it's the first tick since we've loaded the robot into the scene, set its initial position based on the saved settings
         if (SettingsManager.needToSetPosition) {
             transform.position = initialPosition + new Vector3(0, 0, SettingsManager.positionOffset);
             transform.eulerAngles = initialHeading + new Vector3(0, SettingsManager.initialHeading, 0);
@@ -79,18 +80,16 @@ public class Robot : MonoBehaviour
         }
 
         // actually drive
-        if (SettingsManager.manualEnabled) {
-            //TODO should this be field-oriented? or like, if the 3rd person camera is stationary (doesn't rotate with robot) then camera oriented? idk.
-
-            // basically the robot should coast instead of trying to reset the wheels to 0 upon not getting something on a certain axis
-            // TODO: see https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/subsystems/SwerveDrive.cpp line 155 VectorTeleOpDrive()
-           
+        if (SettingsManager.manualEnabled) { //TODO move all this stuff into SwerveDrive's Drive() method, so it's not duplicated across manual and autonomous driving.
+            // get stick inputs
             drive_ = Input.GetAxis("Vertical");
             strafe_ = Input.GetAxis("Horizontal");
             steer_ = Input.GetAxis("Steer");
 
-            steer = steer_; //TODO
+            // no filtering / transformations of the steer input for now
+            steer = steer_;
 
+            // do field oriented drive stuff
             if (SettingsManager.fieldOriented) {
                 // https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/subsystems/SwerveDrive.cpp
                 drive = drive_ * Mathf.Cos(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90))  +  strafe_ * Mathf.Sin(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90));
@@ -103,14 +102,12 @@ public class Robot : MonoBehaviour
            // if any of the inputs is being pressed, then steer the wheels (because otherwise we don't want to move the wheels back to 0 degrees rotation)
            if (Mathf.Abs(drive) > 0.05 || Mathf.Abs(strafe) > 0.05 || Mathf.Abs(steer) > 0.05) {
                 drivetrain.Drive(drive * -100f, strafe * -100f, steer * 100f, true);
-            // if everything is less than 0 then set everything to 0
+            // if all inputs are close to 0, then don't pass any input in, let the robot coast, and don't try to steer the wheels
            } else if (Mathf.Abs(drive) < 0.05 && Mathf.Abs(strafe) < 0.05 && Mathf.Abs(steer) < 0.05) {
                 drivetrain.Drive(0.0f, 0.0f, 0.0f, false);
-           // otherwise, we don't want to steer the wheels
-           } else {
-                drivetrain.Drive(drive * -700f, strafe * -700f, steer * 100f, false);
            }
 
+        // otherwise, for autonomous driving,
         } else {
             if (motorInputMsg != null) {
                 //TODO shouldn't we not make new variables every loop, split across the if statement?
