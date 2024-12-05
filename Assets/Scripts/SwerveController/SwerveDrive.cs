@@ -19,7 +19,17 @@ public class SwerveDrive : MonoBehaviour
     private float lastY = 0.0f;
     private float lastTheta = 0.0f;
 
-   public Transform chassisModel;
+    public Transform chassisModel;
+
+    private float drive = 0.0f; // FIXME make private once debugged
+    private float strafe = 0.0f;
+    private float steer = 0.0f;
+
+    private float drive_ = 0.0f; // FIXME make private once debugged
+    private float strafe_ = 0.0f;
+    private float steer_ = 0.0f;
+
+    private bool allowSteer = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,14 +43,40 @@ public class SwerveDrive : MonoBehaviour
         backRightModule = modules[3];
     }
 
-    public void Drive(float forward_vel, float sideways_vel, float theta_vel, bool allowSteer) {
+    public void Drive(float drive_, float strafe_, float steer_) {
         // another classic FRC link https://www.chiefdelphi.com/t/paper-4-wheel-independent-drive-independent-steering-swerve/107383
         // and some *really* bad code: https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/subsystems/SwerveDrive.cpp
 
-        float A = sideways_vel - (theta_vel * halfWheelbase);
-        float B = sideways_vel + (theta_vel * halfWheelbase);
-        float C = forward_vel - (theta_vel * halfTrackwidth);
-        float D = forward_vel + (theta_vel * halfTrackwidth);
+        // do field oriented drive stuff
+        if (SettingsManager.fieldOriented) {
+            // https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/subsystems/SwerveDrive.cpp
+            drive = drive_ * Mathf.Cos(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90))  +  strafe_ * Mathf.Sin(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90));
+            strafe = strafe_ * Mathf.Cos(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90))  -  drive_ * Mathf.Sin(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90));
+        } else {
+            drive = drive_;
+            strafe = strafe_;
+        }
+
+        // if any of the inputs is being pressed, then steer the wheels (because otherwise we don't want to move the wheels back to 0 degrees rotation)
+        if (Mathf.Abs(drive_) > 0.05 || Mathf.Abs(strafe_) > 0.05 || Mathf.Abs(steer_) > 0.05) {
+            steer = steer_; // then allow the steer
+            allowSteer = true;
+        // if all inputs are close to 0, then don't pass any input in, let the robot coast, and don't try to steer the wheels
+        } else if (Mathf.Abs(drive_) < 0.05 && Mathf.Abs(strafe_) < 0.05 && Mathf.Abs(steer_) < 0.05) {
+            steer = 0; // no steer for u
+            allowSteer = false;
+        }
+
+        // scale the inputs (Unity stick/keyboard values should be in the range [-3, 3] or something I think)
+        drive *= 100;
+        strafe *= 100;
+        steer *= 100;
+
+
+        float A = strafe - (steer * halfWheelbase);
+        float B = strafe + (steer * halfWheelbase);
+        float C = drive - (steer * halfTrackwidth);
+        float D = drive + (steer * halfTrackwidth);
 
         //TODO make the modules never turn more than 90 degrees thing (they currently do that in SwerveModule.cs)
 

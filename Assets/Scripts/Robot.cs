@@ -20,13 +20,9 @@ public class Robot : MonoBehaviour
     private float motorFeedbackFrequency = 0.5f; // twice a second TODO make real-life-accurate
 
     // for manual control, you don't want to return the wheels to 0 even if you're not actively pressing the right arrow, the robot should coast along its current path
-    public float drive_ = 0.0f; // FIXME make private once debugged
-    public float strafe_ = 0.0f;
-    public float steer_ = 0.0f;
-
-    public float drive = 0.0f; // FIXME make private once debugged
-    public float strafe = 0.0f;
-    public float steer = 0.0f;
+    private float drive = 0.0f;
+    private float strafe = 0.0f;
+    private float steer = 0.0f;
 
     // mouse-controlled orbit camera spherical coordinates stuff
     public float theta = 0.0f; // controls azimuth FIXME make private once debugged
@@ -79,45 +75,21 @@ public class Robot : MonoBehaviour
             SettingsManager.needToSetPosition = false;
         }
 
-        // actually drive
-        if (SettingsManager.manualEnabled) { //TODO move all this stuff into SwerveDrive's Drive() method, so it's not duplicated across manual and autonomous driving.
+        // get motor inputs
+        if (SettingsManager.manualEnabled) {
             // get stick inputs
-            drive_ = Input.GetAxis("Vertical");
-            strafe_ = Input.GetAxis("Horizontal");
-            steer_ = Input.GetAxis("Steer");
-
-            // no filtering / transformations of the steer input for now
-            steer = steer_;
-
-            // do field oriented drive stuff
-            if (SettingsManager.fieldOriented) {
-                // https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/subsystems/SwerveDrive.cpp
-                drive = drive_ * Mathf.Cos(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90))  +  strafe_ * Mathf.Sin(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90));
-                strafe = strafe_ * Mathf.Cos(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90))  -  drive_ * Mathf.Sin(Mathf.Deg2Rad * (transform.eulerAngles[1] - 90));
-            } else {
-                drive = drive_;
-                strafe = strafe_;
-            }
-
-           // if any of the inputs is being pressed, then steer the wheels (because otherwise we don't want to move the wheels back to 0 degrees rotation)
-           if (Mathf.Abs(drive) > 0.05 || Mathf.Abs(strafe) > 0.05 || Mathf.Abs(steer) > 0.05) {
-                drivetrain.Drive(drive * -100f, strafe * -100f, steer * 100f, true);
-            // if all inputs are close to 0, then don't pass any input in, let the robot coast, and don't try to steer the wheels
-           } else if (Mathf.Abs(drive) < 0.05 && Mathf.Abs(strafe) < 0.05 && Mathf.Abs(steer) < 0.05) {
-                drivetrain.Drive(0.0f, 0.0f, 0.0f, false);
-           }
-
+            drive = Input.GetAxis("Vertical");
+            strafe = Input.GetAxis("Horizontal");
+            steer = Input.GetAxis("Steer");
         // otherwise, for autonomous driving,
-        } else {
-            if (motorInputMsg != null) {
-                //TODO shouldn't we not make new variables every loop, split across the if statement?
-                drive = motorInputMsg.forward_velocity;
-                strafe = motorInputMsg.sideways_velocity;
-                steer = motorInputMsg.angular_velocity;
-
-                drivetrain.Drive(drive*-100f, strafe*-100f, steer*100f, true); //FIXME
-            }
+        } else if (motorInputMsg != null) {
+            drive = motorInputMsg.forward_velocity;
+            strafe = motorInputMsg.sideways_velocity;
+            steer = motorInputMsg.angular_velocity;
         }
+
+        // send commmands to the swerve drive script
+        drivetrain.Drive(drive, strafe, steer);
 
         timeElapsed += Time.deltaTime;
         if (timeElapsed > motorFeedbackFrequency) {
