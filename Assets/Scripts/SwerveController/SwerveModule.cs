@@ -44,6 +44,8 @@ public class SwerveModule : MonoBehaviour
     public float debugSteerSetpoint = 0.0f;
     public float debugDriveSetpoint = 0.0f;
     public float debugVelocity = 0.0f;
+
+    float steerSetpoint = 0.0f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -74,6 +76,8 @@ public class SwerveModule : MonoBehaviour
         drivePID.SetSetpoint(wheelVel);
         steerPID.SetSetpoint(WrapAngle(steerAngle));
 
+        steerSetpoint = steerAngle;
+
         // FIXME this is supposed to be the not-rotate-more-than 90 degrees logic, not sure if it works or not tho
         // if (Mathf.Abs(wheelCollider.steerAngle - Mathf.Abs(steerPID.GetSetpoint())) > 100) {
         //     steerPID.SetSetpoint(steerAngle-180);
@@ -84,11 +88,6 @@ public class SwerveModule : MonoBehaviour
     public float GetWheelVelocity() {
         // https://docs.unity3d.com/6000.0/Documentation/ScriptReference/WheelCollider.html
         return 2 * Mathf.PI * wheelRadius * wheelCollider.rpm;
-    }
-
-    public float GetAngle() {
-        //TODO
-        return wheelCollider.transform.rotation.eulerAngles.y;
     }
 
     // https://github.com/Team-OKC-Robotics/FRC-2023/blob/master/src/main/cpp/Utils.cpp
@@ -148,7 +147,8 @@ public class SwerveModule : MonoBehaviour
         }
         // wheelCollider.motorTorque = Mathf.Clamp(drivePID.Calculate(GetWheelVelocity()), -1000, 1000);
         wheelCollider.motorTorque = Mathf.Clamp(motorPower, -500, 500);
-        wheelCollider.steerAngle = Mathf.Clamp(steerPID.GetSetpoint(), wheelCollider.steerAngle-maxAllowedAngleChange, wheelCollider.steerAngle+maxAllowedAngleChange);
+        // wheelCollider.steerAngle = Mathf.Clamp(steerPID.GetSetpoint(), wheelCollider.steerAngle-maxAllowedAngleChange, wheelCollider.steerAngle+maxAllowedAngleChange);
+        wheelCollider.steerAngle = steerSetpoint;
 
         debugRotation = wheelCollider.steerAngle; //FIXME
         debugSteerSetpoint = steerPID.GetSetpoint();
