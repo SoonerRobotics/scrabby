@@ -58,11 +58,11 @@ public class SwerveModule : MonoBehaviour
         drivePID.SetSetpoint(wheelVel);
         steerPID.SetSetpoint(WrapAngle(steerAngle));
 
-        // FIXME this is supposed to be the not-rotate-more-than 90 degrees logic, not sure if it works or not tho
-        // if (Mathf.Abs(wheelCollider.steerAngle - Mathf.Abs(steerPID.GetSetpoint())) > 100) {
-        //     steerPID.SetSetpoint(steerAngle-180);
-        //     drivePID.SetSetpoint(-drivePID.GetSetpoint());
-        // }
+        // this is the not-rotate-more-than 90 degrees logic, to avoid unecessasry wheel steering throwing off our movement
+        if (Mathf.Abs(wheelCollider.steerAngle - steerPID.GetSetpoint()) > 95) { // if the angle difference is larger than 90 degrees,
+            steerPID.SetSetpoint(WrapAngle(steerAngle-180)); // rotate the goal angle by 180 degrees
+            drivePID.SetSetpoint(-drivePID.GetSetpoint()); // and flip the direction the wheel spins
+        }
     }
 
     public float GetWheelVelocity() {
@@ -117,7 +117,7 @@ public class SwerveModule : MonoBehaviour
         // }
         // return desiredState.speedMetersPerSecond * (cosineScalar);
 
-        //TODO
+        //TODO FIXME
         float motorPower = drivePID.GetSetpoint();
         if (Mathf.Abs(motorPower) < 0.1) {
             motorPower = 0.0f;
