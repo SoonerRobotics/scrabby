@@ -68,9 +68,9 @@ public class SwerveDrive : MonoBehaviour
         }
 
         // scale the inputs (Unity stick/keyboard values should be in the range [-3, 3] or something I think)
-        drive *= 100;
-        strafe *= 100;
-        steer *= 100;
+        drive *= -50; //TODO what about the meters per second for the autonomous messages???
+        strafe *= -50;
+        steer *= -50;
 
 
         float A = strafe - (steer * halfWheelbase);

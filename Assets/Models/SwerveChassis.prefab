@@ -78,12 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19703c438129631468fb69e0c459738b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drive_: 0
-  strafe_: 0
-  steer_: 0
-  drive: 0
-  strafe: 0
-  steer: 0
   theta: 0
   phi: 0
 --- !u!114 &4044432513042082616
@@ -98,10 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3724515de715a8f4e8ceba5c18255ac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 2094054056846038145}
-  CogX: 0
-  CogY: 0
-  CogZ: 0
   chassisModel: {fileID: 9143162812384560785}
 --- !u!1 &2110196124466543421
 GameObject:
@@ -354,13 +344,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6038452864022524759}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21263108, y: -0.67437977, z: 0.21263108, w: 0.67437977}
+  m_LocalRotation: {x: 0.18301274, y: -0.6830127, z: 0.18301274, w: 0.6830127}
   m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8981353182278466628}
-  m_LocalEulerAnglesHint: {x: 35, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: -90, z: 0}
 --- !u!20 &5533988587421443465
 Camera:
   m_ObjectHideFlags: 0
@@ -542,13 +532,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7850006732108450847}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.21263108, y: 0.67437977, z: -0.21263108, w: 0.67437977}
+  m_LocalRotation: {x: 0.18301274, y: 0.6830127, z: -0.18301274, w: 0.6830127}
   m_LocalPosition: {x: 1.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8981353182278466628}
-  m_LocalEulerAnglesHint: {x: 35, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 90, z: 0}
 --- !u!20 &4232470027967802732
 Camera:
   m_ObjectHideFlags: 0
@@ -833,7 +823,7 @@ Transform:
   m_GameObject: {fileID: 8590054307612676665}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2588199, y: -0, z: -0, w: 0.9659257}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 0, y: 0, z: 2.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1183,11 +1173,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 7191232063989482968}
   wheelCollider: {fileID: 2809360073453790076}
-  pos: 0
-  debugRotation: 0
-  debugSteerSetpoint: 0
-  debugDriveSetpoint: 0
-  debugVelocity: 0
 --- !u!1001 &2224983793712491899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1396,11 +1381,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 1831280071223446160}
   wheelCollider: {fileID: 1406153199344676264}
-  pos: 2
-  debugRotation: 0
-  debugSteerSetpoint: 0
-  debugDriveSetpoint: 0
-  debugVelocity: 0
 --- !u!4 &4601474858310787653 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a3b86a2c4324a8942b6bfeb09cb57839, type: 3}
@@ -1614,11 +1594,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 4108097460041500886}
   wheelCollider: {fileID: 3781738964313370011}
-  pos: 1
-  debugRotation: 0
-  debugSteerSetpoint: 0
-  debugDriveSetpoint: 0
-  debugVelocity: 0
 --- !u!4 &5212277597321823952 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a3b86a2c4324a8942b6bfeb09cb57839, type: 3}
@@ -1837,11 +1812,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelModel: {fileID: 8803487471369810799}
   wheelCollider: {fileID: 8012853228733047024}
-  pos: 3
-  debugRotation: 0
-  debugSteerSetpoint: 0
-  debugDriveSetpoint: 0
-  debugVelocity: 0
 --- !u!1001 &9054201500550829188
 PrefabInstance:
   m_ObjectHideFlags: 0

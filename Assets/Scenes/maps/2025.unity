@@ -55708,7 +55708,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2257797244222251143, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1783415240}
   m_SourcePrefab: {fileID: 100100000, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
 --- !u!1001 &1289104148
 PrefabInstance:
@@ -81109,6 +81112,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 2.220446e-16, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1783415238 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2257797244222251143, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+  m_PrefabInstance: {fileID: 1288745284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1783415240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783415238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee1ecb89704ca8440ae5adfd1ffae7a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ros: {fileID: 0}
+  topicName: /autonav/gps/
+  latitude: 0
+  longitude: 0
+  robot: {fileID: 0}
 --- !u!1 &1783447017 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2836819319387312741, guid: 1f38c74b7998c4b4982791e87d9ca44e, type: 3}
