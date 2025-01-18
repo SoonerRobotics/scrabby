@@ -2,10 +2,11 @@ using UnityEngine;
 using Unity.Robotics.ROSTCPConnector;
 using RosMessageTypes.Autonav;
 
-public class GPSPublisher : MonoBehaviour {
+//FIXME this was all just copied and pasted from GPSPublisher. temporary solution because Feelers expects Position messages from the particle filter, but that's not done yet
+public class PositionPublisher : MonoBehaviour {
     public ROSConnection ros;
-    private string topicName = "/autonav/gps";
-    private float publishRate = 5f; // internal GPS receiver on the VectorNav updates at like 5 Hz according to the ICD or whatever, TODO make this configurable
+    private string topicName = "/autonav/position";
+    private float publishRate = 10f; // TODO make this configurable
     private float lastPublishTime = 0;
 
     private float latitude = 0.0f;
@@ -31,7 +32,7 @@ public class GPSPublisher : MonoBehaviour {
     void Start() {
         // start the ROS connection
         ros = ROSConnection.GetOrCreateInstance();
-        ros.RegisterPublisher<GPSFeedbackMsg>(topicName);
+        ros.RegisterPublisher<PositionMsg>(topicName);
     }
 
     void FixedUpdate() {
@@ -52,12 +53,18 @@ public class GPSPublisher : MonoBehaviour {
             latitude = (transform.position.z - 25.98906f) / latLength + startLat;
             longitude = (transform.position.x - 47.00509f) / lonLength + startLon;
 
-            double altitude = 0.0f; // altitude doesn't matter for us
-            short gps_fix = 3; // see VN200-ICD page 55. Can be [0, 4] U [7, 8]. default of 3 is fine. can change later for testing TODO
-            bool is_locked = true; //TODO make this changable for testing
-            short satellites = 4; //TODO make this changeable for testing
+            // double altitude = 0.0f; // altitude doesn't matter for us
+            // short gps_fix = 3; // see VN200-ICD page 55. Can be [0, 4] U [7, 8]. default of 3 is fine. can change later for testing TODO
+            // bool is_locked = true; //TODO make this changable for testing
+            // short satellites = 4; //TODO make this changeable for testing
+            double x = 0.0f; //FIXME
+            double y = 0.0f; //FIXME
+            double theta = transform.eulerAngles.y; // might need to be localEulerAngles
 
-            GPSFeedbackMsg msg = new GPSFeedbackMsg(latitude, longitude, altitude, gps_fix, is_locked, satellites);
+            theta *= Mathf.Deg2Rad;
+
+            // GPSFeedbackMsg msg = new GPSFeedbackMsg(latitude, longitude, altitude, gps_fix, is_locked, satellites);
+            PositionMsg msg = new PositionMsg(x, y, theta, latitude, longitude);
             ros.Publish(topicName, msg);
             // Debug.Log("PUBLISHING");
         // }

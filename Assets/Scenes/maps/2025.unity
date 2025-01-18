@@ -55712,6 +55712,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2257797244222251143, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1783415240}
+    - targetCorrespondingSourceObject: {fileID: 2257797244222251143, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1783415241}
   m_SourcePrefab: {fileID: 100100000, guid: 8106eb0b21f001a4199fb16375ed97ef, type: 3}
 --- !u!1001 &1289104148
 PrefabInstance:
@@ -81130,10 +81133,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ros: {fileID: 0}
-  topicName: /autonav/gps/
-  latitude: 0
-  longitude: 0
-  robot: {fileID: 0}
+--- !u!114 &1783415241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783415238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ba26164f997774fb46a9cee8d0bc54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ros: {fileID: 0}
 --- !u!1 &1783447017 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2836819319387312741, guid: 1f38c74b7998c4b4982791e87d9ca44e, type: 3}
