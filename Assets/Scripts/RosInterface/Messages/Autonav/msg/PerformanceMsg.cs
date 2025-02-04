@@ -14,18 +14,18 @@ namespace RosMessageTypes.Autonav
         public override string RosMessageName => k_RosMessageName;
 
         public string name;
-        public ushort duration;
+        public ushort elapsed;
 
         public PerformanceMsg()
         {
             this.name = "";
-            this.duration = 0;
+            this.elapsed = 0;
         }
 
-        public PerformanceMsg(string name, ushort duration)
+        public PerformanceMsg(string name, ushort elapsed)
         {
             this.name = name;
-            this.duration = duration;
+            this.elapsed = elapsed;
         }
 
         public static PerformanceMsg Deserialize(MessageDeserializer deserializer) => new PerformanceMsg(deserializer);
@@ -33,20 +33,20 @@ namespace RosMessageTypes.Autonav
         private PerformanceMsg(MessageDeserializer deserializer)
         {
             deserializer.Read(out this.name);
-            deserializer.Read(out this.duration);
+            deserializer.Read(out this.elapsed);
         }
 
         public override void SerializeTo(MessageSerializer serializer)
         {
             serializer.Write(this.name);
-            serializer.Write(this.duration);
+            serializer.Write(this.elapsed);
         }
 
         public override string ToString()
         {
             return "PerformanceMsg: " +
             "\nname: " + name.ToString() +
-            "\nduration: " + duration.ToString();
+            "\nelapsed: " + elapsed.ToString();
         }
 
 #if UNITY_EDITOR
