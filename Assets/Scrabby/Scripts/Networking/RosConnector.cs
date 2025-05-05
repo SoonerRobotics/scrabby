@@ -79,6 +79,7 @@ namespace Scrabby.Networking
             try
             {
                 message = System.Text.Encoding.UTF8.GetString(data);
+                Debug.Log($"[RosConnector.OnSocketMessage] {message}");
             }
             catch (Exception e)
             {
@@ -95,6 +96,7 @@ namespace Scrabby.Networking
                 {
                     var topic = json[RosField.Topic]?.ToObject<string>();
                     var jData = json[RosField.Message]?.ToObject<JObject>();
+                    Debug.Log($"[RosConnector.OnSocketMessage] {topic} {jData}");
                     OnNetworkInstruction.Invoke(new NetworkInstruction(topic, jData));
                 }
                     break;
