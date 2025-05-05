@@ -19,13 +19,13 @@ MonoBehaviour:
   options:
   - key: topics.input
     type: 0
-    value: /autonav/MotorInput
+    value: /autonav/motor_input
   - key: topics.input.type
     type: 0
     value: autonav_msgs/MotorInput
   - key: topics.feedback
     type: 0
-    value: /autonav/MotorFeedback
+    value: /autonav/motor_feedback
   - key: topics.feedback.type
     type: 0
     value: autonav_msgs/MotorFeedback

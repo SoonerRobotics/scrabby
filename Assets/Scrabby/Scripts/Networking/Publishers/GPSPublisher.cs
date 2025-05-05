@@ -46,8 +46,8 @@ namespace Scrabby.Networking.Publishers
             _gpsData[_gpsLonField] = (pos.x + Utilities.Math.GetRandomNormal(0, _gpsLonNoise)) / length.y + origin.y;
             _gpsData["altitude"] = 0.0f;
             _gpsData["gps_fix"] = 3;
-            _gpsData["is_locked"] = true;
-            _gpsData["satellites"] = 7;
+            // _gpsData["is_locked"] = true;
+            _gpsData["num_satellites"] = 7;
             // Debug.Log($"Publishing GPS: {_gpsData}");
             RosConnector.Instance.Publish(_gpsTopic, _gpsType, _gpsData);
         }
