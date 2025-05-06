@@ -130,11 +130,8 @@ namespace Scrabby.Robots
                 angularInput = angularControl;
             }
 
-            // Convert local velocity to world space using heading
-            Vector2 linearVelocity = new Vector2(
-                localVelocity.x * Mathf.Cos(psi) - localVelocity.y * Mathf.Sin(psi),
-                localVelocity.x * Mathf.Sin(psi) + localVelocity.y * Mathf.Cos(psi)
-            );
+            // === Modified: local velocity is already robot-relative, no world rotation needed ===
+            Vector2 linearVelocity = localVelocity;
 
             // Calculate wheel velocities (linear + rotational)
             Vector2 averageVelocity = Vector2.zero;
@@ -147,8 +144,10 @@ namespace Scrabby.Robots
             }
             averageVelocity /= 4f;
 
-            Vector3 movement = new Vector3(averageVelocity.x, 0, averageVelocity.y);
-            transform.Translate(movement * Time.fixedDeltaTime, Space.World);
+            Vector3 movement = new Vector3(linearVelocity.x, 0, linearVelocity.y);
+
+            // === Modified: use Space.Self for robot-relative movement ===
+            transform.Translate(movement * Time.fixedDeltaTime, Space.Self);
             transform.Rotate(0, angularInput * Mathf.Rad2Deg * Time.fixedDeltaTime, 0, Space.World);
 
             LinearVelocity = movement;
