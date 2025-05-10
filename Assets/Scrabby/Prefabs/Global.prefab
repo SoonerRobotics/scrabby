@@ -109,6 +109,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 247e2a8924ff6bd48b0eb0f3a9b2e85d, type: 2}
   - {fileID: 11400000, guid: 4beeaea5b7be41d418900deefdca842b, type: 2}
   maps:
+  - {fileID: 11400000, guid: 89af23293e2d6cf42a57c663ea67a3b9, type: 2}
   - {fileID: 11400000, guid: 909fdd8f9329cc4439e5db9256bcdadc, type: 2}
   movementEnabled: 1
   canMoveManually: 0

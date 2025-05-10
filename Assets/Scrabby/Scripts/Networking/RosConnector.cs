@@ -79,7 +79,7 @@ namespace Scrabby.Networking
             try
             {
                 message = System.Text.Encoding.UTF8.GetString(data);
-                Debug.Log($"[RosConnector.OnSocketMessage] {message}");
+                // Debug.Log($"[RosConnector.OnSocketMessage] {message}");
             }
             catch (Exception e)
             {

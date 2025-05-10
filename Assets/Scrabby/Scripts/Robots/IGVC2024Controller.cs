@@ -75,7 +75,6 @@ namespace Scrabby.Robots
 
         private void OnNetworkInstruction(NetworkInstruction instruction)
         {
-            Debug.Log($"Received instruction: {instruction.Topic}");
             var inputTopic = "/autonav/motor_input";
             if (inputTopic != instruction.Topic)
             {
@@ -86,7 +85,7 @@ namespace Scrabby.Robots
             var sideways = -instruction.GetData<float>(_inputSidewaysField);
             var angular = instruction.GetData<float>(_inputAngularField);
 
-            Debug.Log($"Forward: {forward}, Sideways: {sideways}, Angular: {angular}");
+            // Debug.Log($"Forward: {forward}, Sideways: {sideways}, Angular: {angular}");
 
             forwardControl = forward;
             sidewaysControl = sideways;
@@ -159,9 +158,9 @@ namespace Scrabby.Robots
         private void PublishFeedback(Vector2 avgVelocity)
         {
             float deltaT = Time.fixedDeltaTime;
-            float deltaX = avgVelocity.x * deltaT;
-            float deltaY = avgVelocity.y * deltaT;
-            float deltaTheta = angularControl * deltaT;
+            float deltaX = -avgVelocity.x * deltaT;
+            float deltaY = -avgVelocity.y * deltaT;
+            float deltaTheta = -angularControl * deltaT;
 
             if (_deltaXField == null || _deltaYField == null || _deltaThetaField == null)
             {
