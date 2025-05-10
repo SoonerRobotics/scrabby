@@ -19,12 +19,14 @@ namespace Scrabby.Robots
         public float drag = 0.85f;
 
         public float forwardControl;
+        public float sidewaysControl;
         public float angularControl;
 
         private Vector3 LinearVelocity { get; set; }
         private Vector3 AngularVelocity { get; set; }
 
         private string _inputForwardField;
+        private string _inputSidewaysField;
         private string _inputAngularField;
 
         private string _feedbackTopic;
@@ -41,6 +43,7 @@ namespace Scrabby.Robots
             RosConnector.OnNetworkInstruction.AddListener(OnNetworkInstruction);
 
             _inputForwardField = robot.GetOption("topics.input.forward", "forward_velocity");
+            _inputSidewaysField = robot.GetOption("topics.input.sideways", "sideways_velocity");
             _inputAngularField = robot.GetOption("topics.input.angular", "angular_velocity");
 
             _feedbackTopic = robot.GetOption("topics.feedback", "/autonav/motor_feedback");
@@ -72,19 +75,24 @@ namespace Scrabby.Robots
 
         private void OnNetworkInstruction(NetworkInstruction instruction)
         {
-            var inputTopic = robot.GetOption("topics.input", "/autonav/MotorInput");
+            Debug.Log($"Received instruction: {instruction.Topic}");
+            var inputTopic = "/autonav/motor_input";
             if (inputTopic != instruction.Topic)
             {
                 return;
             }
 
             var forward = instruction.GetData<float>(_inputForwardField);
+            var sideways = -instruction.GetData<float>(_inputSidewaysField);
             var angular = instruction.GetData<float>(_inputAngularField);
-            Debug.Log($"Forward: {forward}, Angular: {angular}");
+
+            Debug.Log($"Forward: {forward}, Sideways: {sideways}, Angular: {angular}");
+
             forwardControl = forward;
+            sidewaysControl = sideways;
             angularControl = angular;
 
-            if ((forward > 0 || angular > 0) && !RunTimer.Instance.IsStarted)
+            if ((Mathf.Abs(forward) > 0 || Mathf.Abs(sideways) > 0 || Mathf.Abs(angular) > 0) && !RunTimer.Instance.IsStarted)
             {
                 RunTimer.Instance.Begin();
             }
@@ -97,11 +105,10 @@ namespace Scrabby.Robots
                 return;
             }
 
-            // Get robot's orientation
             float psi = transform.rotation.eulerAngles.y * Mathf.Deg2Rad;
 
-            // Linear movement vector in world space
-            Vector2 linearVelocity;
+            Vector2 localVelocity;
+            float angularInput;
 
             if (ScrabbyState.Instance.canMoveManually)
             {
@@ -109,40 +116,42 @@ namespace Scrabby.Robots
                 float inputY = Input.GetAxis("Vertical");   // W/S or left stick Y
                 float inputRot = Input.GetAxis("Rotate");   // Q/E or right stick X
 
-                // Convert input to world-space direction (using robot's heading)
-                Vector3 inputWorld = Quaternion.Euler(0, transform.eulerAngles.y, 0) * new Vector3(inputX, 0, inputY);
-                
-                // Project into 2D movement vector for swerve
-                linearVelocity = new Vector2(inputWorld.x, inputWorld.z) * speedMod;
+                localVelocity = new Vector2(inputX, inputY) * speedMod;
+                angularInput = inputRot;
 
-                forwardControl = linearVelocity.magnitude;
-                angularControl = inputRot;
+                // Save to network-style variables (optional telemetry/debugging)
+                forwardControl = localVelocity.y;
+                sidewaysControl = localVelocity.x;
+                angularControl = angularInput;
             }
             else
             {
-                // Use remote command
-                linearVelocity = new Vector2(forwardControl * Mathf.Sin(psi), forwardControl * Mathf.Cos(psi));
+                localVelocity = new Vector2(sidewaysControl, forwardControl);
+                angularInput = angularControl;
             }
 
+            // === Modified: local velocity is already robot-relative, no world rotation needed ===
+            Vector2 linearVelocity = localVelocity;
 
-            // Calculate per-wheel velocities (linear + rotational)
+            // Calculate wheel velocities (linear + rotational)
             Vector2 averageVelocity = Vector2.zero;
             for (int i = 0; i < 4; i++)
             {
                 Vector2 pos = wheelPositions[i];
-                Vector2 rotationalVelocity = new Vector2(-angularControl * pos.y, angularControl * pos.x);
+                Vector2 rotationalVelocity = new Vector2(-angularInput * pos.y, angularInput * pos.x);
                 wheelVelocities[i] = linearVelocity + rotationalVelocity;
                 averageVelocity += wheelVelocities[i];
             }
             averageVelocity /= 4f;
 
-            Vector3 movement = new Vector3(averageVelocity.x, 0, averageVelocity.y);
-            transform.Translate(movement * Time.fixedDeltaTime, Space.World);
-            transform.Rotate(0, angularControl * Mathf.Rad2Deg * Time.fixedDeltaTime, 0, Space.World);
+            Vector3 movement = new Vector3(linearVelocity.x, 0, linearVelocity.y);
 
-            // Save linear/angular velocity for possible use
+            // === Modified: use Space.Self for robot-relative movement ===
+            transform.Translate(movement * Time.fixedDeltaTime, Space.Self);
+            transform.Rotate(0, angularInput * Mathf.Rad2Deg * Time.fixedDeltaTime, 0, Space.World);
+
             LinearVelocity = movement;
-            AngularVelocity = new Vector3(0, angularControl, 0);
+            AngularVelocity = new Vector3(0, angularInput, 0);
 
             PublishFeedback(averageVelocity);
         }
