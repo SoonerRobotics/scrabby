@@ -1,4 +1,6 @@
-﻿using Scrabby.ScriptableObjects;
+﻿using RosMessageTypes.Sensor;
+using Scrabby.ScriptableObjects;
+using Unity.Robotics.ROSTCPConnector;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -6,35 +8,36 @@ namespace Scrabby.Networking.Publishers
 {
     public class ImagePublisher : MonoBehaviour
     {
-        public Camera camera;
-
-        private Texture2D _texture;
-        private Rect _rect;
-
+        [Header("Settings")]
+        public float frequency = 0.125f;
+        public string topic = "/autonav/camera/compressed/front";
         public int quality = 75;
-        public int frameRate = 8;
-        public string topic = "/autonav/camera/compressed/left";
-        public float lastCaptureTime = 0;
 
-        private int _fps = 8;
-        private int _quality = 75;
-
+        [Header("Camera Settings")]
+        public Camera camera;
         public int width = 480;
+     
         public int height = 680;
         public bool flip = false;
+
+        // Private variables
+        private Texture2D _texture;
+        private Rect _rect;
+        private float _timeElapsed;
+        private ROSConnection _ros;
         
         private void Start()
         {
-            var robot = Robot.Active;
-            // _fps = robot.GetOption("topics.camera.fps", 8);
-            _fps = 4;
-            _quality = robot.GetOption("topics.camera.quality", 75);
-
             if (flip)
             {
                 (width, height) = (height, width);
             }
 
+            // Ros
+            _ros = ROSConnection.GetOrCreateInstance();
+            _ros.RegisterPublisher<CompressedImageMsg>(topic);
+
+            // Other stuff
             _texture = new Texture2D(width, height, TextureFormat.RGB24, false);
             _rect = new Rect(0, 0, width, height);
             camera.targetTexture = new RenderTexture(width, height, 24);
@@ -48,22 +51,28 @@ namespace Scrabby.Networking.Publishers
 
         private void OnCameraRender(ScriptableRenderContext context, Camera targetCamera)
         {
-            if (targetCamera != camera)
+            if (targetCamera != camera || _texture == null)
             {
                 return;
             }
             
-            if (Time.time - lastCaptureTime < 1f / _fps) return;
-            lastCaptureTime = Time.time;
-
-            if (_texture == null)
+            _timeElapsed += Time.deltaTime;
+            if (_timeElapsed > frequency)
             {
-                return;
-            }
+                _texture.ReadPixels(_rect, 0, 0);
+                var bytes = _texture.EncodeToJPG(quality);
 
-            _texture.ReadPixels(_rect, 0, 0);
-            var bytes = _texture.EncodeToJPG(_quality);
-            RosConnector.Instance.PublishCompressedImage(topic, bytes);
+                CompressedImageMsg msg = new()
+                {
+                    data = bytes,
+                    format = "jpeg",
+                    header = new RosMessageTypes.Std.HeaderMsg()
+                };
+                _ros.Publish(topic, msg);
+                Debug.Log($"Publishing image to {topic}");
+                
+                _timeElapsed = 0.0f;
+            }
         }
     }
 }

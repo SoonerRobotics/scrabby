@@ -9,17 +9,10 @@ namespace Scrabby.State
 {
     public class ScrabbyState : MonoSingleton<ScrabbyState>
     {
-        public static bool ShowIncomingMessages = true;
-        public static bool ShowOutgoingMessages = true;
-
-        public NetworkType enabledNetworks = NetworkType.PyScrabby | NetworkType.Ros;
-        
         public List<Robot> robots;
         public List<Map> maps;
         public bool movementEnabled = true;
         public bool canMoveManually = false;
-        public bool resetSceneOnConnectionLost = true;
-
         public bool randomizeSeed;
         public int randomSeed;
 
@@ -43,23 +36,6 @@ namespace Scrabby.State
 
             Debug.LogWarning("Map with id " + id + " not found.");
             return null;
-        }
-
-        public bool IsNetworkEnabled(NetworkType type)
-        {
-            return enabledNetworks.HasFlag(type);
-        }
-        
-        public void SetNetworkEnabled(NetworkType type, bool isEnabled)
-        {
-            if (isEnabled)
-            {
-                enabledNetworks |= type;
-            }
-            else
-            {
-                enabledNetworks &= ~type;
-            }
         }
     }
 }

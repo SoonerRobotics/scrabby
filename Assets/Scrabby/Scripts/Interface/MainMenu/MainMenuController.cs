@@ -161,21 +161,6 @@ namespace Scrabby.Interface
             Screen.SetResolution(Screen.currentResolution.width, Screen.currentResolution.height, screenMode);
         }
 
-        private static void OnRosNetworkToggle(bool value)
-        {
-            ScrabbyState.Instance.SetNetworkEnabled(NetworkType.Ros, value);
-        }
-
-        private static void OnPyScrabbyNetworkToggle(bool value)
-        {
-            ScrabbyState.Instance.SetNetworkEnabled(NetworkType.PyScrabby, value);
-        }
-
-        private static void OnStormNetworkToggle(bool value)
-        {
-            ScrabbyState.Instance.SetNetworkEnabled(NetworkType.Storm, value);
-        }
-
         private void OnRandomSeedChanged(string value)
         {
             if (!int.TryParse(value, out var seed))

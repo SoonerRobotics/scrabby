@@ -15,22 +15,22 @@ namespace Scrabby.Robots
         
         protected static void InitializeRobot(List<RobotOption> options)
         {
-            foreach (var topic in from option in options where option.key.StartsWith("topics.") && !option.key.EndsWith(".type") select option)
-            {
-                SetupTopic(options, topic);
-            }
+            // foreach (var topic in from option in options where option.key.StartsWith("topics.") && !option.key.EndsWith(".type") select option)
+            // {
+            //     SetupTopic(options, topic);
+            // }
         }
 
         private static void SetupTopic(List<RobotOption> options, RobotOption option)
         {
-            var bits = option.key.Split(".");
-            if (bits.Length > 2)
-            {
-                return;
-            }
+            // var bits = option.key.Split(".");
+            // if (bits.Length > 2)
+            // {
+            //     return;
+            // }
             
-            var type = options.FirstOrDefault(x => x.key == $"{option.key}.type")?.value ?? "std_msgs/Empty";
-            RosConnector.Instance.Subscribe(option.value, type);
+            // var type = options.FirstOrDefault(x => x.key == $"{option.key}.type")?.value ?? "std_msgs/Empty";
+            // RosConnector.Instance.Subscribe(option.value, type);
         }
 
         private void FixedUpdate()

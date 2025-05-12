@@ -1,55 +1,49 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using RosMessageTypes.Autonav;
 using Scrabby.ScriptableObjects;
+using Unity.Robotics.ROSTCPConnector;
 using UnityEngine;
 
 namespace Scrabby.Networking.Publishers
 {
     public class GpsPublisher : MonoBehaviour
     {
-        private JObject _gpsData;
+        [Header("Settings")]
+        public float frequency = 0.25f;
+        public string topic = "/autonav/gps";
+        public float latitudeNoise;
+        public float longitudeNoise;
+        
 
-        private float _gpsFlowRate;
-        private float _gpsLatNoise;
-        private float _gpsLonNoise;
+        // Private variables
+        private float _timeElapsed;
+        private ROSConnection _ros;
 
-        private string _gpsTopic;
-        private string _gpsType;
-        private string _gpsLatField;
-        private string _gpsLonField;
-
-        private float _nextPublishTime;
-
-        private void Start()
+        void Start()
         {
-            var robot = Robot.Active;
-            _gpsFlowRate = robot.GetOption("topics.gps.rate", 2.0f);
-            _gpsLatNoise = robot.GetOption("topics.gps.lat_noise", 0.0f);
-            _gpsLonNoise = robot.GetOption("topics.gps.lon_noise", 0.0f);
-
-            _gpsType = robot.GetOption("topics.gps.type", "autonav_msgs/GPSFeedback");
-            _gpsTopic = robot.GetOption("topics.gps", "/autonav/gps");
-            _gpsLatField = robot.GetOption("topics.gps.lat_field", "latitude");
-            _gpsLonField = robot.GetOption("topics.gps.lon_field", "longitude");
-
-            _gpsData = new JObject();
+            _ros = ROSConnection.GetOrCreateInstance();
+            _ros.RegisterPublisher<GPSFeedbackMsg>(topic);
         }
 
         private void FixedUpdate()
         {
-            if (Time.time < _nextPublishTime) return;
+            _timeElapsed += Time.fixedDeltaTime;
+            if (_timeElapsed > frequency && Map.Active != null)
+            {
+                Map map = Map.Active;
+                // Publish the GPS data
+                GPSFeedbackMsg msg = new()
+                {
+                    latitude = (transform.position.z + Utilities.Math.GetRandomNormal(0, latitudeNoise)) / map.originLength.x + map.origin.x,
+                    longitude = (transform.position.x + Utilities.Math.GetRandomNormal(0, longitudeNoise)) / map.originLength.y + map.origin.y,
+                    altitude = 0.0f,
+                    gps_fix = 3,
+                    num_satellites = 7
+                };
+                _ros.Publish(topic, msg);
 
-            _nextPublishTime = Time.time + 1.0f / _gpsFlowRate;
-            var pos = transform.position;
-            var length = Map.Active.originLength;
-            var origin = Map.Active.origin;
-            _gpsData[_gpsLatField] = (pos.z + Utilities.Math.GetRandomNormal(0, _gpsLatNoise)) / length.x + origin.x;
-            _gpsData[_gpsLonField] = (pos.x + Utilities.Math.GetRandomNormal(0, _gpsLonNoise)) / length.y + origin.y;
-            _gpsData["altitude"] = 0.0f;
-            _gpsData["gps_fix"] = 3;
-            // _gpsData["is_locked"] = true;
-            _gpsData["num_satellites"] = 7;
-            // Debug.Log($"Publishing GPS: {_gpsData}");
-            RosConnector.Instance.Publish(_gpsTopic, _gpsType, _gpsData);
+                // Reset the elapsed time
+                _timeElapsed = 0.0f;
+            }
         }
     }
 }
