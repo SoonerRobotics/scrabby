@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5929699988195859672
+--- !u!1 &7853022447015590944
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,73 +8,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 921212156295919539}
-  - component: {fileID: 5586037624581849863}
-  - component: {fileID: 1281193370003566919}
-  - component: {fileID: 3700319131672897065}
+  - component: {fileID: 4717495359168421961}
+  - component: {fileID: 6363848938315702450}
+  - component: {fileID: 1354593389288512122}
   m_Layer: 0
-  m_Name: '@ROS'
+  m_Name: '@ConfigManager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &921212156295919539
+--- !u!4 &4717495359168421961
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5929699988195859672}
+  m_GameObject: {fileID: 7853022447015590944}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 54.908997, y: -1.9654932, z: 39.777798}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5586037624581849863
+--- !u!114 &6363848938315702450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5929699988195859672}
+  m_GameObject: {fileID: 7853022447015590944}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7acef0b79454c9b4dae3f8139bc4ba77, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f56530256f44595983c6ad33d016c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RosIPAddress: 127.0.0.1
-  m_RosPort: 10000
-  m_ConnectOnStart: 1
-  m_KeepaliveTime: 1
-  m_NetworkTimeoutSeconds: 2
-  m_SleepTimeSeconds: 0.01
-  m_ShowHUD: 0
-  m_TFTopics:
-  - /tf
-  listenForTFMessages: 1
---- !u!114 &1281193370003566919
+--- !u!114 &1354593389288512122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5929699988195859672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbd19a933294ff841b8991ec2507f3ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3700319131672897065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5929699988195859672}
+  m_GameObject: {fileID: 7853022447015590944}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac8dd0e36d502144b8bdc1f8a5275f11, type: 3}

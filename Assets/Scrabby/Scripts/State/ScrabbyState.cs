@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Scrabby.Networking;
 using Scrabby.ScriptableObjects;
 using Scrabby.Utilities;
 using UnityEngine;
@@ -18,7 +17,6 @@ namespace Scrabby.State
 
         protected override void Init()
         {
-            DontDestroyOnLoad(gameObject);
             randomSeed = Random.state.GetHashCode();
         }
 

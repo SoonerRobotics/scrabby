@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Scrabby.Interface;
-using Scrabby.Networking;
 using Scrabby.ScriptableObjects;
 using Scrabby.State;
 using UnityEngine;

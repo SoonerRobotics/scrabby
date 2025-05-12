@@ -16,6 +16,7 @@ namespace Scrabby.ScriptableObjects
         public string category;
         public int sceneIndex;
         public List<Robot> availableRobots;
+        public List<Color> barrelColors;
 
         public Vector2 origin;
         public Vector2 originLength;

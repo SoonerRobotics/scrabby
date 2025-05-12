@@ -10,9 +10,7 @@ namespace Scrabby.Gameplay
         private SpawnPoint _spawnPoint;
         
         private void Start()
-        {
-            DontDestroyOnLoad(this);
-            
+        {            
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         
