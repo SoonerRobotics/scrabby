@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7180961654599775733}
   - component: {fileID: 5614577195249598804}
   - component: {fileID: 7679572349079626663}
-  - component: {fileID: 2259932232478621946}
+  - component: {fileID: 4531424829635240860}
   m_Layer: 0
   m_Name: Left
   m_TagString: Untagged
@@ -51,14 +51,14 @@ Camera:
   m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
-  m_Aperture: 16
+  m_Aperture: 4
   m_FocusDistance: 10
-  m_FocalLength: 2.7127066
+  m_FocalLength: 0.55045706
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
   m_Anamorphism: 0
-  m_SensorSize: {x: 4.8, y: 3.6}
+  m_SensorSize: {x: 1, y: 2.6}
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -68,13 +68,13 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 67.13204
+  field of view: 134.10162
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 5
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 2
@@ -138,7 +138,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &2259932232478621946
+--- !u!114 &4531424829635240860
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,14 +147,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1780619420367359320}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d17a8dd64a4243ec9967c27e0ca65c7d, type: 3}
+  m_Script: {fileID: 11500000, guid: f02226a8f28797c46a1b1f4beaa4d8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 7180961654599775733}
-  quality: 25
-  frameRate: 6
+  frequency: 0.125
   topic: /autonav/camera/compressed/left
-  lastCaptureTime: 0
+  quality: 75
+  camera: {fileID: 7180961654599775733}
   width: 640
   height: 480
   flip: 0
@@ -205,7 +204,7 @@ GameObject:
   - component: {fileID: 3853707249325970881}
   - component: {fileID: 6374516843053759325}
   - component: {fileID: 6994834688688809704}
-  - component: {fileID: 4562758930065212918}
+  - component: {fileID: 4601847460319188722}
   m_Layer: 0
   m_Name: Front
   m_TagString: Untagged
@@ -244,14 +243,14 @@ Camera:
   m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
-  m_Aperture: 16
+  m_Aperture: 4
   m_FocusDistance: 10
-  m_FocalLength: 2.7127066
+  m_FocalLength: 0.55045706
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
   m_Anamorphism: 0
-  m_SensorSize: {x: 4.8, y: 3.6}
+  m_SensorSize: {x: 1, y: 2.6}
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -261,13 +260,13 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 67.13204
+  field of view: 134.10162
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 5
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 2
@@ -331,7 +330,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &4562758930065212918
+--- !u!114 &4601847460319188722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,14 +339,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4822515953668227026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d17a8dd64a4243ec9967c27e0ca65c7d, type: 3}
+  m_Script: {fileID: 11500000, guid: f02226a8f28797c46a1b1f4beaa4d8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 3853707249325970881}
-  quality: 25
-  frameRate: 6
+  frequency: 0.125
   topic: /autonav/camera/compressed/front
-  lastCaptureTime: 0
+  quality: 75
+  camera: {fileID: 3853707249325970881}
   width: 640
   height: 480
   flip: 0
@@ -360,8 +358,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4083538901733597605}
-  - component: {fileID: 5171411003028620330}
   - component: {fileID: 6215243856884526285}
+  - component: {fileID: 4461407373232489783}
   m_Layer: 0
   m_Name: Twistopher
   m_TagString: Untagged
@@ -387,18 +385,6 @@ Transform:
   - {fileID: 586361898028524927}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &5171411003028620330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5165328303154280144}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b41d44fc5ff48d68748a91f6bcf12a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6215243856884526285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,6 +407,23 @@ MonoBehaviour:
   forwardControl: 0
   sidewaysControl: 0
   angularControl: 0
+  feedbackFrequency: 0.1
+--- !u!114 &4461407373232489783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5165328303154280144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f9474028344af4e83c90f08c74a69f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.25
+  topic: /autonav/gps
+  latitudeNoise: 0
+  longitudeNoise: 0
 --- !u!1 &5387191676184046886
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +436,7 @@ GameObject:
   - component: {fileID: 4709391753030174409}
   - component: {fileID: 497774970803461189}
   - component: {fileID: 4748619542134196331}
-  - component: {fileID: 3698459107304116973}
+  - component: {fileID: 9065470126388879361}
   m_Layer: 0
   m_Name: Rear
   m_TagString: Untagged
@@ -472,14 +475,14 @@ Camera:
   m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
-  m_Aperture: 16
+  m_Aperture: 4
   m_FocusDistance: 10
-  m_FocalLength: 2.7127066
+  m_FocalLength: 0.55045706
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
   m_Anamorphism: 0
-  m_SensorSize: {x: 4.8, y: 3.6}
+  m_SensorSize: {x: 1, y: 2.6}
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -489,13 +492,13 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 67.13204
+  field of view: 134.10162
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 5
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 2
@@ -559,7 +562,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &3698459107304116973
+--- !u!114 &9065470126388879361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -568,14 +571,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5387191676184046886}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d17a8dd64a4243ec9967c27e0ca65c7d, type: 3}
+  m_Script: {fileID: 11500000, guid: f02226a8f28797c46a1b1f4beaa4d8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 4709391753030174409}
-  quality: 25
-  frameRate: 6
+  frequency: 0.125
   topic: /autonav/camera/compressed/rear
-  lastCaptureTime: 0
+  quality: 75
+  camera: {fileID: 4709391753030174409}
   width: 640
   height: 480
   flip: 0
@@ -728,7 +730,7 @@ GameObject:
   - component: {fileID: 658888959238185043}
   - component: {fileID: 2740583516913135517}
   - component: {fileID: 1562454665210695139}
-  - component: {fileID: 284319276230149124}
+  - component: {fileID: 4831801224743000502}
   m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
@@ -767,14 +769,14 @@ Camera:
   m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
-  m_Aperture: 16
+  m_Aperture: 4
   m_FocusDistance: 10
-  m_FocalLength: 2.7127066
+  m_FocalLength: 0.55045706
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
   m_Anamorphism: 0
-  m_SensorSize: {x: 4.8, y: 3.6}
+  m_SensorSize: {x: 1, y: 2.6}
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -784,13 +786,13 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 67.13204
+  field of view: 134.10162
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 5
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 2
@@ -854,7 +856,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!114 &284319276230149124
+--- !u!114 &4831801224743000502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -863,14 +865,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8604808329440891935}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d17a8dd64a4243ec9967c27e0ca65c7d, type: 3}
+  m_Script: {fileID: 11500000, guid: f02226a8f28797c46a1b1f4beaa4d8d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 658888959238185043}
-  quality: 25
-  frameRate: 6
+  frequency: 0.125
   topic: /autonav/camera/compressed/right
-  lastCaptureTime: 0
+  quality: 75
+  camera: {fileID: 658888959238185043}
   width: 640
   height: 480
   flip: 0
