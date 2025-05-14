@@ -164,7 +164,7 @@ namespace Scrabby.Robots
             float deltaT = Time.fixedDeltaTime;
             float deltaX = avgVelocity.y * deltaT;
             float deltaY = -avgVelocity.x * deltaT;
-            float deltaTheta = angularControl * deltaT;
+            float deltaTheta = -angularControl * deltaT;
 
             MotorFeedbackMsg msg = new()
             {
