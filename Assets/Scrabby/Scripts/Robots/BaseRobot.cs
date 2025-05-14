@@ -39,8 +39,8 @@ namespace Scrabby.Robots
             HUDController.UpdateRadians(rotation.eulerAngles.y * Mathf.Deg2Rad);
             
             var position = transform.position;
-            HUDController.UpdateX(position.x);
-            HUDController.UpdateY(position.z);
+            HUDController.UpdateX(-position.z);
+            HUDController.UpdateY(position.x);
             
             var instSpeed = (position - _lastPosition).magnitude / Time.fixedDeltaTime;
             _lastSpeed = 0.85f * instSpeed + 0.15f * _lastSpeed;

@@ -30,11 +30,26 @@ namespace Scrabby.Robots
         private Vector2[] wheelPositions;    // Local positions of wheels relative to center
         private Vector2[] wheelVelocities;   // Calculated velocities per wheel
 
+        public GameObject safeteyLight;
+        private Material _safetyLightMaterial;
+        private float _nextBlinkTime = 0f;
+        public float safetyLightBlinkRate = 1f;
+        private int _safetyState = 0;
+        private bool _lightOn = false;
+        private Color _safetyLightColor = Color.white;
+
         private void Start()
         {
             _ros = ROSConnection.GetOrCreateInstance();
             _ros.RegisterPublisher<MotorFeedbackMsg>("/autonav/motor_feedback");
             _ros.Subscribe<MotorInputMsg>("/autonav/motor_input", OnMotorInputReceived);
+            _ros.Subscribe<SafetyLightsMsg>("/autonav/safety_lights", OnSafetyLightsReceived);
+
+            // Setup safety light material
+            if (safeteyLight != null)
+            {
+                _safetyLightMaterial = safeteyLight.GetComponent<Renderer>().material;
+            }
 
             // Setup swerve drive geometry
             float halfLength = axleLength / 2f;
@@ -64,8 +79,35 @@ namespace Scrabby.Robots
             }
         }
 
+        private void OnSafetyLightsReceived(SafetyLightsMsg msg)
+        {
+            // Update emission color based on safety light status
+            Color color = new(msg.red, msg.green, msg.blue);
+            if (_safetyLightMaterial != null)
+            {
+                _safetyLightColor = color;
+                _safetyLightMaterial.SetColor("_EmissionColor", color);
+            }
+
+            _safetyState = msg.mode;
+        }
+
         protected override void RobotUpdate()
         {
+            // Safety light blinking logic
+            if (safeteyLight != null)
+            {
+                if (_safetyState == 1)
+                {
+                    if (Time.time >= _nextBlinkTime)
+                    {
+                        _lightOn = !_lightOn;
+                        _safetyLightMaterial.SetColor("_EmissionColor", _lightOn ? _safetyLightColor : Color.black);
+                        _nextBlinkTime = Time.time + safetyLightBlinkRate;
+                    }
+                }
+            }
+
             if (!CanMove())
             {
                 return;
@@ -120,9 +162,9 @@ namespace Scrabby.Robots
         private void PublishFeedback(Vector2 avgVelocity)
         {
             float deltaT = Time.fixedDeltaTime;
-            float deltaX = -avgVelocity.x * deltaT;
-            float deltaY = -avgVelocity.y * deltaT;
-            float deltaTheta = -angularControl * deltaT;
+            float deltaX = avgVelocity.y * deltaT;
+            float deltaY = -avgVelocity.x * deltaT;
+            float deltaTheta = angularControl * deltaT;
 
             MotorFeedbackMsg msg = new()
             {
