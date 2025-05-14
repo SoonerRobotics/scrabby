@@ -21,7 +21,7 @@ namespace Scrabby.Gameplay
                 return;
             }
 
-            _spawnPoint = FindObjectOfType<SpawnPoint>();
+            _spawnPoint = FindFirstObjectByType<SpawnPoint>();
             var spawnPoint = _spawnPoint == null ? Vector3.zero : _spawnPoint.transform.position;
             var robot = Robot.Active;
             var robotGameObject = Instantiate(robot.prefab);

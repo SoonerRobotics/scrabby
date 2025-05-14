@@ -14,7 +14,7 @@ namespace Scrabby.Robots.Publishers
         public int quality = 75;
 
         [Header("Camera Settings")]
-        public Camera camera;
+        public Camera _camera;
         public int width = 480;
         public int height = 680;
         public bool flip = false;
@@ -39,7 +39,7 @@ namespace Scrabby.Robots.Publishers
             // Other stuff
             _texture = new Texture2D(width, height, TextureFormat.RGB24, false);
             _rect = new Rect(0, 0, width, height);
-            camera.targetTexture = new RenderTexture(width, height, 24);
+            _camera.targetTexture = new RenderTexture(width, height, 24);
             RenderPipelineManager.endCameraRendering += OnCameraRender;
         }
 
@@ -50,7 +50,7 @@ namespace Scrabby.Robots.Publishers
 
         private void OnCameraRender(ScriptableRenderContext context, Camera targetCamera)
         {
-            if (targetCamera != camera || _texture == null)
+            if (targetCamera != _camera || _texture == null)
             {
                 return;
             }

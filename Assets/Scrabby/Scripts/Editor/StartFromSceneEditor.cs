@@ -44,7 +44,7 @@ namespace Scrabby.Editor
                 return;
             }
 
-            foreach (var go in Object.FindObjectsOfType<GameObject>())
+            foreach (var go in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
             {
                 go.SetActive(false);
             }

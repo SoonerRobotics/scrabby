@@ -14,7 +14,6 @@ namespace Scrabby.Configuration
         protected override void Init()
         {
             EnsureDirectory();
-            Debug.Log($"Config Path -> {Application.persistentDataPath}/Config");
             
             _robotConfig = new RobotConfigManager();
             _robotConfig.Init();

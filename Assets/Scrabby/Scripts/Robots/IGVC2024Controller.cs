@@ -25,7 +25,6 @@ namespace Scrabby.Robots
         private ROSConnection _ros;
 
         public float feedbackFrequency = 0.1f;
-        private float _lastFeedbackTime = 0f;
 
         private Vector2[] wheelPositions;    // Local positions of wheels relative to center
         private Vector2[] wheelVelocities;   // Calculated velocities per wheel

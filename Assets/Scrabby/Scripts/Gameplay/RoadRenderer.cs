@@ -37,7 +37,7 @@ namespace Scrabby.Gameplay
 
         private void Update()
         {
-            // GenerateMesh();
+            GenerateMesh();
         }
 
         private void OnDisable()

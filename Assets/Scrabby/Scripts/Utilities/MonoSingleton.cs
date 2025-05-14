@@ -12,7 +12,7 @@ namespace Scrabby.Utilities
             {
                 if (_instance == null)
                 {
-                    _instance = FindObjectOfType(typeof(T)) as T;
+                    _instance = FindFirstObjectByType(typeof(T)) as T;
                 }
                 return _instance;
             }
