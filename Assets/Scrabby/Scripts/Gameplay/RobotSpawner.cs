@@ -29,7 +29,7 @@ namespace Scrabby.Gameplay
             
             // Choose a random direction (either 0 rotation or 180 rotation)
             // var direction = Random.Range(0, 2) == 0 ? 0 : 180;
-            var direction = 180; // IGVC/AutoNav is now always north
+            var direction = 0; // IGVC/AutoNav is now always north
             robotGameObject.transform.rotation = Quaternion.Euler(0, direction, 0);
         }
     }

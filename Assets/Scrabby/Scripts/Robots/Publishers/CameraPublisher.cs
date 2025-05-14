@@ -36,6 +36,17 @@ namespace Scrabby.Robots.Publishers
             _ros = ROSConnection.GetOrCreateInstance();
             _ros.RegisterPublisher<CompressedImageMsg>(topic);
 
+            // Camera
+            if (_camera == null)
+            {
+                _camera = GetComponent<Camera>();
+                if (_camera == null)
+                {
+                    Debug.LogError("CameraPublisher: No camera found. Please assign a camera.");
+                    return;
+                }
+            }
+
             // Other stuff
             _texture = new Texture2D(width, height, TextureFormat.RGB24, false);
             _rect = new Rect(0, 0, width, height);

@@ -12,22 +12,10 @@ namespace Scrabby.Robots
     {
         public Robot robot;
 
-        public float speedMod = 2.2727273f;
-        public float wheelRadius = 0.1016f;
-        public float distanceBetweenWheels = 0.3f;
-        public float axleLength = 0.492f;
-        public float minSpeed = 0.1f;
-        public float drag = 0.85f;
-
         public float forwardControl;
         public float sidewaysControl;
         public float angularControl;
         private ROSConnection _ros;
-
-        public float feedbackFrequency = 0.1f;
-
-        private Vector2[] wheelPositions;    // Local positions of wheels relative to center
-        private Vector2[] wheelVelocities;   // Calculated velocities per wheel
 
         public GameObject safeteyLight;
         private Material _safetyLightMaterial;
@@ -36,6 +24,9 @@ namespace Scrabby.Robots
         private int _safetyState = 0;
         private bool _lightOn = false;
         private Color _safetyLightColor = Color.white;
+
+        private Vector3 _lastPosition;
+        private Vector3 _lastRotation;
 
         private void Start()
         {
@@ -49,19 +40,6 @@ namespace Scrabby.Robots
             {
                 _safetyLightMaterial = safeteyLight.GetComponent<Renderer>().material;
             }
-
-            // Setup swerve drive geometry
-            float halfLength = axleLength / 2f;
-            float halfWidth = distanceBetweenWheels / 2f;
-
-            wheelPositions = new Vector2[4];
-            wheelVelocities = new Vector2[4];
-
-            // Order: FrontLeft, FrontRight, BackLeft, BackRight
-            wheelPositions[0] = new Vector2(-halfWidth, halfLength);
-            wheelPositions[1] = new Vector2(halfWidth, halfLength);
-            wheelPositions[2] = new Vector2(-halfWidth, -halfLength);
-            wheelPositions[3] = new Vector2(halfWidth, -halfLength);
 
             InitializeRobot(robot.options);
         }
@@ -121,13 +99,8 @@ namespace Scrabby.Robots
                 float inputY = Input.GetAxis("Vertical");   // W/S or left stick Y
                 float inputRot = Input.GetAxis("Rotate");   // Q/E or right stick X
 
-                localVelocity = new Vector2(inputX, inputY) * speedMod;
+                localVelocity = new Vector2(inputX, inputY) * 2;
                 angularInput = inputRot;
-
-                // Save to network-style variables (optional telemetry/debugging)
-                forwardControl = localVelocity.y;
-                sidewaysControl = localVelocity.x;
-                angularControl = angularInput;
             }
             else
             {
@@ -135,43 +108,33 @@ namespace Scrabby.Robots
                 angularInput = angularControl;
             }
 
-            // === Modified: local velocity is already robot-relative, no world rotation needed ===
-            Vector2 linearVelocity = localVelocity;
+            // Convert angularInput to be in radians per second
+            angularInput *= Mathf.Rad2Deg;
 
-            // Calculate wheel velocities (linear + rotational)
-            Vector2 averageVelocity = Vector2.zero;
-            for (int i = 0; i < 4; i++)
-            {
-                Vector2 pos = wheelPositions[i];
-                Vector2 rotationalVelocity = new Vector2(-angularInput * pos.y, angularInput * pos.x);
-                wheelVelocities[i] = linearVelocity + rotationalVelocity;
-                averageVelocity += wheelVelocities[i];
-            }
-            averageVelocity /= 4f;
+            // Store the current position and rotation
+            Vector3 currentPosition = transform.position;
+            Vector3 currentRotation = transform.eulerAngles;
 
-            Vector3 movement = new Vector3(linearVelocity.x, 0, linearVelocity.y);
+            // Move the robot (Translate and Rotate)
+            transform.Translate(localVelocity.x * Time.deltaTime, 0, localVelocity.y * Time.deltaTime);
+            transform.Rotate(0, angularInput * Time.deltaTime, 0);
 
-            // === Modified: use Space.Self for robot-relative movement ===
-            transform.Translate(movement * Time.fixedDeltaTime, Space.Self);
-            transform.Rotate(0, angularInput * Mathf.Rad2Deg * Time.fixedDeltaTime, 0, Space.World);
-
-            PublishFeedback(averageVelocity);
-        }
-
-        private void PublishFeedback(Vector2 avgVelocity)
-        {
-            float deltaT = Time.fixedDeltaTime;
-            float deltaX = avgVelocity.y * deltaT;
-            float deltaY = -avgVelocity.x * deltaT;
-            float deltaTheta = -angularControl * deltaT;
+            // Calculate deltas
+            float deltaX = currentPosition.x - _lastPosition.x;
+            float deltaY = currentPosition.z - _lastPosition.z;
+            float deltaTheta = currentRotation.y - _lastRotation.y;
 
             MotorFeedbackMsg msg = new()
             {
-                delta_x = deltaX,
-                delta_y = deltaY,
-                delta_theta = deltaTheta
+                delta_x = deltaY,
+                delta_y = -deltaX,
+                delta_theta = -deltaTheta * Mathf.Deg2Rad,
             };
             _ros.Publish("/autonav/motor_feedback", msg);
+
+            // Update the last position and rotation
+            _lastPosition = currentPosition;
+            _lastRotation = currentRotation;
         }
     }
 }
