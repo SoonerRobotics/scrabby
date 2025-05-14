@@ -39,9 +39,9 @@ namespace Scrabby
                 if (_ros != null && _hasConnectionErrorField != null)
                 {
                     bool hasConnectionError = (bool)_hasConnectionErrorField.GetValue(_ros);
-                    if (hasConnectionError && !_hasConnectionError)
+                    if (hasConnectionError && !_hasConnectionError && SceneManager.GetActiveScene().name != "Main Menu")
                     {
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                         Debug.Log("Reloading scene due to ROS connection error.");
                         _hasConnectionError = true;
                     }
