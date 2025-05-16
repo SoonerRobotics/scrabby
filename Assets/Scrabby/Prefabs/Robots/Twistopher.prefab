@@ -151,9 +151,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: 0.125
-  topic: /autonav/camera/compressed/left
+  topic: /autonav/camera/left
   quality: 75
-  camera: {fileID: 7180961654599775733}
+  _camera: {fileID: 0}
   width: 640
   height: 480
   flip: 0
@@ -343,9 +343,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: 0.125
-  topic: /autonav/camera/compressed/front
+  topic: /autonav/camera/front
   quality: 75
-  camera: {fileID: 3853707249325970881}
+  _camera: {fileID: 0}
   width: 640
   height: 480
   flip: 0
@@ -399,17 +399,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   robot: {fileID: 11400000, guid: 0e27cd772ce2c9a4db0526a35823c617, type: 2}
-  speedMod: 2.2727273
-  wheelRadius: 0.1016
-  distanceBetweenWheels: 0.3
-  axleLength: 0.492
-  minSpeed: 0.1
-  drag: 0.85
   forwardControl: 0
   sidewaysControl: 0
   angularControl: 0
-  feedbackFrequency: 0.1
   safeteyLight: {fileID: 7373889471499035757}
+  safetyLightBlinkRate: 1
 --- !u!114 &4461407373232489783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,9 +571,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: 0.125
-  topic: /autonav/camera/compressed/rear
+  topic: /autonav/camera/back
   quality: 75
-  camera: {fileID: 4709391753030174409}
+  _camera: {fileID: 0}
   width: 640
   height: 480
   flip: 0
@@ -979,9 +973,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frequency: 0.125
-  topic: /autonav/camera/compressed/right
+  topic: /autonav/camera/right
   quality: 75
-  camera: {fileID: 658888959238185043}
+  _camera: {fileID: 0}
   width: 640
   height: 480
   flip: 0
